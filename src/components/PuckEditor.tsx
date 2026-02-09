@@ -51,6 +51,7 @@ export function PuckEditor({ config, data, height, path, viewports, theme = "lig
       const isDark = theme === "dark";
       doc.documentElement.classList.toggle("puck-theme-dark", isDark);
       doc.body?.classList.toggle("puck-theme-dark", isDark);
+      doc.documentElement.style.colorScheme = isDark ? "dark" : "light";
       return true;
     };
 

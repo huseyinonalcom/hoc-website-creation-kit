@@ -111,7 +111,7 @@
 }
 
 .puck-theme-dark [class*="Nav-list"] > [class*="NavItem"]:nth-child(1) [class*="NavItem-link"] > span:last-child::after {
-  content: "Elementler";
+  content: "Bloklar";
   color: var(--puck-color-grey-08);
   position: absolute;
   inset: 0;
