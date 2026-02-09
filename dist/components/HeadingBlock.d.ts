@@ -1,0 +1,30 @@
+import type { ReactElement } from "react";
+export type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+export type HeadingAlignment = "left" | "center" | "right";
+export type HeadingBlockProps = {
+    text?: string;
+    level?: HeadingLevel;
+    textAlign?: HeadingAlignment;
+    fontSize?: number;
+    fontWeight?: number;
+    italic?: boolean;
+    textColor?: string;
+    textColorLight?: string;
+    textColorDark?: string;
+    decorationEnabled?: boolean;
+    decorationWidth?: number;
+    decorationThickness?: number;
+    decorationSpacing?: number;
+    decorationColor?: string;
+    decorationColorLight?: string;
+    decorationColorDark?: string;
+    underlineMode?: "separate" | "inline";
+    marginTop?: number;
+    marginRight?: number;
+    marginBottom?: number;
+    marginLeft?: number;
+    styleClipboard?: unknown;
+};
+export declare function HeadingBlock({ text, level, textAlign, fontSize, fontWeight, italic, textColor, textColorLight, textColorDark, decorationEnabled, decorationWidth, decorationThickness, decorationSpacing, decorationColor, decorationColorLight, decorationColorDark, underlineMode, marginTop, marginRight, marginBottom, marginLeft, }: HeadingBlockProps): ReactElement | null;
+export default HeadingBlock;
+//# sourceMappingURL=HeadingBlock.d.ts.map
