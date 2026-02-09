@@ -3,6 +3,8 @@
 import type { Config, Data, Viewport } from "@puckeditor/core";
 import type { ReactNode } from "react";
 
+import { useEffect, useRef } from "react";
+
 import { createUsePuck, Puck } from "@puckeditor/core";
 
 export type PuckEditorHeaderActionsProps = {
@@ -29,9 +31,33 @@ const usePuck = createUsePuck();
 export function PuckEditor({ config, data, height, path, viewports, theme = "light", className, onPublish, renderHeaderActions }: PuckEditorProps) {
   const themeClassName = theme === "dark" ? "puck-theme-dark" : undefined;
   const wrapperClassName = ["puck-editor", themeClassName, className].filter(Boolean).join(" ");
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const frame = wrapperRef.current?.querySelector("iframe");
+    if (!frame) {
+      return;
+    }
+
+    const applyTheme = () => {
+      const doc = frame.contentDocument;
+      if (!doc) {
+        return;
+      }
+
+      doc.documentElement.classList.toggle("puck-theme-dark", theme === "dark");
+    };
+
+    applyTheme();
+    frame.addEventListener("load", applyTheme);
+
+    return () => {
+      frame.removeEventListener("load", applyTheme);
+    };
+  }, [theme]);
 
   return (
-    <div className={wrapperClassName}>
+    <div className={wrapperClassName} ref={wrapperRef}>
       <Puck
         config={config}
         data={data}
