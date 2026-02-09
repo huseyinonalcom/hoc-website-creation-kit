@@ -1,0 +1,48 @@
+{
+  "name": "hoc-website-creation-kit",
+  "author": {
+    "name": "Hüseyin Önal",
+    "email": "contact@huseyinonal.com",
+    "url": "https://huseyinonal.com"
+  },
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
+    },
+    "./styles.css": "./src/hoc-website-creation-kit.css"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts",
+    "dev": "tsup src/index.ts --format esm --dts --watch",
+    "build:css": "node ./scripts/build-css.mjs",
+    "postinstall": "node ./scripts/build-css.mjs"
+  },
+  "peerDependencies": {
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "next": "16.1.6"
+  },
+  "dependencies": {
+    "@heroicons/react": "2.2.0",
+    "isomorphic-dompurify": "2.36.0",
+    "@puckeditor/core": "0.21.0",
+    "quill": "2.0.3",
+    "quill-table-better": "1.2.3",
+    "tailwind-merge": "3.4.0"
+  },
+  "devDependencies": {
+    "tsup": "8.5.1",
+    "typescript": "5.9.3"
+  }
+}
