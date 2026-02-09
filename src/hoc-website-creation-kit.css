@@ -3270,6 +3270,10 @@ ol.table-list-container {
   color: var(--puck-color-grey-08);
 }
 
+.puck-theme-dark [class*="PuckHeader-inner"] * {
+  border: 0;
+}
+
 .puck-theme-dark [class*="SidebarSection-title"] {
   background: var(--puck-color-grey-11);
   border-color: var(--puck-color-grey-09);
