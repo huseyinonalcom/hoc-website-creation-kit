@@ -1,0 +1,23 @@
+/* Optional dark theme overrides for Puck editor UI */
+
+.puck-theme-dark {
+  color-scheme: dark;
+  background: var(--puck-color-grey-12);
+  color: var(--puck-color-grey-08);
+
+  --puck-color-white: #0b101a;
+  --puck-color-black: #f8fafc;
+
+  --puck-color-grey-01: #0f141c;
+  --puck-color-grey-02: #121a24;
+  --puck-color-grey-03: #151f2b;
+  --puck-color-grey-04: #e2e8f0;
+  --puck-color-grey-05: #cbd5e1;
+  --puck-color-grey-06: #94a3b8;
+  --puck-color-grey-07: #b5c0ce;
+  --puck-color-grey-08: #e2e8f0;
+  --puck-color-grey-09: #2a3445;
+  --puck-color-grey-10: #1e2736;
+  --puck-color-grey-11: #141b28;
+  --puck-color-grey-12: #0b101a;
+}

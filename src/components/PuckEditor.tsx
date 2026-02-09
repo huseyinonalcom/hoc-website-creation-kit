@@ -16,6 +16,8 @@ export type PuckEditorProps = {
   height?: string;
   path?: string;
   viewports?: Viewport[];
+  theme?: "light" | "dark";
+  className?: string;
   // eslint-disable-next-line no-unused-vars
   onPublish?: (_data: Data) => void | Promise<void>;
   // eslint-disable-next-line no-unused-vars
@@ -24,25 +26,30 @@ export type PuckEditorProps = {
 
 const usePuck = createUsePuck();
 
-export function PuckEditor({ config, data, height, path, viewports, onPublish, renderHeaderActions }: PuckEditorProps) {
+export function PuckEditor({ config, data, height, path, viewports, theme = "light", className, onPublish, renderHeaderActions }: PuckEditorProps) {
+  const themeClassName = theme === "dark" ? "puck-theme-dark" : undefined;
+  const wrapperClassName = ["puck-editor", themeClassName, className].filter(Boolean).join(" ");
+
   return (
-    <Puck
-      config={config}
-      data={data}
-      height={height}
-      overrides={
-        renderHeaderActions
-          ? {
-              headerActions: () => {
-                // eslint-disable-next-line react-hooks/rules-of-hooks
-                const appState = usePuck((state) => state.appState);
-                return <>{renderHeaderActions({ appState, path })}</>;
-              },
-            }
-          : undefined
-      }
-      viewports={viewports}
-      onPublish={onPublish}
-    />
+    <div className={wrapperClassName}>
+      <Puck
+        config={config}
+        data={data}
+        height={height}
+        overrides={
+          renderHeaderActions
+            ? {
+                headerActions: () => {
+                  // eslint-disable-next-line react-hooks/rules-of-hooks
+                  const appState = usePuck((state) => state.appState);
+                  return <>{renderHeaderActions({ appState, path })}</>;
+                },
+              }
+            : undefined
+        }
+        viewports={viewports}
+        onPublish={onPublish}
+      />
+    </div>
   );
 }

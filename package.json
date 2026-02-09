@@ -22,7 +22,8 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./styles.css": "./src/hoc-website-creation-kit.css"
+    "./styles.css": "./src/hoc-website-creation-kit.css",
+    "./puck-dark-theme.css": "./src/puck-dark-theme.css"
   },
   "sideEffects": false,
   "scripts": {

@@ -12,8 +12,10 @@ export type PuckEditorProps = {
     height?: string;
     path?: string;
     viewports?: Viewport[];
+    theme?: "light" | "dark";
+    className?: string;
     onPublish?: (_data: Data) => void | Promise<void>;
     renderHeaderActions?: (_props: PuckEditorHeaderActionsProps) => ReactNode;
 };
-export declare function PuckEditor({ config, data, height, path, viewports, onPublish, renderHeaderActions }: PuckEditorProps): import("react/jsx-runtime").JSX.Element;
+export declare function PuckEditor({ config, data, height, path, viewports, theme, className, onPublish, renderHeaderActions }: PuckEditorProps): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=PuckEditor.d.ts.map
