@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
@@ -5,7 +6,26 @@ import path from "node:path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const repoRoot = path.resolve(__dirname, "..", "..", "..");
+const findRepoRoot = (startDir) => {
+  let currentDir = startDir;
+
+  while (true) {
+    if (existsSync(path.join(currentDir, "package.json"))) {
+      return currentDir;
+    }
+
+    const parentDir = path.dirname(currentDir);
+    if (parentDir === currentDir) {
+      break;
+    }
+
+    currentDir = parentDir;
+  }
+
+  throw new Error("Could not locate package.json to resolve repo root.");
+};
+
+const repoRoot = findRepoRoot(__dirname);
 const puckSourcePath = path.join(
   repoRoot,
   "node_modules",
