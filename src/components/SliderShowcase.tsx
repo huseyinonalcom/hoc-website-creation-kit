@@ -42,9 +42,7 @@ export default function SliderShowcase({
     .filter((slide) => Boolean(slide.imageUrl));
 
   const desktopStageHeight = normalizeHeight(desktopHeight, 50);
-  const sideCardHeight = Number(
-    (desktopStageHeight * SIDE_CARD_HEIGHT_RATIO).toFixed(2),
-  );
+  const sideCardHeight = Number((desktopStageHeight * SIDE_CARD_HEIGHT_RATIO).toFixed(2));
   const mobileStageHeight = normalizeHeight(mobileHeight, 45);
 
   const [activeIndex, setActiveIndex] = useState(0);
@@ -53,8 +51,7 @@ export default function SliderShowcase({
 
   const totalSlides = normalizedSlides.length;
   const currentSlide = normalizedSlides[activeIndex] ?? normalizedSlides[0];
-  const objectFitClass =
-    imageMode === "contain" ? "object-contain" : "object-cover";
+  const objectFitClass = imageMode === "contain" ? "object-contain" : "object-cover";
 
   const toPlainText = (html?: string) =>
     typeof html === "string"
@@ -136,17 +133,10 @@ export default function SliderShowcase({
   const nextIndex = (activeIndex + 1) % totalSlides;
 
   return (
-    <section
-      className="mb-16 w-full text-slate-900"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <section className="mb-16 w-full text-slate-900" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       <div className="mx-auto w-full max-w-6xl space-y-8 px-4">
         <div className="hidden w-full sm:block">
-          <div
-            className="relative w-full overflow-hidden"
-            style={{ height: `${desktopStageHeight}rem` }}
-          >
+          <div className="relative w-full overflow-hidden" style={{ height: `${desktopStageHeight}rem` }}>
             {normalizedSlides.map((slide, index) => {
               const isCenter = index === activeIndex;
               const isPrev = totalSlides > 1 && index === prevIndex;
@@ -154,11 +144,7 @@ export default function SliderShowcase({
               const isSide = isPrev || isNext;
               const isHidden = !isCenter && !isSide;
 
-              const positionClasses = isCenter
-                ? "z-30"
-                : isSide
-                  ? "z-20"
-                  : "z-10";
+              const positionClasses = isCenter ? "z-30" : isSide ? "z-20" : "z-10";
 
               const transformValue = (() => {
                 if (isCenter) {
@@ -175,21 +161,15 @@ export default function SliderShowcase({
 
               const opacityValue = isCenter ? 1 : isSide ? 0.85 : 0;
 
-              const widthValue = isCenter
-                ? `${CENTER_CARD_WIDTH_PERCENT}%`
-                : `${SIDE_CARD_WIDTH_PERCENT}%`;
-              const heightValue = isCenter
-                ? `${desktopStageHeight}rem`
-                : `${sideCardHeight}rem`;
+              const widthValue = isCenter ? `${CENTER_CARD_WIDTH_PERCENT}%` : `${SIDE_CARD_WIDTH_PERCENT}%`;
+              const heightValue = isCenter ? `${desktopStageHeight}rem` : `${sideCardHeight}rem`;
 
               return (
                 <button
                   key={`showcase-slide-${index}-${slide.imageUrl}`}
                   aria-current={isCenter}
                   aria-hidden={isHidden}
-                  aria-label={
-                    slide.text ? `Görsel ${index + 1}` : slide.imageUrl
-                  }
+                  aria-label={slide.text ? `Görsel ${index + 1}` : slide.imageUrl}
                   className={`group absolute overflow-hidden bg-slate-100/60 transition-all duration-500 ease-out focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-slate-900 ${positionClasses}`}
                   disabled={isHidden}
                   style={{
@@ -226,10 +206,7 @@ export default function SliderShowcase({
           </div>
           {currentSlide?.text ? (
             <div className="flex w-full justify-center">
-              <div
-                className="bg-black px-6 py-4 text-sm text-white shadow-xl"
-                style={{ width: `${CENTER_CARD_WIDTH_PERCENT}%` }}
-              >
+              <div className="bg-black px-6 py-4 text-sm text-white shadow-xl" style={{ width: `${CENTER_CARD_WIDTH_PERCENT}%` }}>
                 <div className="richtext text-current **:text-current">
                   <RichTextRenderer html={currentSlide.text} />
                 </div>
@@ -238,18 +215,8 @@ export default function SliderShowcase({
           ) : null}
         </div>
         <div className="sm:hidden">
-          <div
-            className="relative w-full overflow-hidden"
-            style={{ height: `${mobileStageHeight}rem` }}
-          >
-            <Image
-              fill
-              priority
-              alt={currentSlide.text ?? currentSlide.imageUrl}
-              className={`${objectFitClass}`}
-              sizes="90vw"
-              src={currentSlide.imageUrl}
-            />
+          <div className="relative w-full overflow-hidden" style={{ height: `${mobileStageHeight}rem` }}>
+            <Image fill priority alt={currentSlide.text ?? currentSlide.imageUrl} className={`${objectFitClass}`} sizes="90vw" src={currentSlide.imageUrl} />
           </div>
           {currentSlide.text ? (
             <div className="w-full">
@@ -263,34 +230,18 @@ export default function SliderShowcase({
         </div>
 
         <div className="flex flex-row items-center justify-center gap-4 text-slate-500">
-          <button
-            aria-label="Önceki görsel"
-            className="text-3xl transition hover:text-slate-900"
-            type="button"
-            onClick={() => goToSlide(activeIndex - 1)}
-          >
+          <button aria-label="Önceki görsel" className="text-3xl transition hover:text-slate-900" type="button" onClick={() => goToSlide(activeIndex - 1)}>
             ‹
           </button>
           <span className="mt-1.5 text-base font-semibold">
             {activeIndex + 1} / {totalSlides}
           </span>
-          <button
-            aria-label="Sonraki görsel"
-            className="text-3xl transition hover:text-slate-900"
-            type="button"
-            onClick={() => goToSlide(activeIndex + 1)}
-          >
+          <button aria-label="Sonraki görsel" className="text-3xl transition hover:text-slate-900" type="button" onClick={() => goToSlide(activeIndex + 1)}>
             ›
           </button>
         </div>
 
-        <Lightbox
-          activeIndex={lightboxIndex}
-          items={lightboxItems}
-          onClose={closeLightbox}
-          onNext={showLightboxNext}
-          onPrevious={showLightboxPrevious}
-        />
+        <Lightbox activeIndex={lightboxIndex} items={lightboxItems} onClose={closeLightbox} onNext={showLightboxNext} onPrevious={showLightboxPrevious} />
       </div>
     </section>
   );

@@ -17,19 +17,8 @@ type LightboxProps = {
   onPrevious: () => void;
 };
 
-export default function Lightbox({
-  items,
-  activeIndex,
-  onClose,
-  onNext,
-  onPrevious,
-}: LightboxProps) {
-  if (
-    !items.length ||
-    activeIndex == null ||
-    activeIndex < 0 ||
-    activeIndex >= items.length
-  ) {
+export default function Lightbox({ items, activeIndex, onClose, onNext, onPrevious }: LightboxProps) {
+  if (!items.length || activeIndex == null || activeIndex < 0 || activeIndex >= items.length) {
     return null;
   }
 
@@ -37,29 +26,15 @@ export default function Lightbox({
   const altText = currentItem.alt || currentItem.title || "Galeri görseli";
 
   return (
-    <div
-      aria-modal="true"
-      className="fixed inset-0 z-50 flex w-full bg-black/80 p-6"
-      role="dialog"
-    >
+    <div aria-modal="true" className="fixed inset-0 z-50 flex w-full bg-black/80 p-6" role="dialog">
       <div className="pointer-events-none flex w-full items-center justify-center">
         <div className="pointer-events-auto relative min-h-[80vh] w-full max-w-5xl">
-          <Image
-            fill
-            alt={altText}
-            className="object-contain"
-            sizes="80vw"
-            src={currentItem.imageUrl}
-          />
+          <Image fill alt={altText} className="object-contain" sizes="80vw" src={currentItem.imageUrl} />
 
           {(currentItem.title || currentItem.subtitle) && (
             <div className="absolute bottom-6 left-6 max-w-xl rounded-lg bg-black/60 px-4 py-3 text-white shadow-lg backdrop-blur">
-              {currentItem.title ? (
-                <p className="text-base font-semibold">{currentItem.title}</p>
-              ) : null}
-              {currentItem.subtitle ? (
-                <p className="text-sm text-white/80">{currentItem.subtitle}</p>
-              ) : null}
+              {currentItem.title ? <p className="text-base font-semibold">{currentItem.title}</p> : null}
+              {currentItem.subtitle ? <p className="text-sm text-white/80">{currentItem.subtitle}</p> : null}
             </div>
           )}
 

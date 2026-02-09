@@ -19,9 +19,7 @@ const buildEmbedSrc = (rawValue?: string): string | undefined => {
   }
 
   const ensureUrl = (input: string) =>
-    input.startsWith("http://") || input.startsWith("https://")
-      ? input
-      : `https://www.google.com/maps?q=${encodeURIComponent(input)}&output=embed`;
+    input.startsWith("http://") || input.startsWith("https://") ? input : `https://www.google.com/maps?q=${encodeURIComponent(input)}&output=embed`;
 
   try {
     const parsedUrl = new URL(ensureUrl(value));
@@ -30,11 +28,7 @@ const buildEmbedSrc = (rawValue?: string): string | undefined => {
       return undefined;
     }
 
-    if (
-      !parsedUrl.pathname.startsWith("/maps/embed") &&
-      !parsedUrl.pathname.startsWith("/maps/d/embed") &&
-      parsedUrl.searchParams.get("output") !== "embed"
-    ) {
+    if (!parsedUrl.pathname.startsWith("/maps/embed") && !parsedUrl.pathname.startsWith("/maps/d/embed") && parsedUrl.searchParams.get("output") !== "embed") {
       parsedUrl.searchParams.set("output", "embed");
     }
 
@@ -46,20 +40,14 @@ const buildEmbedSrc = (rawValue?: string): string | undefined => {
   }
 };
 
-export const GoogleMapsEmbed = ({
-  url,
-  title,
-  height,
-  allowFullScreen,
-}: GoogleMapsEmbedProps) => {
+export const GoogleMapsEmbed = ({ url, title, height, allowFullScreen }: GoogleMapsEmbedProps) => {
   const embedSrc = buildEmbedSrc(url);
 
   if (!embedSrc) {
     return <></>;
   }
 
-  const resolvedHeight =
-    typeof height === "number" && height > 0 ? height : DEFAULT_HEIGHT;
+  const resolvedHeight = typeof height === "number" && height > 0 ? height : DEFAULT_HEIGHT;
 
   return (
     <div

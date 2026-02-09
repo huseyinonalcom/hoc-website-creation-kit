@@ -36,10 +36,7 @@ export type HeadingBlockProps = {
   styleClipboard?: unknown;
 };
 
-const headingAlignmentMap: Record<
-  HeadingAlignment,
-  CSSProperties["alignItems"]
-> = {
+const headingAlignmentMap: Record<HeadingAlignment, CSSProperties["alignItems"]> = {
   left: "flex-start",
   center: "center",
   right: "flex-end",
@@ -63,11 +60,7 @@ type HeadingContainerStyle = CSSProperties & {
   "--heading-decoration-color-dark"?: string;
 };
 
-const normalizeNumber = (
-  value: number | undefined,
-  fallback: number,
-  min?: number,
-) => {
+const normalizeNumber = (value: number | undefined, fallback: number, min?: number) => {
   if (typeof value !== "number" || Number.isNaN(value)) {
     return fallback;
   }
@@ -118,54 +111,20 @@ export function HeadingBlock({
   const resolvedLevel = headingLevels.includes(level) ? level : "h2";
   const HeadingTag = resolvedLevel as keyof JSX.IntrinsicElements;
 
-  const resolvedFontSize = normalizeNumber(
-    fontSize,
-    DEFAULT_FONT_SIZE,
-    MIN_FONT_SIZE,
-  );
-  const resolvedFontWeight = normalizeNumber(
-    fontWeight,
-    DEFAULT_FONT_WEIGHT,
-    100,
-  );
-  const resolvedTextColorLight = resolveColor(
-    textColorLight ?? textColor,
-    HEADING_TEXT_COLOR_LIGHT,
-  );
-  const resolvedTextColorDark = resolveColor(
-    textColorDark ?? textColor,
-    HEADING_TEXT_COLOR_DARK,
-  );
+  const resolvedFontSize = normalizeNumber(fontSize, DEFAULT_FONT_SIZE, MIN_FONT_SIZE);
+  const resolvedFontWeight = normalizeNumber(fontWeight, DEFAULT_FONT_WEIGHT, 100);
+  const resolvedTextColorLight = resolveColor(textColorLight ?? textColor, HEADING_TEXT_COLOR_LIGHT);
+  const resolvedTextColorDark = resolveColor(textColorDark ?? textColor, HEADING_TEXT_COLOR_DARK);
 
-  const baseDecorationColorLight =
-    decorationColorLight ?? decorationColor ?? resolvedTextColorLight;
-  const baseDecorationColorDark =
-    decorationColorDark ?? decorationColor ?? resolvedTextColorDark;
+  const baseDecorationColorLight = decorationColorLight ?? decorationColor ?? resolvedTextColorLight;
+  const baseDecorationColorDark = decorationColorDark ?? decorationColor ?? resolvedTextColorDark;
 
-  const resolvedDecorationColorLight = resolveColor(
-    baseDecorationColorLight,
-    HEADING_DECORATION_COLOR_LIGHT,
-  );
-  const resolvedDecorationColorDark = resolveColor(
-    baseDecorationColorDark,
-    HEADING_DECORATION_COLOR_DARK,
-  );
+  const resolvedDecorationColorLight = resolveColor(baseDecorationColorLight, HEADING_DECORATION_COLOR_LIGHT);
+  const resolvedDecorationColorDark = resolveColor(baseDecorationColorDark, HEADING_DECORATION_COLOR_DARK);
 
-  const resolvedDecorationWidth = normalizeNumber(
-    decorationWidth,
-    DEFAULT_DECORATION_WIDTH,
-    MIN_DECORATION_WIDTH,
-  );
-  const resolvedDecorationThickness = normalizeNumber(
-    decorationThickness,
-    DEFAULT_DECORATION_THICKNESS,
-    MIN_DECORATION_THICKNESS,
-  );
-  const resolvedDecorationSpacing = normalizeNumber(
-    decorationSpacing,
-    DEFAULT_DECORATION_SPACING,
-    0,
-  );
+  const resolvedDecorationWidth = normalizeNumber(decorationWidth, DEFAULT_DECORATION_WIDTH, MIN_DECORATION_WIDTH);
+  const resolvedDecorationThickness = normalizeNumber(decorationThickness, DEFAULT_DECORATION_THICKNESS, MIN_DECORATION_THICKNESS);
+  const resolvedDecorationSpacing = normalizeNumber(decorationSpacing, DEFAULT_DECORATION_SPACING, 0);
 
   const containerAlign = headingAlignmentMap[textAlign] ?? "flex-start";
 
@@ -183,16 +142,8 @@ export function HeadingBlock({
 
   const resolvedMargins = {
     marginTop: normalizeNumber(marginTop, headingDefaultValues.marginTop, 0),
-    marginRight: normalizeNumber(
-      marginRight,
-      headingDefaultValues.marginRight,
-      0,
-    ),
-    marginBottom: normalizeNumber(
-      marginBottom,
-      headingDefaultValues.marginBottom,
-      0,
-    ),
+    marginRight: normalizeNumber(marginRight, headingDefaultValues.marginRight, 0),
+    marginBottom: normalizeNumber(marginBottom, headingDefaultValues.marginBottom, 0),
     marginLeft: normalizeNumber(marginLeft, headingDefaultValues.marginLeft, 0),
   };
 
@@ -205,18 +156,11 @@ export function HeadingBlock({
     marginBottom: `${resolvedMargins.marginBottom}px`,
     marginLeft: `${resolvedMargins.marginLeft}px`,
     textAlign,
-    borderBottom:
-      decorationEnabled && underlineMode === "inline"
-        ? `${resolvedDecorationThickness}px solid var(--heading-decoration-color-light)`
-        : undefined,
-    borderImageSlice:
-      decorationEnabled && underlineMode === "inline" ? 1 : undefined,
+    borderBottom: decorationEnabled && underlineMode === "inline" ? `${resolvedDecorationThickness}px solid var(--heading-decoration-color-light)` : undefined,
+    borderImageSlice: decorationEnabled && underlineMode === "inline" ? 1 : undefined,
   };
 
-  const headingDarkBorderClass =
-    decorationEnabled && underlineMode === "inline"
-      ? "dark:border-[var(--heading-decoration-color-dark)]"
-      : undefined;
+  const headingDarkBorderClass = decorationEnabled && underlineMode === "inline" ? "dark:border-[var(--heading-decoration-color-dark)]" : undefined;
 
   const decorationStyles: CSSProperties = {
     alignSelf: containerAlign,
@@ -226,30 +170,17 @@ export function HeadingBlock({
     width: `${underlineMode === "inline" ? "100%" : `${resolvedDecorationWidth}px`}`,
   };
 
-  const headingColorClass =
-    "text-[var(--heading-text-color-light)] dark:text-[var(--heading-text-color-dark)]";
-  const decorationColorClass =
-    "bg-[var(--heading-decoration-color-light)] dark:bg-[var(--heading-decoration-color-dark)]";
+  const headingColorClass = "text-[var(--heading-text-color-light)] dark:text-[var(--heading-text-color-dark)]";
+  const decorationColorClass = "bg-[var(--heading-decoration-color-light)] dark:bg-[var(--heading-decoration-color-dark)]";
 
   return (
     <div className="flex flex-col" style={containerStyle}>
       {hasText ? (
-        <HeadingTag
-          className={[headingColorClass, headingDarkBorderClass]
-            .filter(Boolean)
-            .join(" ")}
-          style={headingStyles}
-        >
+        <HeadingTag className={[headingColorClass, headingDarkBorderClass].filter(Boolean).join(" ")} style={headingStyles}>
           {rawText}
         </HeadingTag>
       ) : null}
-      {decorationEnabled && underlineMode === "separate" ? (
-        <span
-          aria-hidden="true"
-          className={decorationColorClass}
-          style={decorationStyles}
-        />
-      ) : null}
+      {decorationEnabled && underlineMode === "separate" ? <span aria-hidden="true" className={decorationColorClass} style={decorationStyles} /> : null}
     </div>
   );
 }

@@ -5,11 +5,7 @@ import type { ComponentData } from "@puckeditor/core";
 import { createUsePuck } from "@puckeditor/core";
 import { useMemo } from "react";
 
-import type {
-  HeadingAlignment,
-  HeadingBlockProps,
-  HeadingLevel,
-} from "../components/HeadingBlock";
+import type { HeadingAlignment, HeadingBlockProps, HeadingLevel } from "../components/HeadingBlock";
 
 import { headingDefaultValues } from "../components/HeadingBlock.defaults";
 import { ClipboardFormSection } from "./ClipboardFormSection";
@@ -40,23 +36,9 @@ export type HeadingClipboardValue = {
   marginLeft: number;
 };
 
-const HEADING_LEVELS = new Set<HeadingLevel>([
-  "h1",
-  "h2",
-  "h3",
-  "h4",
-  "h5",
-  "h6",
-]);
-const HEADING_ALIGNMENTS = new Set<HeadingAlignment>([
-  "left",
-  "center",
-  "right",
-]);
-const UNDERLINE_MODES = new Set<HeadingClipboardValue["underlineMode"]>([
-  "inline",
-  "separate",
-]);
+const HEADING_LEVELS = new Set<HeadingLevel>(["h1", "h2", "h3", "h4", "h5", "h6"]);
+const HEADING_ALIGNMENTS = new Set<HeadingAlignment>(["left", "center", "right"]);
+const UNDERLINE_MODES = new Set<HeadingClipboardValue["underlineMode"]>(["inline", "separate"]);
 
 const sanitizeNumber = (value: unknown, fallback: number): number => {
   return typeof value === "number" && Number.isFinite(value) ? value : fallback;
@@ -75,9 +57,7 @@ const sanitizeColor = (value: unknown): string | undefined => {
   return trimmed.length > 0 ? trimmed : undefined;
 };
 
-const sanitizeHeadingClipboardValue = (
-  raw: unknown,
-): HeadingClipboardValue | null => {
+const sanitizeHeadingClipboardValue = (raw: unknown): HeadingClipboardValue | null => {
   if (!raw || typeof raw !== "object") {
     return null;
   }
@@ -85,71 +65,32 @@ const sanitizeHeadingClipboardValue = (
   const value = raw as Partial<HeadingBlockProps>;
 
   return {
-    level: HEADING_LEVELS.has(value.level as HeadingLevel)
-      ? (value.level as HeadingLevel)
-      : headingDefaultValues.level,
-    textAlign: HEADING_ALIGNMENTS.has(value.textAlign as HeadingAlignment)
-      ? (value.textAlign as HeadingAlignment)
-      : headingDefaultValues.textAlign,
+    level: HEADING_LEVELS.has(value.level as HeadingLevel) ? (value.level as HeadingLevel) : headingDefaultValues.level,
+    textAlign: HEADING_ALIGNMENTS.has(value.textAlign as HeadingAlignment) ? (value.textAlign as HeadingAlignment) : headingDefaultValues.textAlign,
     fontSize: sanitizeNumber(value.fontSize, headingDefaultValues.fontSize),
-    fontWeight: sanitizeNumber(
-      value.fontWeight,
-      headingDefaultValues.fontWeight,
-    ),
+    fontWeight: sanitizeNumber(value.fontWeight, headingDefaultValues.fontWeight),
     italic: sanitizeBoolean(value.italic, headingDefaultValues.italic),
     textColor: sanitizeColor(value.textColor),
-    textColorLight:
-      sanitizeColor(value.textColorLight) ??
-      headingDefaultValues.textColorLight,
-    textColorDark:
-      sanitizeColor(value.textColorDark) ?? headingDefaultValues.textColorDark,
-    decorationEnabled: sanitizeBoolean(
-      value.decorationEnabled,
-      headingDefaultValues.decorationEnabled,
-    ),
-    decorationWidth: sanitizeNumber(
-      value.decorationWidth,
-      headingDefaultValues.decorationWidth,
-    ),
-    decorationThickness: sanitizeNumber(
-      value.decorationThickness,
-      headingDefaultValues.decorationThickness,
-    ),
-    decorationSpacing: sanitizeNumber(
-      value.decorationSpacing,
-      headingDefaultValues.decorationSpacing,
-    ),
+    textColorLight: sanitizeColor(value.textColorLight) ?? headingDefaultValues.textColorLight,
+    textColorDark: sanitizeColor(value.textColorDark) ?? headingDefaultValues.textColorDark,
+    decorationEnabled: sanitizeBoolean(value.decorationEnabled, headingDefaultValues.decorationEnabled),
+    decorationWidth: sanitizeNumber(value.decorationWidth, headingDefaultValues.decorationWidth),
+    decorationThickness: sanitizeNumber(value.decorationThickness, headingDefaultValues.decorationThickness),
+    decorationSpacing: sanitizeNumber(value.decorationSpacing, headingDefaultValues.decorationSpacing),
     decorationColor: sanitizeColor(value.decorationColor),
-    decorationColorLight:
-      sanitizeColor(value.decorationColorLight) ??
-      headingDefaultValues.decorationColorLight,
-    decorationColorDark:
-      sanitizeColor(value.decorationColorDark) ??
-      headingDefaultValues.decorationColorDark,
-    underlineMode: UNDERLINE_MODES.has(
-      value.underlineMode as HeadingClipboardValue["underlineMode"],
-    )
+    decorationColorLight: sanitizeColor(value.decorationColorLight) ?? headingDefaultValues.decorationColorLight,
+    decorationColorDark: sanitizeColor(value.decorationColorDark) ?? headingDefaultValues.decorationColorDark,
+    underlineMode: UNDERLINE_MODES.has(value.underlineMode as HeadingClipboardValue["underlineMode"])
       ? (value.underlineMode as HeadingClipboardValue["underlineMode"])
       : headingDefaultValues.underlineMode,
     marginTop: sanitizeNumber(value.marginTop, headingDefaultValues.marginTop),
-    marginRight: sanitizeNumber(
-      value.marginRight,
-      headingDefaultValues.marginRight,
-    ),
-    marginBottom: sanitizeNumber(
-      value.marginBottom,
-      headingDefaultValues.marginBottom,
-    ),
-    marginLeft: sanitizeNumber(
-      value.marginLeft,
-      headingDefaultValues.marginLeft,
-    ),
+    marginRight: sanitizeNumber(value.marginRight, headingDefaultValues.marginRight),
+    marginBottom: sanitizeNumber(value.marginBottom, headingDefaultValues.marginBottom),
+    marginLeft: sanitizeNumber(value.marginLeft, headingDefaultValues.marginLeft),
   };
 };
 
-const defaultClipboardValue = sanitizeHeadingClipboardValue(
-  headingDefaultValues,
-) ?? {
+const defaultClipboardValue = sanitizeHeadingClipboardValue(headingDefaultValues) ?? {
   level: headingDefaultValues.level,
   textAlign: headingDefaultValues.textAlign,
   fontSize: headingDefaultValues.fontSize,
@@ -184,10 +125,7 @@ export function HeadingClipboardField() {
 
   const clipboardValue = useMemo(() => {
     if (selectedHeading) {
-      return (
-        sanitizeHeadingClipboardValue(selectedHeading.props) ??
-        defaultClipboardValue
-      );
+      return sanitizeHeadingClipboardValue(selectedHeading.props) ?? defaultClipboardValue;
     }
     return defaultClipboardValue;
   }, [selectedHeading]);
@@ -203,9 +141,36 @@ export function HeadingClipboardField() {
     }
 
     dispatch({
-      type: "set",
-      selector,
-      value,
+      type: "setData",
+      data: (previous) => {
+        const updateItemProps = (item: ComponentData<HeadingBlockProps>) => ({
+          ...item,
+          props: {
+            ...item.props,
+            ...value,
+          },
+        });
+
+        if (selector.zone && previous.zones?.[selector.zone]) {
+          const zoneItems = previous.zones[selector.zone];
+          const updatedZone = zoneItems.map((item, index) => (index === selector.index ? updateItemProps(item as ComponentData<HeadingBlockProps>) : item));
+
+          return {
+            zones: {
+              ...previous.zones,
+              [selector.zone]: updatedZone,
+            },
+          };
+        }
+
+        const updatedContent = previous.content.map((item, index) =>
+          index === selector.index ? updateItemProps(item as ComponentData<HeadingBlockProps>) : item,
+        );
+
+        return {
+          content: updatedContent,
+        };
+      },
     });
   };
 

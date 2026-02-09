@@ -4,19 +4,12 @@ import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 
 import { Button } from "../components/Button";
 
-type ClipboardStatus =
-  | "idle"
-  | "copied"
-  | "pasted"
-  | "mismatch"
-  | "invalid"
-  | "error"
-  | "unsupported";
+type ClipboardStatus = "idle" | "copied" | "pasted" | "mismatch" | "invalid" | "error" | "unsupported";
 
 type ClipboardFormSectionProps<T> = {
   componentKey: string;
   title: string;
-  children: ReactNode;
+  children?: ReactNode;
   getValue: () => T;
   sanitize: (raw: unknown) => T | null;
   onPaste: (value: T) => void;
@@ -26,10 +19,7 @@ type ClipboardFormSectionProps<T> = {
   statusMessages?: Partial<Record<Exclude<ClipboardStatus, "idle">, string>>;
 };
 
-const DEFAULT_STATUS_MESSAGES: Record<
-  Exclude<ClipboardStatus, "idle">,
-  string
-> = {
+const DEFAULT_STATUS_MESSAGES: Record<Exclude<ClipboardStatus, "idle">, string> = {
   copied: "İçerik panoya kopyalandı.",
   pasted: "İçerik başarıyla yapıştırıldı.",
   mismatch: "Panodaki veri bu alanla eşleşmiyor.",
@@ -55,15 +45,10 @@ export function ClipboardFormSection<T>({
   const [isBusy, setIsBusy] = useState(false);
   const resetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const mergedStatusMessages = useMemo(
-    () => ({ ...DEFAULT_STATUS_MESSAGES, ...statusMessages }),
-    [statusMessages],
-  );
+  const mergedStatusMessages = useMemo(() => ({ ...DEFAULT_STATUS_MESSAGES, ...statusMessages }), [statusMessages]);
 
   useEffect(() => {
-    setClipboardSupported(
-      typeof navigator !== "undefined" && Boolean(navigator.clipboard),
-    );
+    setClipboardSupported(typeof navigator !== "undefined" && Boolean(navigator.clipboard));
 
     return () => {
       if (resetTimerRef.current) {
@@ -142,33 +127,21 @@ export function ClipboardFormSection<T>({
         <div>
           <p className="text-sm font-semibold text-gray-800">{title}</p>
           {status !== "idle" ? (
-            <p className="text-xs text-gray-500">
-              {mergedStatusMessages[status as Exclude<ClipboardStatus, "idle">]}
-            </p>
+            <p className="text-xs text-gray-500">{mergedStatusMessages[status as Exclude<ClipboardStatus, "idle">]}</p>
           ) : description ? (
             <p className="text-xs text-gray-500">{description}</p>
           ) : null}
         </div>
         <div className="flex gap-2">
-          <Button
-            disabled={!clipboardSupported || isBusy}
-            type="button"
-            variant="outline"
-            onClick={handleCopy}
-          >
+          <Button disabled={!clipboardSupported || isBusy} type="button" variant="outline" onClick={handleCopy}>
             {copyLabel}
           </Button>
-          <Button
-            disabled={!clipboardSupported || isBusy}
-            type="button"
-            variant="outline"
-            onClick={handlePaste}
-          >
+          <Button disabled={!clipboardSupported || isBusy} type="button" variant="outline" onClick={handlePaste}>
             {pasteLabel}
           </Button>
         </div>
       </div>
-      {children}
+      {children ?? null}
     </div>
   );
 }

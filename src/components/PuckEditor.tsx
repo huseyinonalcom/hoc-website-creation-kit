@@ -24,15 +24,7 @@ export type PuckEditorProps = {
 
 const usePuck = createUsePuck();
 
-export function PuckEditor({
-  config,
-  data,
-  height,
-  path,
-  viewports,
-  onPublish,
-  renderHeaderActions,
-}: PuckEditorProps) {
+export function PuckEditor({ config, data, height, path, viewports, onPublish, renderHeaderActions }: PuckEditorProps) {
   return (
     <Puck
       config={config}

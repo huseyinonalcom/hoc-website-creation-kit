@@ -44,11 +44,9 @@ const sizeClassNames: Record<GalleryBlockItemSize, string> = {
   "2x2": "lg:col-span-2 lg:row-span-2",
 };
 
-const isValidGallerySize = (value: unknown): value is GalleryBlockItemSize =>
-  value === "1x1" || value === "2x1" || value === "1x2" || value === "2x2";
+const isValidGallerySize = (value: unknown): value is GalleryBlockItemSize => value === "1x1" || value === "2x1" || value === "1x2" || value === "2x2";
 
-const isGalleryImageMode = (value: unknown): value is GalleryImageMode =>
-  value === "cover" || value === "contain";
+const isGalleryImageMode = (value: unknown): value is GalleryImageMode => value === "cover" || value === "contain";
 
 const defaultGridClassName = "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
 
@@ -66,8 +64,7 @@ export default function Gallery({ items, gridSize, imageMode }: GalleryProps) {
 
     const sanitized = items
       .map((item) => {
-        const imageUrl =
-          typeof item?.imageUrl === "string" ? item.imageUrl.trim() : "";
+        const imageUrl = typeof item?.imageUrl === "string" ? item.imageUrl.trim() : "";
         if (!imageUrl) {
           return null;
         }
@@ -78,9 +75,7 @@ export default function Gallery({ items, gridSize, imageMode }: GalleryProps) {
           imageUrl,
           size: isValidGallerySize(item?.size) ? item.size : "1x1",
           href: typeof item?.href === "string" ? item.href.trim() : "",
-          imageMode: isGalleryImageMode(item?.imageMode)
-            ? item.imageMode
-            : undefined,
+          imageMode: isGalleryImageMode(item?.imageMode) ? item.imageMode : undefined,
         } satisfies NormalizedGalleryItem;
       })
       .filter((item): item is NormalizedGalleryItem => Boolean(item));
@@ -109,9 +104,7 @@ export default function Gallery({ items, gridSize, imageMode }: GalleryProps) {
       return;
     }
 
-    setActiveIndex((prev) =>
-      prev == null ? 0 : (prev + 1) % normalizedItems.length,
-    );
+    setActiveIndex((prev) => (prev == null ? 0 : (prev + 1) % normalizedItems.length));
   };
 
   const showPreviousImage = () => {
@@ -120,40 +113,21 @@ export default function Gallery({ items, gridSize, imageMode }: GalleryProps) {
       return;
     }
 
-    setActiveIndex((prev) =>
-      prev == null
-        ? normalizedItems.length - 1
-        : (prev - 1 + normalizedItems.length) % normalizedItems.length,
-    );
+    setActiveIndex((prev) => (prev == null ? normalizedItems.length - 1 : (prev - 1 + normalizedItems.length) % normalizedItems.length));
   };
 
   return (
     <div>
-      <Lightbox
-        activeIndex={activeIndex}
-        items={lightboxItems}
-        onClose={() => setActiveIndex(null)}
-        onNext={showNextImage}
-        onPrevious={showPreviousImage}
-      />
-      <div
-        className={cn(
-          "grid gap-10",
-          gridClassNamesBySize[gridSize ?? 3] ?? defaultGridClassName,
-        )}
-      >
+      <Lightbox activeIndex={activeIndex} items={lightboxItems} onClose={() => setActiveIndex(null)} onNext={showNextImage} onPrevious={showPreviousImage} />
+      <div className={cn("grid gap-10", gridClassNamesBySize[gridSize ?? 3] ?? defaultGridClassName)}>
         {normalizedItems.map((item, index) => {
           const spanClass = sizeClassNames[item.size];
           const hasHref = Boolean(item.href);
           const resolvedImageMode = item.imageMode ?? galleryImageMode;
-          const objectFitClass =
-            resolvedImageMode === "contain" ? "object-contain" : "object-cover";
+          const objectFitClass = resolvedImageMode === "contain" ? "object-contain" : "object-cover";
 
           return (
-            <div
-              key={`${item.imageUrl}-${index}`}
-              className={cn("group flex flex-col gap-2", spanClass)}
-            >
+            <div key={`${item.imageUrl}-${index}`} className={cn("group flex flex-col gap-2", spanClass)}>
               <div className="relative h-full min-h-64 w-full">
                 <Image
                   fill

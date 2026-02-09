@@ -21,10 +21,7 @@ type LinkBarClipboardFieldProps = {
   onChange: (next: LinkListItem[]) => void;
 };
 
-export function LinkBarClipboardField({
-  value,
-  onChange,
-}: LinkBarClipboardFieldProps) {
+export function LinkBarClipboardField({ value, onChange }: LinkBarClipboardFieldProps) {
   const normalizedValue = sanitizeLinks(value) ?? [];
 
   return (

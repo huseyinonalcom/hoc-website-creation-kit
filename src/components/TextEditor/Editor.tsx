@@ -4,19 +4,7 @@ import QuillTableBetter from "quill-table-better";
 import { useEffect, useRef } from "react";
 import Quill from "quill";
 
-const SIZE_VALUES = [
-  "8px",
-  "10px",
-  "12px",
-  "14px",
-  "16px",
-  "18px",
-  "20px",
-  "22px",
-  "24px",
-  "32px",
-  "36px",
-];
+const SIZE_VALUES = ["8px", "10px", "12px", "14px", "16px", "18px", "20px", "22px", "24px", "32px", "36px"];
 
 const buildSizePickerCss = () => {
   const rules = SIZE_VALUES.map((value) => {
@@ -27,9 +15,7 @@ const buildSizePickerCss = () => {
     ].join("\n");
   });
 
-  rules.push(
-    `.ql-snow .ql-picker.ql-size .ql-picker-label:not([data-value])::before { content: "12"; }`,
-  );
+  rules.push(`.ql-snow .ql-picker.ql-size .ql-picker-label:not([data-value])::before { content: "12"; }`);
 
   return rules.join("\n");
 };
@@ -70,9 +56,7 @@ const TextEditor = ({ initialData, onChange }: EditorProps) => {
       whitelist: string[];
     };
     Size.whitelist = SIZE_VALUES;
-    const registerTarget = Size as unknown as Parameters<
-      typeof Quill.register
-    >[0];
+    const registerTarget = Size as unknown as Parameters<typeof Quill.register>[0];
     Quill.register(registerTarget, true);
 
     Quill.register(
@@ -89,14 +73,7 @@ const TextEditor = ({ initialData, onChange }: EditorProps) => {
           [{ size: Size.whitelist }],
           ["link", "bold", "italic", "underline", "strike"],
           [{ color: [] }, { background: [] }],
-          [
-            { list: "ordered" },
-            { list: "bullet" },
-            { indent: "-1" },
-            { indent: "+1" },
-            { align: [] },
-            "table-better",
-          ],
+          [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }, { align: [] }, "table-better"],
           [{ script: "sub" }, { script: "super" }],
           ["clean"],
         ],

@@ -17,12 +17,7 @@ export type SliderProps = {
   imageMode?: "cover" | "contain";
 };
 
-export default function Slider({
-  slides = [],
-  autoPlay = false,
-  autoPlayInterval = 6000,
-  imageMode = "cover",
-}: SliderProps) {
+export default function Slider({ slides = [], autoPlay = false, autoPlayInterval = 6000, imageMode = "cover" }: SliderProps) {
   const normalizedSlides = slides
     .map((slide) => ({
       imageUrl: slide.imageUrl?.trim() ?? "",
@@ -35,8 +30,7 @@ export default function Slider({
 
   const totalSlides = normalizedSlides.length;
   const currentSlide = normalizedSlides[activeIndex] ?? normalizedSlides[0];
-  const objectFitClass =
-    imageMode === "contain" ? "object-contain" : "object-cover";
+  const objectFitClass = imageMode === "contain" ? "object-contain" : "object-cover";
 
   useEffect(() => {
     if (!autoPlay || totalSlides <= 1 || isHovered) {
@@ -59,11 +53,7 @@ export default function Slider({
   }
 
   return (
-    <section
-      className="w-full text-slate-900"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <section className="w-full text-slate-900" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       <div className="mx-auto flex w-full max-w-7xl flex-col-reverse items-center lg:flex-row">
         <div className="z-10 -mt-16 w-full px-8 lg:m-0 lg:-mr-48 lg:h-100 lg:w-112.5 lg:px-0">
           <div className="h-3 bg-[#f5c302]" />
@@ -106,10 +96,7 @@ export default function Slider({
             style={{ transform: `translateX(-${activeIndex * 100}%)` }}
           >
             {normalizedSlides.map((slide) => (
-              <li
-                key={slide.imageUrl}
-                className="relative h-full w-full shrink-0"
-              >
+              <li key={slide.imageUrl} className="relative h-full w-full shrink-0">
                 <Image
                   fill
                   alt={slide.text ?? slide.imageUrl}

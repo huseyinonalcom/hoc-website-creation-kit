@@ -33,9 +33,7 @@
   background: inherit;
 }
 .ql-table-input:focus::placeholder,
-.ql-table-color-container
-  .label-field-view-color
-  .property-input:focus::placeholder,
+.ql-table-color-container .label-field-view-color .property-input:focus::placeholder,
 .ql-table-properties-form .property-input:focus::placeholder {
   color: rgba(0, 0, 0, 0);
 }
@@ -45,10 +43,7 @@
   display: block;
 }
 .ql-table-input:not(:placeholder-shown) + label,
-.ql-table-color-container
-  .label-field-view-color
-  .property-input:not(:placeholder-shown)
-  + label,
+.ql-table-color-container .label-field-view-color .property-input:not(:placeholder-shown) + label,
 .ql-table-properties-form .property-input:not(:placeholder-shown) + label {
   display: block;
 }
@@ -58,11 +53,7 @@
 .ql-table-center,
 .ql-table-select-container .ql-table-select-list,
 .ql-table-select-container,
-.ql-table-color-container
-  .color-picker
-  .color-picker-palette
-  .color-picker-wrap
-  .iro-container,
+.ql-table-color-container .color-picker .color-picker-palette .color-picker-wrap .iro-container,
 .ql-table-color-container .color-picker,
 .ql-table-properties-form .properties-form-action-row > button,
 .ql-table-dropdown-list .ql-table-header-row,
@@ -324,40 +315,23 @@
   border: 1px solid #ccced1;
   align-items: center;
 }
-.ql-table-properties-form
-  .properties-form-row
-  .ql-table-check-container
-  .ql-table-tooltip-hover {
+.ql-table-properties-form .properties-form-row .ql-table-check-container .ql-table-tooltip-hover {
   padding: 6px 10px;
   cursor: pointer;
 }
-.ql-table-properties-form
-  .properties-form-row
-  .ql-table-check-container
-  .ql-table-tooltip-hover:hover {
+.ql-table-properties-form .properties-form-row .ql-table-check-container .ql-table-tooltip-hover:hover {
   background: #f0f0f0;
 }
-.ql-table-properties-form
-  .properties-form-row
-  .ql-table-check-container
-  .ql-table-btns-checked {
+.ql-table-properties-form .properties-form-row .ql-table-check-container .ql-table-btns-checked {
   background: #f0f7ff;
 }
-.ql-table-properties-form
-  .properties-form-row
-  .ql-table-check-container
-  .ql-table-btns-checked
-  > svg
-  path {
+.ql-table-properties-form .properties-form-row .ql-table-check-container .ql-table-btns-checked > svg path {
   stroke: #2977ff;
 }
 .ql-table-properties-form .properties-form-row-full .ql-table-color-container {
   width: 100%;
 }
-.ql-table-properties-form
-  .properties-form-row-full
-  .ql-table-color-container
-  .property-input {
+.ql-table-properties-form .properties-form-row-full .ql-table-color-container .property-input {
   width: 100%;
 }
 .ql-table-properties-form .properties-form-action-row {
@@ -447,27 +421,17 @@
   padding: 0 12px;
   cursor: pointer;
 }
-.ql-table-color-container
-  .color-picker
-  .color-picker-select
-  .erase-container:hover {
+.ql-table-color-container .color-picker .color-picker-select .erase-container:hover {
   background: #f0f0f0;
 }
-.ql-table-color-container
-  .color-picker
-  .color-picker-select
-  .erase-container
-  > button {
+.ql-table-color-container .color-picker .color-picker-select .erase-container > button {
   border: none;
   outline: none;
   background: inherit;
   height: 100%;
   cursor: pointer;
 }
-.ql-table-color-container
-  .color-picker
-  .color-picker-select
-  > .erase-container {
+.ql-table-color-container .color-picker .color-picker-select > .erase-container {
   margin-bottom: 4px;
 }
 .ql-table-color-container .color-picker .color-picker-select .color-list {
@@ -485,11 +449,7 @@
   position: relative;
   cursor: pointer;
 }
-.ql-table-color-container
-  .color-picker
-  .color-picker-select
-  .color-list
-  > li[data-color="#ffffff"] {
+.ql-table-color-container .color-picker .color-picker-select .color-list > li[data-color="#ffffff"] {
   border: 1px solid #ccced1;
   box-sizing: border-box;
 }
@@ -502,20 +462,13 @@
   z-index: 1;
   background: #fff;
 }
-.ql-table-color-container
-  .color-picker
-  .color-picker-palette
-  .color-picker-wrap {
+.ql-table-color-container .color-picker .color-picker-palette .color-picker-wrap {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
-.ql-table-color-container
-  .color-picker
-  .color-picker-palette
-  .color-picker-wrap
-  .iro-container {
+.ql-table-color-container .color-picker .color-picker-palette .color-picker-wrap .iro-container {
   flex: 1;
 }
 .ql-table-disabled {

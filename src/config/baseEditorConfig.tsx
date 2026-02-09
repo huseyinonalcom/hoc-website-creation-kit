@@ -1,24 +1,10 @@
 import type { Config, Field, Slot } from "@puckeditor/core";
 import type { ChangeEvent, ComponentType } from "react";
 
-import {
-  ArrowDownTrayIcon,
-  BookmarkIcon,
-  CheckCircleIcon,
-  LinkIcon,
-  TrashIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowDownTrayIcon, BookmarkIcon, CheckCircleIcon, LinkIcon, TrashIcon } from "@heroicons/react/24/outline";
 
-import type {
-  GalleryBlockItem,
-  GalleryBlockItemSize,
-  GalleryGridSize,
-  GalleryImageMode,
-} from "../components/Gallery";
-import type {
-  HeadingAlignment,
-  HeadingLevel,
-} from "../components/HeadingBlock";
+import type { GalleryBlockItem, GalleryBlockItemSize, GalleryGridSize, GalleryImageMode } from "../components/Gallery";
+import type { HeadingAlignment, HeadingLevel } from "../components/HeadingBlock";
 
 import AccordionBlock from "../components/AccordionBlock";
 import Gallery from "../components/Gallery";
@@ -150,11 +136,7 @@ export type BaseEditorConfigOptions = {
   FormInputField?: FormInputFieldComponent;
 };
 
-const BaseFormInputField: FormInputFieldComponent = ({
-  label,
-  className,
-  ...inputProps
-}) => (
+const BaseFormInputField: FormInputFieldComponent = ({ label, className, ...inputProps }) => (
   <label className="flex flex-col gap-2 text-sm font-medium text-gray-700">
     {label ? <span>{label}</span> : null}
     <input
@@ -167,9 +149,7 @@ const BaseFormInputField: FormInputFieldComponent = ({
 );
 
 const EmptyImageField: ImageFieldComponent = () => (
-  <div className="rounded-md border border-dashed border-gray-300 px-3 py-2 text-xs text-gray-500">
-    Image picker not configured.
-  </div>
+  <div className="rounded-md border border-dashed border-gray-300 px-3 py-2 text-xs text-gray-500">Image picker not configured.</div>
 );
 
 type ButtonToggleOption<T extends string | number> = {
@@ -177,11 +157,7 @@ type ButtonToggleOption<T extends string | number> = {
   value: T;
 };
 
-const createButtonToggleField = <T extends string | number>(
-  label: string,
-  options: ButtonToggleOption<T>[],
-  defaultValue: T,
-) => ({
+const createButtonToggleField = <T extends string | number>(label: string, options: ButtonToggleOption<T>[], defaultValue: T) => ({
   label,
   type: "custom" as const,
   render: ({
@@ -195,8 +171,7 @@ const createButtonToggleField = <T extends string | number>(
     id: string;
     name: string;
   }) => {
-    const currentValue =
-      value ?? defaultValue ?? options[0]?.value ?? ("" as T);
+    const currentValue = value ?? defaultValue ?? options[0]?.value ?? ("" as T);
 
     return (
       <div className="flex flex-col gap-2">
@@ -206,9 +181,7 @@ const createButtonToggleField = <T extends string | number>(
             <button
               key={option.value}
               className={`rounded border px-4 py-2 text-left text-sm font-medium transition ${
-                currentValue === option.value
-                  ? "border-indigo-600 bg-indigo-50 text-indigo-700"
-                  : "border-gray-300 text-gray-600 hover:border-indigo-400"
+                currentValue === option.value ? "border-indigo-600 bg-indigo-50 text-indigo-700" : "border-gray-300 text-gray-600 hover:border-indigo-400"
               }`}
               type="button"
               onClick={() => onChange(option.value)}
@@ -238,11 +211,7 @@ type NumberFieldOptions = {
   step?: number;
 };
 
-const createNumberInputField = (
-  FormInput: FormInputFieldComponent,
-  label: string,
-  options: NumberFieldOptions = {},
-) => ({
+const createNumberInputField = (FormInput: FormInputFieldComponent, label: string, options: NumberFieldOptions = {}) => ({
   label,
   type: "custom" as const,
   render: ({
@@ -256,12 +225,7 @@ const createNumberInputField = (
     id: string;
     name: string;
   }) => {
-    const displayValue =
-      typeof value === "number"
-        ? value
-        : typeof options.defaultValue === "number"
-          ? options.defaultValue
-          : "";
+    const displayValue = typeof value === "number" ? value : typeof options.defaultValue === "number" ? options.defaultValue : "";
 
     return (
       <FormInput
@@ -286,11 +250,7 @@ const createNumberInputField = (
   },
 });
 
-const createColorInputField = (
-  FormInput: FormInputFieldComponent,
-  label: string,
-  defaultValue: string,
-) => ({
+const createColorInputField = (FormInput: FormInputFieldComponent, label: string, defaultValue: string) => ({
   label,
   type: "custom" as const,
   render: ({
@@ -308,11 +268,7 @@ const createColorInputField = (
       className="h-10 cursor-pointer px-2"
       label={label}
       type="color"
-      value={
-        typeof value === "string" && value.trim().length > 0
-          ? value
-          : defaultValue
-      }
+      value={typeof value === "string" && value.trim().length > 0 ? value : defaultValue}
       onChange={(event) => onChange(event.target.value)}
     />
   ),
@@ -366,11 +322,9 @@ const galleryGridColumnsOptions: {
   { label: "2 sütun", value: 2 },
 ];
 
-const isGalleryGridSize = (value: unknown): value is GalleryGridSize =>
-  value === 2 || value === 3 || value === 4;
+const isGalleryGridSize = (value: unknown): value is GalleryGridSize => value === 2 || value === 3 || value === 4;
 
-const isGalleryImageMode = (value: unknown): value is GalleryImageMode =>
-  value === "cover" || value === "contain";
+const isGalleryImageMode = (value: unknown): value is GalleryImageMode => value === "cover" || value === "contain";
 
 const galleryItemImageModeField = {
   label: "Görsel Modu (Bu Görsel)",
@@ -390,24 +344,15 @@ const galleryItemImageModeField = {
 
     const buttonClasses = (isActive: boolean) =>
       `rounded border px-4 py-2 text-left text-sm font-medium transition ${
-        isActive
-          ? "border-indigo-600 bg-indigo-50 text-indigo-700"
-          : "border-gray-300 text-gray-600 hover:border-indigo-400"
+        isActive ? "border-indigo-600 bg-indigo-50 text-indigo-700" : "border-gray-300 text-gray-600 hover:border-indigo-400"
       }`;
 
     return (
       <div className="flex flex-col gap-2">
-        <span className="text-sm font-medium text-gray-700">
-          Görsel Modu (Bu Görsel)
-        </span>
+        <span className="text-sm font-medium text-gray-700">Görsel Modu (Bu Görsel)</span>
         <div className="flex gap-3">
           {["cover", "contain"].map((mode) => (
-            <button
-              key={mode}
-              className={buttonClasses(currentValue === mode)}
-              type="button"
-              onClick={() => onChange(mode as GalleryImageMode)}
-            >
+            <button key={mode} className={buttonClasses(currentValue === mode)} type="button" onClick={() => onChange(mode as GalleryImageMode)}>
               {mode === "cover" ? "Kapla" : "Sığdır"}
             </button>
           ))}
@@ -417,16 +362,12 @@ const galleryItemImageModeField = {
   },
 };
 
-export const createBaseEditorConfig = (
-  options: BaseEditorConfigOptions = {},
-): Config<BaseEditorProps> => {
+export const createBaseEditorConfig = (options: BaseEditorConfigOptions = {}): Config<BaseEditorProps> => {
   const FormInput = options.FormInputField ?? BaseFormInputField;
   const ImageField = options.ImageField ?? EmptyImageField;
 
-  const numberInput = (label: string, opts?: NumberFieldOptions) =>
-    createNumberInputField(FormInput, label, opts);
-  const colorInput = (label: string, defaultValue: string) =>
-    createColorInputField(FormInput, label, defaultValue);
+  const numberInput = (label: string, opts?: NumberFieldOptions) => createNumberInputField(FormInput, label, opts);
+  const colorInput = (label: string, defaultValue: string) => createColorInputField(FormInput, label, defaultValue);
 
   return {
     root: {
@@ -441,12 +382,7 @@ export const createBaseEditorConfig = (
     },
     categories: {
       content: {
-        components: [
-          "HeadingBlock",
-          "RichTextBlock",
-          "AccordionBlock",
-          "SingleAccordion",
-        ],
+        components: ["HeadingBlock", "RichTextBlock", "AccordionBlock", "SingleAccordion"],
         title: "İçerik",
       },
       media: {
@@ -507,14 +443,8 @@ export const createBaseEditorConfig = (
               { label: "Hayır", value: false },
             ],
           },
-          textColorLight: colorInput(
-            "Metin Rengi (Açık Tema)",
-            headingDefaultValues.textColorLight,
-          ),
-          textColorDark: colorInput(
-            "Metin Rengi (Koyu Tema)",
-            headingDefaultValues.textColorDark,
-          ),
+          textColorLight: colorInput("Metin Rengi (Açık Tema)", headingDefaultValues.textColorLight),
+          textColorDark: colorInput("Metin Rengi (Koyu Tema)", headingDefaultValues.textColorDark),
           decorationEnabled: {
             label: "Alt Çizgi",
             type: "radio",
@@ -538,14 +468,8 @@ export const createBaseEditorConfig = (
             placeholder: "Örn: 12",
             defaultValue: headingDefaultValues.decorationSpacing,
           }),
-          decorationColorLight: colorInput(
-            "Alt Çizgi Rengi (Açık Tema)",
-            headingDefaultValues.decorationColorLight,
-          ),
-          decorationColorDark: colorInput(
-            "Alt Çizgi Rengi (Koyu Tema)",
-            headingDefaultValues.decorationColorDark,
-          ),
+          decorationColorLight: colorInput("Alt Çizgi Rengi (Açık Tema)", headingDefaultValues.decorationColorLight),
+          decorationColorDark: colorInput("Alt Çizgi Rengi (Koyu Tema)", headingDefaultValues.decorationColorDark),
           underlineMode: {
             label: "Alt Çizgi Modu",
             type: "radio",
@@ -608,9 +532,7 @@ export const createBaseEditorConfig = (
             defaultItemProps: {
               title: "Yeni Bölüm",
             },
-            getItemSummary: (item, index) =>
-              item?.title?.trim() ||
-              `Bölüm ${typeof index === "number" ? index + 1 : 1}`,
+            getItemSummary: (item, index) => item?.title?.trim() || `Bölüm ${typeof index === "number" ? index + 1 : 1}`,
             arrayFields: {
               title: {
                 label: "Başlık",
@@ -633,12 +555,7 @@ export const createBaseEditorConfig = (
             return <></>;
           }
 
-          return (
-            <AccordionBlock
-              isEditing={isEditing}
-              sections={normalizedSections}
-            />
-          );
+          return <AccordionBlock isEditing={isEditing} sections={normalizedSections} />;
         },
       },
       SingleAccordion: {
@@ -665,10 +582,7 @@ export const createBaseEditorConfig = (
           },
         },
         render: ({ title, content: Content, defaultOpen }) => (
-          <SingleAccordionBlock
-            defaultOpen={Boolean(defaultOpen)}
-            title={title}
-          >
+          <SingleAccordionBlock defaultOpen={Boolean(defaultOpen)} title={title}>
             {Content ? <Content /> : null}
           </SingleAccordionBlock>
         ),
@@ -681,20 +595,13 @@ export const createBaseEditorConfig = (
             type: "custom",
             render: ({ value, onChange }) => {
               const items = Array.isArray(value)
-                ? (value as { label?: string; path?: string }[]).map(
-                    (link) => ({
-                      label: link.label ?? "",
-                      path: link.path ?? "",
-                    }),
-                  )
+                ? (value as { label?: string; path?: string }[]).map((link) => ({
+                    label: link.label ?? "",
+                    path: link.path ?? "",
+                  }))
                 : [];
 
-              return (
-                <LinkBarClipboardField
-                  value={items}
-                  onChange={(next) => onChange(next)}
-                />
-              );
+              return <LinkBarClipboardField value={items} onChange={(next) => onChange(next)} />;
             },
           },
         },
@@ -706,13 +613,7 @@ export const createBaseEditorConfig = (
           text: {
             label: "Buton Metni",
             type: "custom",
-            render: ({ value, onChange, id }) => (
-              <RichTextEditor
-                key={id ?? "button-link-text"}
-                initialData={value ?? ""}
-                onChange={onChange}
-              />
-            ),
+            render: ({ value, onChange, id }) => <RichTextEditor key={id ?? "button-link-text"} initialData={value ?? ""} onChange={onChange} />,
           },
           url: {
             label: "Bağlantı URL'si",
@@ -764,20 +665,11 @@ export const createBaseEditorConfig = (
         },
         render: ({ text, url, icon, openInNewTab, color, borderRadius }) => {
           const normalizedHtml = (text ?? "").trim();
-          const IconComponent =
-            buttonIconOptions.find((option) => option.value === icon)?.Icon ??
-            buttonIconOptions[0].Icon;
-          const backgroundColor =
-            typeof color === "string" && color.trim().length > 0
-              ? color
-              : "#4f46e5";
-          const radiusValue =
-            typeof borderRadius === "number" && borderRadius >= 0
-              ? borderRadius
-              : 12;
+          const IconComponent = buttonIconOptions.find((option) => option.value === icon)?.Icon ?? buttonIconOptions[0].Icon;
+          const backgroundColor = typeof color === "string" && color.trim().length > 0 ? color : "#4f46e5";
+          const radiusValue = typeof borderRadius === "number" && borderRadius >= 0 ? borderRadius : 12;
           const hasText = normalizedHtml.length > 0;
-          const resolvedHref =
-            url && url.trim().length > 0 ? url.trim() : undefined;
+          const resolvedHref = url && url.trim().length > 0 ? url.trim() : undefined;
           const target = openInNewTab ? "_blank" : undefined;
           const rel = openInNewTab ? "noreferrer noopener" : undefined;
 
@@ -809,11 +701,7 @@ export const createBaseEditorConfig = (
             label: "Slaytlar",
             type: "custom",
             render: ({ value, onChange }) => (
-              <SlidesField
-                ImageField={ImageField}
-                value={Array.isArray(value) ? value : []}
-                onChange={(next) => onChange(next)}
-              />
+              <SlidesField ImageField={ImageField} value={Array.isArray(value) ? value : []} onChange={(next) => onChange(next)} />
             ),
           },
           autoPlay: {
@@ -840,11 +728,7 @@ export const createBaseEditorConfig = (
           return (
             <Slider
               autoPlay={Boolean(autoPlay)}
-              autoPlayInterval={
-                typeof autoPlayInterval === "number" && autoPlayInterval > 0
-                  ? autoPlayInterval
-                  : 6000
-              }
+              autoPlayInterval={typeof autoPlayInterval === "number" && autoPlayInterval > 0 ? autoPlayInterval : 6000}
               imageMode={imageMode === "contain" ? "contain" : "cover"}
               slides={normalizedSlides}
             />
@@ -858,11 +742,7 @@ export const createBaseEditorConfig = (
             label: "Slaytlar",
             type: "custom",
             render: ({ value, onChange }) => (
-              <SlidesField
-                ImageField={ImageField}
-                value={Array.isArray(value) ? value : []}
-                onChange={(next) => onChange(next)}
-              />
+              <SlidesField ImageField={ImageField} value={Array.isArray(value) ? value : []} onChange={(next) => onChange(next)} />
             ),
           },
           autoPlay: {
@@ -892,14 +772,7 @@ export const createBaseEditorConfig = (
             defaultValue: 45,
           }),
         },
-        render: ({
-          slides,
-          autoPlay,
-          autoPlayInterval,
-          imageMode,
-          desktopHeight,
-          mobileHeight,
-        }) => {
+        render: ({ slides, autoPlay, autoPlayInterval, imageMode, desktopHeight, mobileHeight }) => {
           const normalizedSlides = (slides ?? []).map((slide) => ({
             imageUrl: slide?.imageUrl ?? "",
             text: slide?.text ?? "",
@@ -908,22 +781,10 @@ export const createBaseEditorConfig = (
           return (
             <SliderShowcase
               autoPlay={Boolean(autoPlay)}
-              autoPlayInterval={
-                typeof autoPlayInterval === "number" && autoPlayInterval > 0
-                  ? autoPlayInterval
-                  : 6000
-              }
-              desktopHeight={
-                typeof desktopHeight === "number" && desktopHeight > 0
-                  ? desktopHeight
-                  : undefined
-              }
+              autoPlayInterval={typeof autoPlayInterval === "number" && autoPlayInterval > 0 ? autoPlayInterval : 6000}
+              desktopHeight={typeof desktopHeight === "number" && desktopHeight > 0 ? desktopHeight : undefined}
               imageMode={imageMode === "contain" ? "contain" : "cover"}
-              mobileHeight={
-                typeof mobileHeight === "number" && mobileHeight > 0
-                  ? mobileHeight
-                  : undefined
-              }
+              mobileHeight={typeof mobileHeight === "number" && mobileHeight > 0 ? mobileHeight : undefined}
               slides={normalizedSlides}
             />
           );
@@ -969,20 +830,9 @@ export const createBaseEditorConfig = (
           },
         },
         render: ({ url, title, startSeconds, autoPlay, muted }) => {
-          const normalizedStart =
-            typeof startSeconds === "number" && startSeconds > 0
-              ? startSeconds
-              : undefined;
+          const normalizedStart = typeof startSeconds === "number" && startSeconds > 0 ? startSeconds : undefined;
 
-          return (
-            <YoutubeEmbed
-              autoPlay={Boolean(autoPlay)}
-              muted={Boolean(muted)}
-              startSeconds={normalizedStart}
-              title={title}
-              url={url}
-            />
-          );
+          return <YoutubeEmbed autoPlay={Boolean(autoPlay)} muted={Boolean(muted)} startSeconds={normalizedStart} title={title} url={url} />;
         },
       },
       GoogleMapsEmbed: {
@@ -1014,12 +864,7 @@ export const createBaseEditorConfig = (
           },
         },
         render: ({ url, title, height, allowFullScreen }) => (
-          <GoogleMapsEmbed
-            allowFullScreen={Boolean(allowFullScreen)}
-            height={height}
-            title={title}
-            url={url}
-          />
+          <GoogleMapsEmbed allowFullScreen={Boolean(allowFullScreen)} height={height} title={title} url={url} />
         ),
       },
       Gallery: {
@@ -1042,8 +887,7 @@ export const createBaseEditorConfig = (
                 return title;
               }
 
-              const path =
-                typeof item?.imageUrl === "string" ? item.imageUrl : "";
+              const path = typeof item?.imageUrl === "string" ? item.imageUrl : "";
               if (path) {
                 const segments = path.split("/");
                 const lastSegment = segments[segments.length - 1];
@@ -1068,12 +912,7 @@ export const createBaseEditorConfig = (
               imageUrl: {
                 label: "Görsel",
                 type: "custom",
-                render: ({ value, onChange }) => (
-                  <ImageField
-                    value={typeof value === "string" ? value : ""}
-                    onChange={(next) => onChange(next)}
-                  />
-                ),
+                render: ({ value, onChange }) => <ImageField value={typeof value === "string" ? value : ""} onChange={(next) => onChange(next)} />,
               },
               href: {
                 label: "Bağlantı URL'si",
@@ -1088,22 +927,14 @@ export const createBaseEditorConfig = (
               imageMode: galleryItemImageModeField,
             },
           },
-          gridSize: createButtonToggleField<GalleryGridSize>(
-            "Grid Sütun Sayısı (lg)",
-            galleryGridColumnsOptions,
-            3,
-          ),
+          gridSize: createButtonToggleField<GalleryGridSize>("Grid Sütun Sayısı (lg)", galleryGridColumnsOptions, 3),
           imageMode: imageModeToggleField,
           text: {
             label: "Açıklama",
             type: "custom",
             render: ({ value, onChange }) => (
               <>
-                <input
-                  className="hidden"
-                  value={value}
-                  onChange={(e) => onChange(e.target.value)}
-                />
+                <input className="hidden" value={value} onChange={(e) => onChange(e.target.value)} />
               </>
             ),
           },

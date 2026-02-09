@@ -1,15 +1,10 @@
 import type { Config } from "@puckeditor/core";
 
-import type {
-  BaseEditorConfigOptions,
-  BaseEditorProps,
-} from "./baseEditorConfig";
+import type { BaseEditorConfigOptions, BaseEditorProps } from "./baseEditorConfig";
 import { createBaseEditorConfig } from "./baseEditorConfig";
 import { RichTextRenderer } from "../components/TextEditor/Renderer";
 
-export const createBaseRendererConfig = (
-  options: BaseEditorConfigOptions = {},
-): Config<BaseEditorProps> => {
+export const createBaseRendererConfig = (options: BaseEditorConfigOptions = {}): Config<BaseEditorProps> => {
   const baseConfig = createBaseEditorConfig(options);
 
   return {

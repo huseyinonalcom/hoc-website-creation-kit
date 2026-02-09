@@ -1,25 +1,13 @@
 export { default as AccordionBlock } from "./components/AccordionBlock";
-export type {
-  AccordionBlockProps,
-  AccordionSection,
-} from "./components/AccordionBlock";
+export type { AccordionBlockProps, AccordionSection } from "./components/AccordionBlock";
 
 export { Button, ButtonLink } from "./components/Button";
 
 export { default as Gallery } from "./components/Gallery";
-export type {
-  GalleryBlockItem,
-  GalleryBlockItemSize,
-  GalleryGridSize,
-  GalleryImageMode,
-} from "./components/Gallery";
+export type { GalleryBlockItem, GalleryBlockItemSize, GalleryGridSize, GalleryImageMode } from "./components/Gallery";
 
 export { default as HeadingBlock } from "./components/HeadingBlock";
-export type {
-  HeadingAlignment,
-  HeadingBlockProps,
-  HeadingLevel,
-} from "./components/HeadingBlock";
+export type { HeadingAlignment, HeadingBlockProps, HeadingLevel } from "./components/HeadingBlock";
 export {
   HEADING_DECORATION_COLOR_DARK,
   HEADING_DECORATION_COLOR_LIGHT,
@@ -46,10 +34,7 @@ export { RichTextEditor } from "./components/TextEditor/Editor";
 export { RichTextRenderer } from "./components/TextEditor/Renderer";
 export { PublicRenderer } from "./components/PublicRenderer";
 export { PuckEditor } from "./components/PuckEditor";
-export type {
-  PuckEditorHeaderActionsProps,
-  PuckEditorProps,
-} from "./components/PuckEditor";
+export type { PuckEditorHeaderActionsProps, PuckEditorProps } from "./components/PuckEditor";
 
 export { GoogleMapsEmbed } from "./components/Embed/GoogleMapsEmbed";
 export { YoutubeEmbed } from "./components/Embed/YoutubeEmbed";

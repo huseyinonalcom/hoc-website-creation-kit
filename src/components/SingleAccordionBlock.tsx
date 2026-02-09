@@ -10,11 +10,7 @@ export type SingleAccordionBlockProps = {
   defaultOpen?: boolean;
 };
 
-export default function SingleAccordionBlock({
-  title,
-  children,
-  defaultOpen = false,
-}: SingleAccordionBlockProps) {
+export default function SingleAccordionBlock({ title, children, defaultOpen = false }: SingleAccordionBlockProps) {
   const [isOpen, setIsOpen] = useState(Boolean(defaultOpen));
 
   useEffect(() => {
@@ -32,31 +28,11 @@ export default function SingleAccordionBlock({
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
         >
-          <span className="text-base font-semibold text-gray-900">
-            {resolvedTitle}
-          </span>
-          <ArrowIcon
-            className={cn(
-              "h-5 w-5 text-gray-600 transition-transform",
-              isOpen && "rotate-180",
-            )}
-          />
+          <span className="text-base font-semibold text-gray-900">{resolvedTitle}</span>
+          <ArrowIcon className={cn("h-5 w-5 text-gray-600 transition-transform", isOpen && "rotate-180")} />
         </button>
-        <div
-          className={cn(
-            "grid overflow-hidden px-5 transition-[grid-template-rows] duration-300",
-            isOpen ? "grid-rows-[1fr] pb-5" : "grid-rows-[0fr]",
-          )}
-        >
-          <div className="min-h-0">
-            {children ? (
-              children
-            ) : (
-              <p className="text-sm text-gray-500">
-                Bu bölüm için içerik ekleyin.
-              </p>
-            )}
-          </div>
+        <div className={cn("grid overflow-hidden px-5 transition-[grid-template-rows] duration-300", isOpen ? "grid-rows-[1fr] pb-5" : "grid-rows-[0fr]")}>
+          <div className="min-h-0">{children ? children : <p className="text-sm text-gray-500">Bu bölüm için içerik ekleyin.</p>}</div>
         </div>
       </div>
     </div>
@@ -65,20 +41,8 @@ export default function SingleAccordionBlock({
 
 function ArrowIcon({ className }: { className?: string }) {
   return (
-    <svg
-      aria-hidden="true"
-      className={className}
-      fill="none"
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M6 9l6 6 6-6"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
+    <svg aria-hidden="true" className={className} fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6 9l6 6 6-6" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
     </svg>
   );
 }
