@@ -41,7 +41,7 @@
 .puck-theme-dark [class*="PuckHeader"],
 .puck-theme-dark [class*="MenuBar"] {
   background: var(--puck-color-grey-12);
-  border-bottom: 1px solid var(--puck-color-grey-09);
+  border-bottom: 0;
   color: var(--puck-color-grey-08);
 }
 
