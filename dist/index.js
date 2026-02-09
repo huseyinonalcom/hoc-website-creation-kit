@@ -9,14 +9,9 @@ function cn(...classes) {
 
 // src/components/AccordionBlock.tsx
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";
-function AccordionBlock({
-  sections = [],
-  isEditing = false
-}) {
+function AccordionBlock({ sections = [], isEditing = false }) {
   const sanitizedSections = useMemo(() => {
-    return sections.filter(
-      (section) => Boolean(section)
-    );
+    return sections.filter((section) => Boolean(section));
   }, [sections]);
   const [openIndex, setOpenIndex] = useState(null);
   const handleToggle = (index) => {
@@ -28,69 +23,26 @@ function AccordionBlock({
   return /* @__PURE__ */ jsx("div", { className: "w-full overflow-hidden", children: sanitizedSections.map((section, index) => {
     const isOpen = openIndex === index || isEditing;
     const title = section.title?.trim() || `B\xF6l\xFCm ${index + 1}`;
-    return /* @__PURE__ */ jsxs(
-      "div",
-      {
-        className: cn("border-b-2 border-gray-500 *:last:border-b-0"),
-        children: [
-          /* @__PURE__ */ jsxs(
-            "button",
-            {
-              "aria-expanded": isOpen,
-              className: "flex w-full items-center justify-between gap-4 px-5 py-4 text-left",
-              type: "button",
-              onClick: () => handleToggle(index),
-              children: [
-                /* @__PURE__ */ jsx("span", { className: "text-base font-bold", children: title }),
-                /* @__PURE__ */ jsx(
-                  ArrowIcon,
-                  {
-                    className: cn(
-                      "h-5 w-5 transition-transform",
-                      isOpen && "rotate-180"
-                    )
-                  }
-                )
-              ]
-            }
-          ),
-          /* @__PURE__ */ jsx(
-            "div",
-            {
-              className: cn(
-                "grid overflow-hidden px-5 transition-[grid-template-rows] duration-300",
-                isOpen ? "grid-rows-[1fr] pb-5" : "grid-rows-[0fr]"
-              ),
-              children: /* @__PURE__ */ jsx("div", { className: "min-h-0", children: section.children ? section.children : /* @__PURE__ */ jsx("p", { className: "text-sm" }) })
-            }
-          )
-        ]
-      },
-      `accordion-section-${index}-${title}`
-    );
+    return /* @__PURE__ */ jsxs("div", { className: cn("border-b-2 border-gray-500 *:last:border-b-0"), children: [
+      /* @__PURE__ */ jsxs(
+        "button",
+        {
+          "aria-expanded": isOpen,
+          className: "flex w-full items-center justify-between gap-4 px-5 py-4 text-left",
+          type: "button",
+          onClick: () => handleToggle(index),
+          children: [
+            /* @__PURE__ */ jsx("span", { className: "text-base font-bold", children: title }),
+            /* @__PURE__ */ jsx(ArrowIcon, { className: cn("h-5 w-5 transition-transform", isOpen && "rotate-180") })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsx("div", { className: cn("grid overflow-hidden px-5 transition-[grid-template-rows] duration-300", isOpen ? "grid-rows-[1fr] pb-5" : "grid-rows-[0fr]"), children: /* @__PURE__ */ jsx("div", { className: "min-h-0", children: section.children ? section.children : /* @__PURE__ */ jsx("p", { className: "text-sm" }) }) })
+    ] }, `accordion-section-${index}-${title}`);
   }) });
 }
 function ArrowIcon({ className }) {
-  return /* @__PURE__ */ jsx(
-    "svg",
-    {
-      "aria-hidden": "true",
-      className,
-      fill: "none",
-      viewBox: "0 0 24 24",
-      xmlns: "http://www.w3.org/2000/svg",
-      children: /* @__PURE__ */ jsx(
-        "path",
-        {
-          d: "M6 9l6 6 6-6",
-          stroke: "currentColor",
-          strokeLinecap: "round",
-          strokeLinejoin: "round",
-          strokeWidth: "1.5"
-        }
-      )
-    }
-  );
+  return /* @__PURE__ */ jsx("svg", { "aria-hidden": "true", className, fill: "none", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ jsx("path", { d: "M6 9l6 6 6-6", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5" }) });
 }
 
 // src/components/Button.tsx
@@ -104,31 +56,11 @@ var variantClasses = {
   danger: "bg-red-600 text-white hover:bg-red-500 focus-visible:outline-red-600",
   subtle: "bg-white text-gray-900 shadow-xs inset-ring inset-ring-gray-300 hover:bg-gray-50 focus-visible:outline-gray-200 dark:bg-white/10 dark:text-white dark:inset-ring-white/10 dark:hover:bg-white/15"
 };
-function Button({
-  variant = "primary",
-  className,
-  ...props
-}) {
-  return /* @__PURE__ */ jsx2(
-    "button",
-    {
-      className: cn(baseClasses, variantClasses[variant], className),
-      ...props
-    }
-  );
+function Button({ variant = "primary", className, ...props }) {
+  return /* @__PURE__ */ jsx2("button", { className: cn(baseClasses, variantClasses[variant], className), ...props });
 }
-function ButtonLink({
-  variant = "outline",
-  className,
-  ...props
-}) {
-  return /* @__PURE__ */ jsx2(
-    "a",
-    {
-      className: cn(baseClasses, variantClasses[variant], className),
-      ...props
-    }
-  );
+function ButtonLink({ variant = "outline", className, ...props }) {
+  return /* @__PURE__ */ jsx2("a", { className: cn(baseClasses, variantClasses[variant], className), ...props });
 }
 
 // src/components/Gallery.tsx
@@ -140,83 +72,60 @@ import Link from "next/link";
 // src/components/Lightbox.tsx
 import Image from "next/image";
 import { jsx as jsx3, jsxs as jsxs2 } from "react/jsx-runtime";
-function Lightbox({
-  items,
-  activeIndex,
-  onClose,
-  onNext,
-  onPrevious
-}) {
+function Lightbox({ items, activeIndex, onClose, onNext, onPrevious }) {
   if (!items.length || activeIndex == null || activeIndex < 0 || activeIndex >= items.length) {
     return null;
   }
   const currentItem = items[activeIndex];
   const altText = currentItem.alt || currentItem.title || "Galeri g\xF6rseli";
-  return /* @__PURE__ */ jsx3(
-    "div",
-    {
-      "aria-modal": "true",
-      className: "fixed inset-0 z-50 flex w-full bg-black/80 p-6",
-      role: "dialog",
-      children: /* @__PURE__ */ jsx3("div", { className: "pointer-events-none flex w-full items-center justify-center", children: /* @__PURE__ */ jsxs2("div", { className: "pointer-events-auto relative min-h-[80vh] w-full max-w-5xl", children: [
-        /* @__PURE__ */ jsx3(
-          Image,
-          {
-            fill: true,
-            alt: altText,
-            className: "object-contain",
-            sizes: "80vw",
-            src: currentItem.imageUrl
-          }
-        ),
-        (currentItem.title || currentItem.subtitle) && /* @__PURE__ */ jsxs2("div", { className: "absolute bottom-6 left-6 max-w-xl rounded-lg bg-black/60 px-4 py-3 text-white shadow-lg backdrop-blur", children: [
-          currentItem.title ? /* @__PURE__ */ jsx3("p", { className: "text-base font-semibold", children: currentItem.title }) : null,
-          currentItem.subtitle ? /* @__PURE__ */ jsx3("p", { className: "text-sm text-white/80", children: currentItem.subtitle }) : null
-        ] }),
-        /* @__PURE__ */ jsxs2("div", { className: "absolute -bottom-16 flex w-full justify-center gap-4", children: [
-          /* @__PURE__ */ jsx3(
-            "button",
-            {
-              "aria-label": "Kapat",
-              className: "rounded-full bg-white/10 px-6 py-3 text-white shadow-lg backdrop-blur transition hover:bg-white/20",
-              type: "button",
-              onClick: (event) => {
-                event.stopPropagation();
-                onClose();
-              },
-              children: "Kapat"
-            }
-          ),
-          /* @__PURE__ */ jsx3(
-            "button",
-            {
-              "aria-label": "\xD6nceki g\xF6rsel",
-              className: "rounded-full bg-white/10 px-6 py-3 text-white shadow-lg backdrop-blur transition hover:bg-white/20",
-              type: "button",
-              onClick: (event) => {
-                event.stopPropagation();
-                onPrevious();
-              },
-              children: "\xD6nceki"
-            }
-          ),
-          /* @__PURE__ */ jsx3(
-            "button",
-            {
-              "aria-label": "Sonraki g\xF6rsel",
-              className: "rounded-full bg-white/10 px-6 py-3 text-white shadow-lg backdrop-blur transition hover:bg-white/20",
-              type: "button",
-              onClick: (event) => {
-                event.stopPropagation();
-                onNext();
-              },
-              children: "Sonraki"
-            }
-          )
-        ] })
-      ] }) })
-    }
-  );
+  return /* @__PURE__ */ jsx3("div", { "aria-modal": "true", className: "fixed inset-0 z-50 flex w-full bg-black/80 p-6", role: "dialog", children: /* @__PURE__ */ jsx3("div", { className: "pointer-events-none flex w-full items-center justify-center", children: /* @__PURE__ */ jsxs2("div", { className: "pointer-events-auto relative min-h-[80vh] w-full max-w-5xl", children: [
+    /* @__PURE__ */ jsx3(Image, { fill: true, alt: altText, className: "object-contain", sizes: "80vw", src: currentItem.imageUrl }),
+    (currentItem.title || currentItem.subtitle) && /* @__PURE__ */ jsxs2("div", { className: "absolute bottom-6 left-6 max-w-xl rounded-lg bg-black/60 px-4 py-3 text-white shadow-lg backdrop-blur", children: [
+      currentItem.title ? /* @__PURE__ */ jsx3("p", { className: "text-base font-semibold", children: currentItem.title }) : null,
+      currentItem.subtitle ? /* @__PURE__ */ jsx3("p", { className: "text-sm text-white/80", children: currentItem.subtitle }) : null
+    ] }),
+    /* @__PURE__ */ jsxs2("div", { className: "absolute -bottom-16 flex w-full justify-center gap-4", children: [
+      /* @__PURE__ */ jsx3(
+        "button",
+        {
+          "aria-label": "Kapat",
+          className: "rounded-full bg-white/10 px-6 py-3 text-white shadow-lg backdrop-blur transition hover:bg-white/20",
+          type: "button",
+          onClick: (event) => {
+            event.stopPropagation();
+            onClose();
+          },
+          children: "Kapat"
+        }
+      ),
+      /* @__PURE__ */ jsx3(
+        "button",
+        {
+          "aria-label": "\xD6nceki g\xF6rsel",
+          className: "rounded-full bg-white/10 px-6 py-3 text-white shadow-lg backdrop-blur transition hover:bg-white/20",
+          type: "button",
+          onClick: (event) => {
+            event.stopPropagation();
+            onPrevious();
+          },
+          children: "\xD6nceki"
+        }
+      ),
+      /* @__PURE__ */ jsx3(
+        "button",
+        {
+          "aria-label": "Sonraki g\xF6rsel",
+          className: "rounded-full bg-white/10 px-6 py-3 text-white shadow-lg backdrop-blur transition hover:bg-white/20",
+          type: "button",
+          onClick: (event) => {
+            event.stopPropagation();
+            onNext();
+          },
+          children: "Sonraki"
+        }
+      )
+    ] })
+  ] }) }) });
 }
 
 // src/components/Gallery.tsx
@@ -272,91 +181,62 @@ function Gallery({ items, gridSize, imageMode }) {
       setActiveIndex(null);
       return;
     }
-    setActiveIndex(
-      (prev) => prev == null ? 0 : (prev + 1) % normalizedItems.length
-    );
+    setActiveIndex((prev) => prev == null ? 0 : (prev + 1) % normalizedItems.length);
   };
   const showPreviousImage = () => {
     if (!normalizedItems.length) {
       setActiveIndex(null);
       return;
     }
-    setActiveIndex(
-      (prev) => prev == null ? normalizedItems.length - 1 : (prev - 1 + normalizedItems.length) % normalizedItems.length
-    );
+    setActiveIndex((prev) => prev == null ? normalizedItems.length - 1 : (prev - 1 + normalizedItems.length) % normalizedItems.length);
   };
   return /* @__PURE__ */ jsxs3("div", { children: [
-    /* @__PURE__ */ jsx4(
-      Lightbox,
-      {
-        activeIndex,
-        items: lightboxItems,
-        onClose: () => setActiveIndex(null),
-        onNext: showNextImage,
-        onPrevious: showPreviousImage
-      }
-    ),
-    /* @__PURE__ */ jsx4(
-      "div",
-      {
-        className: cn(
-          "grid gap-10",
-          gridClassNamesBySize[gridSize ?? 3] ?? defaultGridClassName
+    /* @__PURE__ */ jsx4(Lightbox, { activeIndex, items: lightboxItems, onClose: () => setActiveIndex(null), onNext: showNextImage, onPrevious: showPreviousImage }),
+    /* @__PURE__ */ jsx4("div", { className: cn("grid gap-10", gridClassNamesBySize[gridSize ?? 3] ?? defaultGridClassName), children: normalizedItems.map((item, index) => {
+      const spanClass = sizeClassNames[item.size];
+      const hasHref = Boolean(item.href);
+      const resolvedImageMode = item.imageMode ?? galleryImageMode;
+      const objectFitClass = resolvedImageMode === "contain" ? "object-contain" : "object-cover";
+      return /* @__PURE__ */ jsx4("div", { className: cn("group flex flex-col gap-2", spanClass), children: /* @__PURE__ */ jsxs3("div", { className: "relative h-full min-h-64 w-full", children: [
+        /* @__PURE__ */ jsx4(
+          Image2,
+          {
+            fill: true,
+            alt: item.title || "Galeri g\xF6rseli",
+            className: cn("mb-2 h-full w-full", objectFitClass),
+            priority: index < 4,
+            sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw",
+            src: item.imageUrl
+          }
         ),
-        children: normalizedItems.map((item, index) => {
-          const spanClass = sizeClassNames[item.size];
-          const hasHref = Boolean(item.href);
-          const resolvedImageMode = item.imageMode ?? galleryImageMode;
-          const objectFitClass = resolvedImageMode === "contain" ? "object-contain" : "object-cover";
-          return /* @__PURE__ */ jsx4(
-            "div",
+        /* @__PURE__ */ jsx4("div", { className: "pointer-events-none absolute inset-0 z-10 flex items-center justify-center opacity-0 transition group-hover:opacity-100", children: /* @__PURE__ */ jsxs3("div", { className: "flex items-center justify-center gap-3", children: [
+          /* @__PURE__ */ jsx4(
+            "button",
             {
-              className: cn("group flex flex-col gap-2", spanClass),
-              children: /* @__PURE__ */ jsxs3("div", { className: "relative h-full min-h-64 w-full", children: [
-                /* @__PURE__ */ jsx4(
-                  Image2,
-                  {
-                    fill: true,
-                    alt: item.title || "Galeri g\xF6rseli",
-                    className: cn("mb-2 h-full w-full", objectFitClass),
-                    priority: index < 4,
-                    sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw",
-                    src: item.imageUrl
-                  }
-                ),
-                /* @__PURE__ */ jsx4("div", { className: "pointer-events-none absolute inset-0 z-10 flex items-center justify-center opacity-0 transition group-hover:opacity-100", children: /* @__PURE__ */ jsxs3("div", { className: "flex items-center justify-center gap-3", children: [
-                  /* @__PURE__ */ jsx4(
-                    "button",
-                    {
-                      "aria-label": "G\xF6rseli b\xFCy\xFCt",
-                      className: "pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full bg-black/70 text-white shadow-lg transition hover:bg-black/80",
-                      type: "button",
-                      onClick: (event) => {
-                        event.preventDefault();
-                        event.stopPropagation();
-                        setActiveIndex(index);
-                      },
-                      children: /* @__PURE__ */ jsx4(MagnifyingGlassIcon, { className: "h-5 w-5" })
-                    }
-                  ),
-                  hasHref ? /* @__PURE__ */ jsx4(
-                    Link,
-                    {
-                      "aria-label": "Ba\u011Flant\u0131y\u0131 a\xE7",
-                      className: "pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full bg-white/80 text-slate-900 shadow-lg transition hover:bg-white",
-                      href: item.href,
-                      onClick: (event) => event.stopPropagation(),
-                      children: /* @__PURE__ */ jsx4(LinkIcon, { className: "h-4 w-4" })
-                    }
-                  ) : null
-                ] }) })
-              ] })
-            },
-            `${item.imageUrl}-${index}`
-          );
-        })
-      }
-    )
+              "aria-label": "G\xF6rseli b\xFCy\xFCt",
+              className: "pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full bg-black/70 text-white shadow-lg transition hover:bg-black/80",
+              type: "button",
+              onClick: (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                setActiveIndex(index);
+              },
+              children: /* @__PURE__ */ jsx4(MagnifyingGlassIcon, { className: "h-5 w-5" })
+            }
+          ),
+          hasHref ? /* @__PURE__ */ jsx4(
+            Link,
+            {
+              "aria-label": "Ba\u011Flant\u0131y\u0131 a\xE7",
+              className: "pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full bg-white/80 text-slate-900 shadow-lg transition hover:bg-white",
+              href: item.href,
+              onClick: (event) => event.stopPropagation(),
+              children: /* @__PURE__ */ jsx4(LinkIcon, { className: "h-4 w-4" })
+            }
+          ) : null
+        ] }) })
+      ] }) }, `${item.imageUrl}-${index}`);
+    }) })
   ] });
 }
 
@@ -447,49 +327,17 @@ function HeadingBlock({
   const hasText = rawText.trim().length > 0;
   const resolvedLevel = headingLevels.includes(level) ? level : "h2";
   const HeadingTag = resolvedLevel;
-  const resolvedFontSize = normalizeNumber(
-    fontSize,
-    DEFAULT_FONT_SIZE,
-    MIN_FONT_SIZE
-  );
-  const resolvedFontWeight = normalizeNumber(
-    fontWeight,
-    DEFAULT_FONT_WEIGHT,
-    100
-  );
-  const resolvedTextColorLight = resolveColor(
-    textColorLight ?? textColor,
-    HEADING_TEXT_COLOR_LIGHT
-  );
-  const resolvedTextColorDark = resolveColor(
-    textColorDark ?? textColor,
-    HEADING_TEXT_COLOR_DARK
-  );
+  const resolvedFontSize = normalizeNumber(fontSize, DEFAULT_FONT_SIZE, MIN_FONT_SIZE);
+  const resolvedFontWeight = normalizeNumber(fontWeight, DEFAULT_FONT_WEIGHT, 100);
+  const resolvedTextColorLight = resolveColor(textColorLight ?? textColor, HEADING_TEXT_COLOR_LIGHT);
+  const resolvedTextColorDark = resolveColor(textColorDark ?? textColor, HEADING_TEXT_COLOR_DARK);
   const baseDecorationColorLight = decorationColorLight ?? decorationColor ?? resolvedTextColorLight;
   const baseDecorationColorDark = decorationColorDark ?? decorationColor ?? resolvedTextColorDark;
-  const resolvedDecorationColorLight = resolveColor(
-    baseDecorationColorLight,
-    HEADING_DECORATION_COLOR_LIGHT
-  );
-  const resolvedDecorationColorDark = resolveColor(
-    baseDecorationColorDark,
-    HEADING_DECORATION_COLOR_DARK
-  );
-  const resolvedDecorationWidth = normalizeNumber(
-    decorationWidth,
-    DEFAULT_DECORATION_WIDTH,
-    MIN_DECORATION_WIDTH
-  );
-  const resolvedDecorationThickness = normalizeNumber(
-    decorationThickness,
-    DEFAULT_DECORATION_THICKNESS,
-    MIN_DECORATION_THICKNESS
-  );
-  const resolvedDecorationSpacing = normalizeNumber(
-    decorationSpacing,
-    DEFAULT_DECORATION_SPACING,
-    0
-  );
+  const resolvedDecorationColorLight = resolveColor(baseDecorationColorLight, HEADING_DECORATION_COLOR_LIGHT);
+  const resolvedDecorationColorDark = resolveColor(baseDecorationColorDark, HEADING_DECORATION_COLOR_DARK);
+  const resolvedDecorationWidth = normalizeNumber(decorationWidth, DEFAULT_DECORATION_WIDTH, MIN_DECORATION_WIDTH);
+  const resolvedDecorationThickness = normalizeNumber(decorationThickness, DEFAULT_DECORATION_THICKNESS, MIN_DECORATION_THICKNESS);
+  const resolvedDecorationSpacing = normalizeNumber(decorationSpacing, DEFAULT_DECORATION_SPACING, 0);
   const containerAlign = headingAlignmentMap[textAlign] ?? "flex-start";
   const containerStyle = {
     alignItems: containerAlign,
@@ -503,16 +351,8 @@ function HeadingBlock({
   }
   const resolvedMargins = {
     marginTop: normalizeNumber(marginTop, headingDefaultValues.marginTop, 0),
-    marginRight: normalizeNumber(
-      marginRight,
-      headingDefaultValues.marginRight,
-      0
-    ),
-    marginBottom: normalizeNumber(
-      marginBottom,
-      headingDefaultValues.marginBottom,
-      0
-    ),
+    marginRight: normalizeNumber(marginRight, headingDefaultValues.marginRight, 0),
+    marginBottom: normalizeNumber(marginBottom, headingDefaultValues.marginBottom, 0),
     marginLeft: normalizeNumber(marginLeft, headingDefaultValues.marginLeft, 0)
   };
   const headingStyles = {
@@ -538,22 +378,8 @@ function HeadingBlock({
   const headingColorClass = "text-[var(--heading-text-color-light)] dark:text-[var(--heading-text-color-dark)]";
   const decorationColorClass = "bg-[var(--heading-decoration-color-light)] dark:bg-[var(--heading-decoration-color-dark)]";
   return /* @__PURE__ */ jsxs4("div", { className: "flex flex-col", style: containerStyle, children: [
-    hasText ? /* @__PURE__ */ jsx5(
-      HeadingTag,
-      {
-        className: [headingColorClass, headingDarkBorderClass].filter(Boolean).join(" "),
-        style: headingStyles,
-        children: rawText
-      }
-    ) : null,
-    decorationEnabled && underlineMode === "separate" ? /* @__PURE__ */ jsx5(
-      "span",
-      {
-        "aria-hidden": "true",
-        className: decorationColorClass,
-        style: decorationStyles
-      }
-    ) : null
+    hasText ? /* @__PURE__ */ jsx5(HeadingTag, { className: [headingColorClass, headingDarkBorderClass].filter(Boolean).join(" "), style: headingStyles, children: rawText }) : null,
+    decorationEnabled && underlineMode === "separate" ? /* @__PURE__ */ jsx5("span", { "aria-hidden": "true", className: decorationColorClass, style: decorationStyles }) : null
   ] });
 }
 var HeadingBlock_default = HeadingBlock;
@@ -598,11 +424,7 @@ function LinkBarBlock({ links = [] }) {
 // src/components/SingleAccordionBlock.tsx
 import { useEffect, useState as useState3 } from "react";
 import { jsx as jsx7, jsxs as jsxs5 } from "react/jsx-runtime";
-function SingleAccordionBlock({
-  title,
-  children,
-  defaultOpen = false
-}) {
+function SingleAccordionBlock({ title, children, defaultOpen = false }) {
   const [isOpen, setIsOpen] = useState3(Boolean(defaultOpen));
   useEffect(() => {
     setIsOpen(Boolean(defaultOpen));
@@ -618,51 +440,15 @@ function SingleAccordionBlock({
         onClick: () => setIsOpen((prev) => !prev),
         children: [
           /* @__PURE__ */ jsx7("span", { className: "text-base font-semibold text-gray-900", children: resolvedTitle }),
-          /* @__PURE__ */ jsx7(
-            ArrowIcon2,
-            {
-              className: cn(
-                "h-5 w-5 text-gray-600 transition-transform",
-                isOpen && "rotate-180"
-              )
-            }
-          )
+          /* @__PURE__ */ jsx7(ArrowIcon2, { className: cn("h-5 w-5 text-gray-600 transition-transform", isOpen && "rotate-180") })
         ]
       }
     ),
-    /* @__PURE__ */ jsx7(
-      "div",
-      {
-        className: cn(
-          "grid overflow-hidden px-5 transition-[grid-template-rows] duration-300",
-          isOpen ? "grid-rows-[1fr] pb-5" : "grid-rows-[0fr]"
-        ),
-        children: /* @__PURE__ */ jsx7("div", { className: "min-h-0", children: children ? children : /* @__PURE__ */ jsx7("p", { className: "text-sm text-gray-500", children: "Bu b\xF6l\xFCm i\xE7in i\xE7erik ekleyin." }) })
-      }
-    )
+    /* @__PURE__ */ jsx7("div", { className: cn("grid overflow-hidden px-5 transition-[grid-template-rows] duration-300", isOpen ? "grid-rows-[1fr] pb-5" : "grid-rows-[0fr]"), children: /* @__PURE__ */ jsx7("div", { className: "min-h-0", children: children ? children : /* @__PURE__ */ jsx7("p", { className: "text-sm text-gray-500", children: "Bu b\xF6l\xFCm i\xE7in i\xE7erik ekleyin." }) }) })
   ] }) });
 }
 function ArrowIcon2({ className }) {
-  return /* @__PURE__ */ jsx7(
-    "svg",
-    {
-      "aria-hidden": "true",
-      className,
-      fill: "none",
-      viewBox: "0 0 24 24",
-      xmlns: "http://www.w3.org/2000/svg",
-      children: /* @__PURE__ */ jsx7(
-        "path",
-        {
-          d: "M6 9l6 6 6-6",
-          stroke: "currentColor",
-          strokeLinecap: "round",
-          strokeLinejoin: "round",
-          strokeWidth: "1.5"
-        }
-      )
-    }
-  );
+  return /* @__PURE__ */ jsx7("svg", { "aria-hidden": "true", className, fill: "none", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ jsx7("path", { d: "M6 9l6 6 6-6", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5" }) });
 }
 
 // src/components/Slider.tsx
@@ -674,23 +460,12 @@ import DOMPurify from "isomorphic-dompurify";
 import { jsx as jsx8 } from "react/jsx-runtime";
 function RichTextRenderer({ html }) {
   const cleanHtml = DOMPurify.sanitize(html);
-  return /* @__PURE__ */ jsx8("div", { className: "ql-snow ql-container w-full border-none!", children: /* @__PURE__ */ jsx8(
-    "div",
-    {
-      dangerouslySetInnerHTML: { __html: cleanHtml },
-      className: "ql-editor w-full"
-    }
-  ) });
+  return /* @__PURE__ */ jsx8("div", { className: "ql-snow ql-container w-full border-none!", children: /* @__PURE__ */ jsx8("div", { dangerouslySetInnerHTML: { __html: cleanHtml }, className: "ql-editor w-full" }) });
 }
 
 // src/components/Slider.tsx
 import { Fragment as Fragment2, jsx as jsx9, jsxs as jsxs6 } from "react/jsx-runtime";
-function Slider({
-  slides = [],
-  autoPlay = false,
-  autoPlayInterval = 6e3,
-  imageMode = "cover"
-}) {
+function Slider({ slides = [], autoPlay = false, autoPlayInterval = 6e3, imageMode = "cover" }) {
   const normalizedSlides = slides.map((slide) => ({
     imageUrl: slide.imageUrl?.trim() ?? "",
     text: slide.text
@@ -715,76 +490,61 @@ function Slider({
   if (!normalizedSlides.length) {
     return /* @__PURE__ */ jsx9(Fragment2, {});
   }
-  return /* @__PURE__ */ jsx9(
-    "section",
-    {
-      className: "w-full text-slate-900",
-      onMouseEnter: () => setIsHovered(true),
-      onMouseLeave: () => setIsHovered(false),
-      children: /* @__PURE__ */ jsxs6("div", { className: "mx-auto flex w-full max-w-7xl flex-col-reverse items-center lg:flex-row", children: [
-        /* @__PURE__ */ jsxs6("div", { className: "z-10 -mt-16 w-full px-8 lg:m-0 lg:-mr-48 lg:h-100 lg:w-112.5 lg:px-0", children: [
-          /* @__PURE__ */ jsx9("div", { className: "h-3 bg-[#f5c302]" }),
-          /* @__PURE__ */ jsxs6("div", { className: "bg-white px-8 py-9", children: [
-            currentSlide.text ? /* @__PURE__ */ jsx9("div", { className: "richtext text-slate-900 **:text-current", children: /* @__PURE__ */ jsx9(RichTextRenderer, { html: currentSlide.text }) }) : null,
-            /* @__PURE__ */ jsxs6("div", { className: "mt-10 flex flex-row items-end justify-end gap-4 text-slate-500", children: [
-              /* @__PURE__ */ jsxs6("span", { className: "mb-0.5 text-base font-semibold", children: [
-                activeIndex + 1,
-                " / ",
-                totalSlides
-              ] }),
-              /* @__PURE__ */ jsx9(
-                "button",
-                {
-                  "aria-label": "\xD6nceki g\xF6rsel",
-                  className: "text-4xl transition hover:border-slate-900 hover:text-slate-900",
-                  type: "button",
-                  onClick: () => goToSlide(activeIndex - 1),
-                  children: "\u2039"
-                }
-              ),
-              /* @__PURE__ */ jsx9(
-                "button",
-                {
-                  "aria-label": "Sonraki g\xF6rsel",
-                  className: "text-4xl transition hover:border-slate-900 hover:text-slate-900",
-                  type: "button",
-                  onClick: () => goToSlide(activeIndex + 1),
-                  children: "\u203A"
-                }
-              )
-            ] })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsx9("div", { className: "w-full overflow-hidden", children: /* @__PURE__ */ jsx9(
-          "ul",
-          {
-            "aria-live": "polite",
-            className: "flex h-130 w-full transition-transform duration-700 ease-in-out",
-            role: "list",
-            style: { transform: `translateX(-${activeIndex * 100}%)` },
-            children: normalizedSlides.map((slide) => /* @__PURE__ */ jsx9(
-              "li",
-              {
-                className: "relative h-full w-full shrink-0",
-                children: /* @__PURE__ */ jsx9(
-                  Image3,
-                  {
-                    fill: true,
-                    alt: slide.text ?? slide.imageUrl,
-                    className: objectFitClass,
-                    priority: normalizedSlides.indexOf(slide) == 0,
-                    sizes: "(max-width: 1200px) 100vw, (max-width: 1280px) 850px, 950px",
-                    src: slide.imageUrl
-                  }
-                )
-              },
-              slide.imageUrl
-            ))
-          }
-        ) })
+  return /* @__PURE__ */ jsx9("section", { className: "w-full text-slate-900", onMouseEnter: () => setIsHovered(true), onMouseLeave: () => setIsHovered(false), children: /* @__PURE__ */ jsxs6("div", { className: "mx-auto flex w-full max-w-7xl flex-col-reverse items-center lg:flex-row", children: [
+    /* @__PURE__ */ jsxs6("div", { className: "z-10 -mt-16 w-full px-8 lg:m-0 lg:-mr-48 lg:h-100 lg:w-112.5 lg:px-0", children: [
+      /* @__PURE__ */ jsx9("div", { className: "h-3 bg-[#f5c302]" }),
+      /* @__PURE__ */ jsxs6("div", { className: "bg-white px-8 py-9", children: [
+        currentSlide.text ? /* @__PURE__ */ jsx9("div", { className: "richtext text-slate-900 **:text-current", children: /* @__PURE__ */ jsx9(RichTextRenderer, { html: currentSlide.text }) }) : null,
+        /* @__PURE__ */ jsxs6("div", { className: "mt-10 flex flex-row items-end justify-end gap-4 text-slate-500", children: [
+          /* @__PURE__ */ jsxs6("span", { className: "mb-0.5 text-base font-semibold", children: [
+            activeIndex + 1,
+            " / ",
+            totalSlides
+          ] }),
+          /* @__PURE__ */ jsx9(
+            "button",
+            {
+              "aria-label": "\xD6nceki g\xF6rsel",
+              className: "text-4xl transition hover:border-slate-900 hover:text-slate-900",
+              type: "button",
+              onClick: () => goToSlide(activeIndex - 1),
+              children: "\u2039"
+            }
+          ),
+          /* @__PURE__ */ jsx9(
+            "button",
+            {
+              "aria-label": "Sonraki g\xF6rsel",
+              className: "text-4xl transition hover:border-slate-900 hover:text-slate-900",
+              type: "button",
+              onClick: () => goToSlide(activeIndex + 1),
+              children: "\u203A"
+            }
+          )
+        ] })
       ] })
-    }
-  );
+    ] }),
+    /* @__PURE__ */ jsx9("div", { className: "w-full overflow-hidden", children: /* @__PURE__ */ jsx9(
+      "ul",
+      {
+        "aria-live": "polite",
+        className: "flex h-130 w-full transition-transform duration-700 ease-in-out",
+        role: "list",
+        style: { transform: `translateX(-${activeIndex * 100}%)` },
+        children: normalizedSlides.map((slide) => /* @__PURE__ */ jsx9("li", { className: "relative h-full w-full shrink-0", children: /* @__PURE__ */ jsx9(
+          Image3,
+          {
+            fill: true,
+            alt: slide.text ?? slide.imageUrl,
+            className: objectFitClass,
+            priority: normalizedSlides.indexOf(slide) == 0,
+            sizes: "(max-width: 1200px) 100vw, (max-width: 1280px) 850px, 950px",
+            src: slide.imageUrl
+          }
+        ) }, slide.imageUrl))
+      }
+    ) })
+  ] }) });
 }
 
 // src/components/SliderShowcase.tsx
@@ -814,9 +574,7 @@ function SliderShowcase({
     text: slide.text
   })).filter((slide) => Boolean(slide.imageUrl));
   const desktopStageHeight = normalizeHeight(desktopHeight, 50);
-  const sideCardHeight = Number(
-    (desktopStageHeight * SIDE_CARD_HEIGHT_RATIO).toFixed(2)
-  );
+  const sideCardHeight = Number((desktopStageHeight * SIDE_CARD_HEIGHT_RATIO).toFixed(2));
   const mobileStageHeight = normalizeHeight(mobileHeight, 45);
   const [activeIndex, setActiveIndex] = useState5(0);
   const [isHovered, setIsHovered] = useState5(false);
@@ -882,153 +640,87 @@ function SliderShowcase({
   }
   const prevIndex = (activeIndex - 1 + totalSlides) % totalSlides;
   const nextIndex = (activeIndex + 1) % totalSlides;
-  return /* @__PURE__ */ jsx10(
-    "section",
-    {
-      className: "mb-16 w-full text-slate-900",
-      onMouseEnter: () => setIsHovered(true),
-      onMouseLeave: () => setIsHovered(false),
-      children: /* @__PURE__ */ jsxs7("div", { className: "mx-auto w-full max-w-6xl space-y-8 px-4", children: [
-        /* @__PURE__ */ jsxs7("div", { className: "hidden w-full sm:block", children: [
-          /* @__PURE__ */ jsx10(
-            "div",
-            {
-              className: "relative w-full overflow-hidden",
-              style: { height: `${desktopStageHeight}rem` },
-              children: normalizedSlides.map((slide, index) => {
-                const isCenter = index === activeIndex;
-                const isPrev = totalSlides > 1 && index === prevIndex;
-                const isNext = totalSlides > 1 && index === nextIndex;
-                const isSide = isPrev || isNext;
-                const isHidden = !isCenter && !isSide;
-                const positionClasses = isCenter ? "z-30" : isSide ? "z-20" : "z-10";
-                const transformValue = (() => {
-                  if (isCenter) {
-                    return "translate(-50%, -50%) scale(1)";
-                  }
-                  if (isPrev) {
-                    return "translate(-95%, -50%) scale(0.9)";
-                  }
-                  if (isNext) {
-                    return "translate(-5%, -50%) scale(0.9)";
-                  }
-                  return "translate(-50%, -50%) scale(0.85)";
-                })();
-                const opacityValue = isCenter ? 1 : isSide ? 0.85 : 0;
-                const widthValue = isCenter ? `${CENTER_CARD_WIDTH_PERCENT}%` : `${SIDE_CARD_WIDTH_PERCENT}%`;
-                const heightValue = isCenter ? `${desktopStageHeight}rem` : `${sideCardHeight}rem`;
-                return /* @__PURE__ */ jsx10(
-                  "button",
-                  {
-                    "aria-current": isCenter,
-                    "aria-hidden": isHidden,
-                    "aria-label": slide.text ? `G\xF6rsel ${index + 1}` : slide.imageUrl,
-                    className: `group absolute overflow-hidden bg-slate-100/60 transition-all duration-500 ease-out focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-slate-900 ${positionClasses}`,
-                    disabled: isHidden,
-                    style: {
-                      left: "50%",
-                      top: "50%",
-                      transform: transformValue,
-                      opacity: opacityValue,
-                      width: widthValue,
-                      height: heightValue,
-                      pointerEvents: isHidden ? "none" : void 0
-                    },
-                    type: "button",
-                    onClick: () => {
-                      if (isCenter) {
-                        openLightbox(index);
-                      } else {
-                        goToSlide(index);
-                      }
-                    },
-                    children: /* @__PURE__ */ jsx10("div", { className: "relative h-full w-full", children: /* @__PURE__ */ jsx10(
-                      Image4,
-                      {
-                        fill: true,
-                        alt: slide.text ?? slide.imageUrl,
-                        className: `${objectFitClass} transition duration-500 group-hover:scale-105`,
-                        priority: isCenter,
-                        sizes: "(max-width: 1280px) 60vw, 900px",
-                        src: slide.imageUrl
-                      }
-                    ) })
-                  },
-                  `showcase-slide-${index}-${slide.imageUrl}`
-                );
-              })
-            }
-          ),
-          currentSlide?.text ? /* @__PURE__ */ jsx10("div", { className: "flex w-full justify-center", children: /* @__PURE__ */ jsx10(
-            "div",
-            {
-              className: "bg-black px-6 py-4 text-sm text-white shadow-xl",
-              style: { width: `${CENTER_CARD_WIDTH_PERCENT}%` },
-              children: /* @__PURE__ */ jsx10("div", { className: "richtext text-current **:text-current", children: /* @__PURE__ */ jsx10(RichTextRenderer, { html: currentSlide.text }) })
-            }
-          ) }) : null
-        ] }),
-        /* @__PURE__ */ jsxs7("div", { className: "sm:hidden", children: [
-          /* @__PURE__ */ jsx10(
-            "div",
-            {
-              className: "relative w-full overflow-hidden",
-              style: { height: `${mobileStageHeight}rem` },
-              children: /* @__PURE__ */ jsx10(
-                Image4,
-                {
-                  fill: true,
-                  priority: true,
-                  alt: currentSlide.text ?? currentSlide.imageUrl,
-                  className: `${objectFitClass}`,
-                  sizes: "90vw",
-                  src: currentSlide.imageUrl
-                }
-              )
-            }
-          ),
-          currentSlide.text ? /* @__PURE__ */ jsx10("div", { className: "w-full", children: /* @__PURE__ */ jsx10("div", { className: "bg-black px-4 py-3 text-sm text-white shadow-xl", children: /* @__PURE__ */ jsx10("div", { className: "richtext text-current **:text-current", children: /* @__PURE__ */ jsx10(RichTextRenderer, { html: currentSlide.text }) }) }) }) : null
-        ] }),
-        /* @__PURE__ */ jsxs7("div", { className: "flex flex-row items-center justify-center gap-4 text-slate-500", children: [
-          /* @__PURE__ */ jsx10(
-            "button",
-            {
-              "aria-label": "\xD6nceki g\xF6rsel",
-              className: "text-3xl transition hover:text-slate-900",
-              type: "button",
-              onClick: () => goToSlide(activeIndex - 1),
-              children: "\u2039"
-            }
-          ),
-          /* @__PURE__ */ jsxs7("span", { className: "mt-1.5 text-base font-semibold", children: [
-            activeIndex + 1,
-            " / ",
-            totalSlides
-          ] }),
-          /* @__PURE__ */ jsx10(
-            "button",
-            {
-              "aria-label": "Sonraki g\xF6rsel",
-              className: "text-3xl transition hover:text-slate-900",
-              type: "button",
-              onClick: () => goToSlide(activeIndex + 1),
-              children: "\u203A"
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsx10(
-          Lightbox,
-          {
-            activeIndex: lightboxIndex,
-            items: lightboxItems,
-            onClose: closeLightbox,
-            onNext: showLightboxNext,
-            onPrevious: showLightboxPrevious
+  return /* @__PURE__ */ jsx10("section", { className: "mb-16 w-full text-slate-900", onMouseEnter: () => setIsHovered(true), onMouseLeave: () => setIsHovered(false), children: /* @__PURE__ */ jsxs7("div", { className: "mx-auto w-full max-w-6xl space-y-8 px-4", children: [
+    /* @__PURE__ */ jsxs7("div", { className: "hidden w-full sm:block", children: [
+      /* @__PURE__ */ jsx10("div", { className: "relative w-full overflow-hidden", style: { height: `${desktopStageHeight}rem` }, children: normalizedSlides.map((slide, index) => {
+        const isCenter = index === activeIndex;
+        const isPrev = totalSlides > 1 && index === prevIndex;
+        const isNext = totalSlides > 1 && index === nextIndex;
+        const isSide = isPrev || isNext;
+        const isHidden = !isCenter && !isSide;
+        const positionClasses = isCenter ? "z-30" : isSide ? "z-20" : "z-10";
+        const transformValue = (() => {
+          if (isCenter) {
+            return "translate(-50%, -50%) scale(1)";
           }
-        )
-      ] })
-    }
-  );
+          if (isPrev) {
+            return "translate(-95%, -50%) scale(0.9)";
+          }
+          if (isNext) {
+            return "translate(-5%, -50%) scale(0.9)";
+          }
+          return "translate(-50%, -50%) scale(0.85)";
+        })();
+        const opacityValue = isCenter ? 1 : isSide ? 0.85 : 0;
+        const widthValue = isCenter ? `${CENTER_CARD_WIDTH_PERCENT}%` : `${SIDE_CARD_WIDTH_PERCENT}%`;
+        const heightValue = isCenter ? `${desktopStageHeight}rem` : `${sideCardHeight}rem`;
+        return /* @__PURE__ */ jsx10(
+          "button",
+          {
+            "aria-current": isCenter,
+            "aria-hidden": isHidden,
+            "aria-label": slide.text ? `G\xF6rsel ${index + 1}` : slide.imageUrl,
+            className: `group absolute overflow-hidden bg-slate-100/60 transition-all duration-500 ease-out focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-slate-900 ${positionClasses}`,
+            disabled: isHidden,
+            style: {
+              left: "50%",
+              top: "50%",
+              transform: transformValue,
+              opacity: opacityValue,
+              width: widthValue,
+              height: heightValue,
+              pointerEvents: isHidden ? "none" : void 0
+            },
+            type: "button",
+            onClick: () => {
+              if (isCenter) {
+                openLightbox(index);
+              } else {
+                goToSlide(index);
+              }
+            },
+            children: /* @__PURE__ */ jsx10("div", { className: "relative h-full w-full", children: /* @__PURE__ */ jsx10(
+              Image4,
+              {
+                fill: true,
+                alt: slide.text ?? slide.imageUrl,
+                className: `${objectFitClass} transition duration-500 group-hover:scale-105`,
+                priority: isCenter,
+                sizes: "(max-width: 1280px) 60vw, 900px",
+                src: slide.imageUrl
+              }
+            ) })
+          },
+          `showcase-slide-${index}-${slide.imageUrl}`
+        );
+      }) }),
+      currentSlide?.text ? /* @__PURE__ */ jsx10("div", { className: "flex w-full justify-center", children: /* @__PURE__ */ jsx10("div", { className: "bg-black px-6 py-4 text-sm text-white shadow-xl", style: { width: `${CENTER_CARD_WIDTH_PERCENT}%` }, children: /* @__PURE__ */ jsx10("div", { className: "richtext text-current **:text-current", children: /* @__PURE__ */ jsx10(RichTextRenderer, { html: currentSlide.text }) }) }) }) : null
+    ] }),
+    /* @__PURE__ */ jsxs7("div", { className: "sm:hidden", children: [
+      /* @__PURE__ */ jsx10("div", { className: "relative w-full overflow-hidden", style: { height: `${mobileStageHeight}rem` }, children: /* @__PURE__ */ jsx10(Image4, { fill: true, priority: true, alt: currentSlide.text ?? currentSlide.imageUrl, className: `${objectFitClass}`, sizes: "90vw", src: currentSlide.imageUrl }) }),
+      currentSlide.text ? /* @__PURE__ */ jsx10("div", { className: "w-full", children: /* @__PURE__ */ jsx10("div", { className: "bg-black px-4 py-3 text-sm text-white shadow-xl", children: /* @__PURE__ */ jsx10("div", { className: "richtext text-current **:text-current", children: /* @__PURE__ */ jsx10(RichTextRenderer, { html: currentSlide.text }) }) }) }) : null
+    ] }),
+    /* @__PURE__ */ jsxs7("div", { className: "flex flex-row items-center justify-center gap-4 text-slate-500", children: [
+      /* @__PURE__ */ jsx10("button", { "aria-label": "\xD6nceki g\xF6rsel", className: "text-3xl transition hover:text-slate-900", type: "button", onClick: () => goToSlide(activeIndex - 1), children: "\u2039" }),
+      /* @__PURE__ */ jsxs7("span", { className: "mt-1.5 text-base font-semibold", children: [
+        activeIndex + 1,
+        " / ",
+        totalSlides
+      ] }),
+      /* @__PURE__ */ jsx10("button", { "aria-label": "Sonraki g\xF6rsel", className: "text-3xl transition hover:text-slate-900", type: "button", onClick: () => goToSlide(activeIndex + 1), children: "\u203A" })
+    ] }),
+    /* @__PURE__ */ jsx10(Lightbox, { activeIndex: lightboxIndex, items: lightboxItems, onClose: closeLightbox, onNext: showLightboxNext, onPrevious: showLightboxPrevious })
+  ] }) });
 }
 
 // src/components/TextEditor/Editor.tsx
@@ -1036,19 +728,7 @@ import QuillTableBetter from "quill-table-better";
 import { useEffect as useEffect4, useRef } from "react";
 import Quill from "quill";
 import { jsx as jsx11 } from "react/jsx-runtime";
-var SIZE_VALUES = [
-  "8px",
-  "10px",
-  "12px",
-  "14px",
-  "16px",
-  "18px",
-  "20px",
-  "22px",
-  "24px",
-  "32px",
-  "36px"
-];
+var SIZE_VALUES = ["8px", "10px", "12px", "14px", "16px", "18px", "20px", "22px", "24px", "32px", "36px"];
 var buildSizePickerCss = () => {
   const rules = SIZE_VALUES.map((value) => {
     const label = value.replace("px", "");
@@ -1057,9 +737,7 @@ var buildSizePickerCss = () => {
       `.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="${value}"]::before { content: "${label}"; }`
     ].join("\n");
   });
-  rules.push(
-    `.ql-snow .ql-picker.ql-size .ql-picker-label:not([data-value])::before { content: "12"; }`
-  );
+  rules.push(`.ql-snow .ql-picker.ql-size .ql-picker-label:not([data-value])::before { content: "12"; }`);
   return rules.join("\n");
 };
 var TextEditor = ({ initialData, onChange }) => {
@@ -1100,14 +778,7 @@ var TextEditor = ({ initialData, onChange }) => {
           [{ size: Size.whitelist }],
           ["link", "bold", "italic", "underline", "strike"],
           [{ color: [] }, { background: [] }],
-          [
-            { list: "ordered" },
-            { list: "bullet" },
-            { indent: "-1" },
-            { indent: "+1" },
-            { align: [] },
-            "table-better"
-          ],
+          [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }, { align: [] }, "table-better"],
           [{ script: "sub" }, { script: "super" }],
           ["clean"]
         ],
@@ -1158,15 +829,7 @@ function PublicRenderer({ config, data, pagePathSegments }) {
 import { createUsePuck, Puck } from "@puckeditor/core";
 import { Fragment as Fragment3, jsx as jsx13 } from "react/jsx-runtime";
 var usePuck = createUsePuck();
-function PuckEditor({
-  config,
-  data,
-  height,
-  path,
-  viewports,
-  onPublish,
-  renderHeaderActions
-}) {
+function PuckEditor({ config, data, height, path, viewports, onPublish, renderHeaderActions }) {
   return /* @__PURE__ */ jsx13(
     Puck,
     {
@@ -1212,12 +875,7 @@ var buildEmbedSrc = (rawValue) => {
     return `https://www.google.com/maps?q=${encodeURIComponent(value)}&output=embed`;
   }
 };
-var GoogleMapsEmbed = ({
-  url,
-  title,
-  height,
-  allowFullScreen
-}) => {
+var GoogleMapsEmbed = ({ url, title, height, allowFullScreen }) => {
   const embedSrc = buildEmbedSrc(url);
   if (!embedSrc) {
     return /* @__PURE__ */ jsx14(Fragment4, {});
@@ -1272,11 +930,7 @@ var extractVideoId = (rawValue) => {
   const idPattern = /^[a-zA-Z0-9_-]{11}$/;
   return idPattern.test(value) ? value : void 0;
 };
-var buildEmbedUrl = (videoId, {
-  startSeconds,
-  autoPlay,
-  muted
-}) => {
+var buildEmbedUrl = (videoId, { startSeconds, autoPlay, muted }) => {
   const params = new URLSearchParams({
     rel: "0",
     modestbranding: "1",
@@ -1291,13 +945,7 @@ var buildEmbedUrl = (videoId, {
   }
   return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
 };
-var YoutubeEmbed = ({
-  url,
-  title,
-  startSeconds,
-  autoPlay,
-  muted
-}) => {
+var YoutubeEmbed = ({ url, title, startSeconds, autoPlay, muted }) => {
   const videoId = extractVideoId(url);
   if (!videoId) {
     return /* @__PURE__ */ jsx15(Fragment5, {});
@@ -1307,25 +955,18 @@ var YoutubeEmbed = ({
     autoPlay,
     muted
   });
-  return /* @__PURE__ */ jsx15(
-    "div",
+  return /* @__PURE__ */ jsx15("div", { className: "relative w-full overflow-hidden rounded-2xl", style: { paddingBottom: "56.25%" }, children: /* @__PURE__ */ jsx15(
+    "iframe",
     {
-      className: "relative w-full overflow-hidden rounded-2xl",
-      style: { paddingBottom: "56.25%" },
-      children: /* @__PURE__ */ jsx15(
-        "iframe",
-        {
-          allowFullScreen: true,
-          allow: "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share",
-          className: "absolute inset-0 h-full w-full",
-          loading: "lazy",
-          referrerPolicy: "strict-origin-when-cross-origin",
-          src: embedUrl,
-          title: title?.trim() || "YouTube video player"
-        }
-      )
+      allowFullScreen: true,
+      allow: "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share",
+      className: "absolute inset-0 h-full w-full",
+      loading: "lazy",
+      referrerPolicy: "strict-origin-when-cross-origin",
+      src: embedUrl,
+      title: title?.trim() || "YouTube video player"
     }
-  );
+  ) });
 };
 
 // src/fields/ClipboardFormSection.tsx
@@ -1355,14 +996,9 @@ function ClipboardFormSection({
   const [clipboardSupported, setClipboardSupported] = useState6(false);
   const [isBusy, setIsBusy] = useState6(false);
   const resetTimerRef = useRef2(null);
-  const mergedStatusMessages = useMemo3(
-    () => ({ ...DEFAULT_STATUS_MESSAGES, ...statusMessages }),
-    [statusMessages]
-  );
+  const mergedStatusMessages = useMemo3(() => ({ ...DEFAULT_STATUS_MESSAGES, ...statusMessages }), [statusMessages]);
   useEffect5(() => {
-    setClipboardSupported(
-      typeof navigator !== "undefined" && Boolean(navigator.clipboard)
-    );
+    setClipboardSupported(typeof navigator !== "undefined" && Boolean(navigator.clipboard));
     return () => {
       if (resetTimerRef.current) {
         clearTimeout(resetTimerRef.current);
@@ -1432,26 +1068,8 @@ function ClipboardFormSection({
         status !== "idle" ? /* @__PURE__ */ jsx16("p", { className: "text-xs text-gray-500", children: mergedStatusMessages[status] }) : description ? /* @__PURE__ */ jsx16("p", { className: "text-xs text-gray-500", children: description }) : null
       ] }),
       /* @__PURE__ */ jsxs8("div", { className: "flex gap-2", children: [
-        /* @__PURE__ */ jsx16(
-          Button,
-          {
-            disabled: !clipboardSupported || isBusy,
-            type: "button",
-            variant: "outline",
-            onClick: handleCopy,
-            children: copyLabel
-          }
-        ),
-        /* @__PURE__ */ jsx16(
-          Button,
-          {
-            disabled: !clipboardSupported || isBusy,
-            type: "button",
-            variant: "outline",
-            onClick: handlePaste,
-            children: pasteLabel
-          }
-        )
+        /* @__PURE__ */ jsx16(Button, { disabled: !clipboardSupported || isBusy, type: "button", variant: "outline", onClick: handleCopy, children: copyLabel }),
+        /* @__PURE__ */ jsx16(Button, { disabled: !clipboardSupported || isBusy, type: "button", variant: "outline", onClick: handlePaste, children: pasteLabel })
       ] })
     ] }),
     children ?? null
@@ -1493,89 +1111,44 @@ function LinkListField({
     onChange(cloned);
   };
   return /* @__PURE__ */ jsxs9("div", { className: "space-y-4", children: [
-    links.map((link, index) => /* @__PURE__ */ jsxs9(
-      "div",
-      {
-        className: "rounded-2xl border border-gray-200 p-4",
-        children: [
-          /* @__PURE__ */ jsxs9("div", { className: "grid gap-3 sm:grid-cols-2", children: [
-            /* @__PURE__ */ jsxs9("div", { className: "space-y-1", children: [
-              /* @__PURE__ */ jsx17("label", { className: "text-xs font-medium text-gray-500", children: "Etiket" }),
-              /* @__PURE__ */ jsx17(
-                "input",
-                {
-                  className: "w-full rounded-md border border-gray-300 px-3 py-2 text-sm",
-                  placeholder: labelPlaceholder,
-                  type: "text",
-                  value: link.label,
-                  onChange: (event) => handleUpdate(index, "label", event.target.value)
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsxs9("div", { className: "space-y-1", children: [
-              /* @__PURE__ */ jsx17("label", { className: "text-xs font-medium text-gray-500", children: "Path" }),
-              /* @__PURE__ */ jsx17(
-                "input",
-                {
-                  className: "w-full rounded-md border border-gray-300 px-3 py-2 text-sm",
-                  placeholder: pathPlaceholder,
-                  type: "text",
-                  value: link.path,
-                  onChange: (event) => handleUpdate(index, "path", event.target.value)
-                }
-              )
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxs9("div", { className: "mt-3 flex flex-wrap items-center justify-between gap-2", children: [
-            /* @__PURE__ */ jsxs9("div", { className: "flex gap-2", children: [
-              /* @__PURE__ */ jsx17(
-                Button,
-                {
-                  className: "text-sm",
-                  disabled: index === 0,
-                  type: "button",
-                  variant: "ghost",
-                  onClick: () => handleMove(index, "up"),
-                  children: "Yukar\u0131 Al"
-                }
-              ),
-              /* @__PURE__ */ jsx17(
-                Button,
-                {
-                  className: "text-sm",
-                  disabled: index === links.length - 1,
-                  type: "button",
-                  variant: "ghost",
-                  onClick: () => handleMove(index, "down"),
-                  children: "A\u015Fa\u011F\u0131 Al"
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsx17(
-              Button,
-              {
-                className: "text-sm text-red-600 hover:text-red-700",
-                type: "button",
-                variant: "ghost",
-                onClick: () => handleRemove(index),
-                children: "Ba\u011Flant\u0131y\u0131 Sil"
-              }
-            )
-          ] })
-        ]
-      },
-      `link-${index}`
-    )),
-    /* @__PURE__ */ jsx17(
-      Button,
-      {
-        className: "w-full",
-        type: "button",
-        variant: "outline",
-        onClick: handleAdd,
-        children: "Yeni Ba\u011Flant\u0131 Ekle"
-      }
-    )
+    links.map((link, index) => /* @__PURE__ */ jsxs9("div", { className: "rounded-2xl border border-gray-200 p-4", children: [
+      /* @__PURE__ */ jsxs9("div", { className: "grid gap-3 sm:grid-cols-2", children: [
+        /* @__PURE__ */ jsxs9("div", { className: "space-y-1", children: [
+          /* @__PURE__ */ jsx17("label", { className: "text-xs font-medium text-gray-500", children: "Etiket" }),
+          /* @__PURE__ */ jsx17(
+            "input",
+            {
+              className: "w-full rounded-md border border-gray-300 px-3 py-2 text-sm",
+              placeholder: labelPlaceholder,
+              type: "text",
+              value: link.label,
+              onChange: (event) => handleUpdate(index, "label", event.target.value)
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxs9("div", { className: "space-y-1", children: [
+          /* @__PURE__ */ jsx17("label", { className: "text-xs font-medium text-gray-500", children: "Path" }),
+          /* @__PURE__ */ jsx17(
+            "input",
+            {
+              className: "w-full rounded-md border border-gray-300 px-3 py-2 text-sm",
+              placeholder: pathPlaceholder,
+              type: "text",
+              value: link.path,
+              onChange: (event) => handleUpdate(index, "path", event.target.value)
+            }
+          )
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs9("div", { className: "mt-3 flex flex-wrap items-center justify-between gap-2", children: [
+        /* @__PURE__ */ jsxs9("div", { className: "flex gap-2", children: [
+          /* @__PURE__ */ jsx17(Button, { className: "text-sm", disabled: index === 0, type: "button", variant: "ghost", onClick: () => handleMove(index, "up"), children: "Yukar\u0131 Al" }),
+          /* @__PURE__ */ jsx17(Button, { className: "text-sm", disabled: index === links.length - 1, type: "button", variant: "ghost", onClick: () => handleMove(index, "down"), children: "A\u015Fa\u011F\u0131 Al" })
+        ] }),
+        /* @__PURE__ */ jsx17(Button, { className: "text-sm text-red-600 hover:text-red-700", type: "button", variant: "ghost", onClick: () => handleRemove(index), children: "Ba\u011Flant\u0131y\u0131 Sil" })
+      ] })
+    ] }, `link-${index}`)),
+    /* @__PURE__ */ jsx17(Button, { className: "w-full", type: "button", variant: "outline", onClick: handleAdd, children: "Yeni Ba\u011Flant\u0131 Ekle" })
   ] });
 }
 
@@ -1591,10 +1164,7 @@ var sanitizeLinks = (raw) => {
     path: typeof link?.path === "string" ? link.path : ""
   }));
 };
-function LinkBarClipboardField({
-  value,
-  onChange
-}) {
+function LinkBarClipboardField({ value, onChange }) {
   const normalizedValue = sanitizeLinks(value) ?? [];
   return /* @__PURE__ */ jsx18(
     ClipboardFormSection,
@@ -1621,23 +1191,9 @@ import { useMemo as useMemo5 } from "react";
 import { jsx as jsx19 } from "react/jsx-runtime";
 var usePuckStore = createUsePuck2();
 var COMPONENT_KEY2 = "HeadingBlock.styles";
-var HEADING_LEVELS = /* @__PURE__ */ new Set([
-  "h1",
-  "h2",
-  "h3",
-  "h4",
-  "h5",
-  "h6"
-]);
-var HEADING_ALIGNMENTS = /* @__PURE__ */ new Set([
-  "left",
-  "center",
-  "right"
-]);
-var UNDERLINE_MODES = /* @__PURE__ */ new Set([
-  "inline",
-  "separate"
-]);
+var HEADING_LEVELS = /* @__PURE__ */ new Set(["h1", "h2", "h3", "h4", "h5", "h6"]);
+var HEADING_ALIGNMENTS = /* @__PURE__ */ new Set(["left", "center", "right"]);
+var UNDERLINE_MODES = /* @__PURE__ */ new Set(["inline", "separate"]);
 var sanitizeNumber = (value, fallback) => {
   return typeof value === "number" && Number.isFinite(value) ? value : fallback;
 };
@@ -1660,54 +1216,26 @@ var sanitizeHeadingClipboardValue = (raw) => {
     level: HEADING_LEVELS.has(value.level) ? value.level : headingDefaultValues.level,
     textAlign: HEADING_ALIGNMENTS.has(value.textAlign) ? value.textAlign : headingDefaultValues.textAlign,
     fontSize: sanitizeNumber(value.fontSize, headingDefaultValues.fontSize),
-    fontWeight: sanitizeNumber(
-      value.fontWeight,
-      headingDefaultValues.fontWeight
-    ),
+    fontWeight: sanitizeNumber(value.fontWeight, headingDefaultValues.fontWeight),
     italic: sanitizeBoolean(value.italic, headingDefaultValues.italic),
     textColor: sanitizeColor(value.textColor),
     textColorLight: sanitizeColor(value.textColorLight) ?? headingDefaultValues.textColorLight,
     textColorDark: sanitizeColor(value.textColorDark) ?? headingDefaultValues.textColorDark,
-    decorationEnabled: sanitizeBoolean(
-      value.decorationEnabled,
-      headingDefaultValues.decorationEnabled
-    ),
-    decorationWidth: sanitizeNumber(
-      value.decorationWidth,
-      headingDefaultValues.decorationWidth
-    ),
-    decorationThickness: sanitizeNumber(
-      value.decorationThickness,
-      headingDefaultValues.decorationThickness
-    ),
-    decorationSpacing: sanitizeNumber(
-      value.decorationSpacing,
-      headingDefaultValues.decorationSpacing
-    ),
+    decorationEnabled: sanitizeBoolean(value.decorationEnabled, headingDefaultValues.decorationEnabled),
+    decorationWidth: sanitizeNumber(value.decorationWidth, headingDefaultValues.decorationWidth),
+    decorationThickness: sanitizeNumber(value.decorationThickness, headingDefaultValues.decorationThickness),
+    decorationSpacing: sanitizeNumber(value.decorationSpacing, headingDefaultValues.decorationSpacing),
     decorationColor: sanitizeColor(value.decorationColor),
     decorationColorLight: sanitizeColor(value.decorationColorLight) ?? headingDefaultValues.decorationColorLight,
     decorationColorDark: sanitizeColor(value.decorationColorDark) ?? headingDefaultValues.decorationColorDark,
-    underlineMode: UNDERLINE_MODES.has(
-      value.underlineMode
-    ) ? value.underlineMode : headingDefaultValues.underlineMode,
+    underlineMode: UNDERLINE_MODES.has(value.underlineMode) ? value.underlineMode : headingDefaultValues.underlineMode,
     marginTop: sanitizeNumber(value.marginTop, headingDefaultValues.marginTop),
-    marginRight: sanitizeNumber(
-      value.marginRight,
-      headingDefaultValues.marginRight
-    ),
-    marginBottom: sanitizeNumber(
-      value.marginBottom,
-      headingDefaultValues.marginBottom
-    ),
-    marginLeft: sanitizeNumber(
-      value.marginLeft,
-      headingDefaultValues.marginLeft
-    )
+    marginRight: sanitizeNumber(value.marginRight, headingDefaultValues.marginRight),
+    marginBottom: sanitizeNumber(value.marginBottom, headingDefaultValues.marginBottom),
+    marginLeft: sanitizeNumber(value.marginLeft, headingDefaultValues.marginLeft)
   };
 };
-var defaultClipboardValue = sanitizeHeadingClipboardValue(
-  headingDefaultValues
-) ?? {
+var defaultClipboardValue = sanitizeHeadingClipboardValue(headingDefaultValues) ?? {
   level: headingDefaultValues.level,
   textAlign: headingDefaultValues.textAlign,
   fontSize: headingDefaultValues.fontSize,
@@ -1764,9 +1292,7 @@ function HeadingClipboardField() {
         });
         if (selector.zone && previous.zones?.[selector.zone]) {
           const zoneItems = previous.zones[selector.zone];
-          const updatedZone = zoneItems.map(
-            (item, index) => index === selector.index ? updateItemProps(item) : item
-          );
+          const updatedZone = zoneItems.map((item, index) => index === selector.index ? updateItemProps(item) : item);
           return {
             zones: {
               ...previous.zones,
@@ -1802,12 +1328,7 @@ function HeadingClipboardField() {
 }
 
 // src/fields/SlidesField.tsx
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  PlusIcon,
-  TrashIcon
-} from "@heroicons/react/24/outline";
+import { ChevronDownIcon, ChevronUpIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { jsx as jsx20, jsxs as jsxs10 } from "react/jsx-runtime";
 var COMPONENT_KEY3 = "SliderBlock.slides";
 var sanitizeSlides = (raw) => {
@@ -1858,93 +1379,27 @@ function SlidesField({ value, onChange, ImageField }) {
       title: "Slider Slaytlar\u0131",
       onPaste: (next) => onChange(next),
       children: /* @__PURE__ */ jsxs10("div", { className: "space-y-4", children: [
-        slides.map((slide, index) => /* @__PURE__ */ jsx20(
-          "div",
-          {
-            className: "rounded-2xl border border-gray-200 p-4",
-            children: /* @__PURE__ */ jsxs10("div", { className: "space-y-4", children: [
-              /* @__PURE__ */ jsx20("div", { children: /* @__PURE__ */ jsx20(
-                ImageField,
-                {
-                  value: typeof slide.imageUrl === "string" ? slide.imageUrl : "",
-                  onChange: (next) => updateSlide(index, { imageUrl: next })
-                }
-              ) }),
-              /* @__PURE__ */ jsx20("div", { children: /* @__PURE__ */ jsx20(
-                RichTextEditor,
-                {
-                  initialData: slide.text ?? "",
-                  onChange: (data) => updateSlide(index, { text: data })
-                },
-                `slider-slide-text-${index}`
-              ) }),
-              /* @__PURE__ */ jsxs10("div", { className: "flex flex-wrap items-center justify-between gap-3", children: [
-                /* @__PURE__ */ jsxs10("div", { className: "flex gap-2", children: [
-                  /* @__PURE__ */ jsx20(
-                    Button,
-                    {
-                      disabled: index === 0,
-                      type: "button",
-                      variant: "ghost",
-                      onClick: () => handleMoveSlide(index, index - 1),
-                      children: /* @__PURE__ */ jsx20(ChevronUpIcon, { className: "h-4 w-4" })
-                    }
-                  ),
-                  /* @__PURE__ */ jsx20(
-                    Button,
-                    {
-                      disabled: index === slides.length - 1,
-                      type: "button",
-                      variant: "ghost",
-                      onClick: () => handleMoveSlide(index, index + 1),
-                      children: /* @__PURE__ */ jsx20(ChevronDownIcon, { className: "h-4 w-4" })
-                    }
-                  )
-                ] }),
-                /* @__PURE__ */ jsx20(
-                  Button,
-                  {
-                    className: "text-sm text-red-600 hover:text-red-700",
-                    type: "button",
-                    variant: "ghost",
-                    onClick: () => handleRemoveSlide(index),
-                    children: /* @__PURE__ */ jsx20(TrashIcon, { className: "h-4 w-4" })
-                  }
-                )
-              ] })
-            ] })
-          },
-          `slider-slide-${index}`
-        )),
-        /* @__PURE__ */ jsx20(
-          Button,
-          {
-            className: "w-full",
-            type: "button",
-            variant: "outline",
-            onClick: handleAddSlide,
-            children: /* @__PURE__ */ jsx20(PlusIcon, { className: "h-4 w-4" })
-          }
-        )
+        slides.map((slide, index) => /* @__PURE__ */ jsx20("div", { className: "rounded-2xl border border-gray-200 p-4", children: /* @__PURE__ */ jsxs10("div", { className: "space-y-4", children: [
+          /* @__PURE__ */ jsx20("div", { children: /* @__PURE__ */ jsx20(ImageField, { value: typeof slide.imageUrl === "string" ? slide.imageUrl : "", onChange: (next) => updateSlide(index, { imageUrl: next }) }) }),
+          /* @__PURE__ */ jsx20("div", { children: /* @__PURE__ */ jsx20(RichTextEditor, { initialData: slide.text ?? "", onChange: (data) => updateSlide(index, { text: data }) }, `slider-slide-text-${index}`) }),
+          /* @__PURE__ */ jsxs10("div", { className: "flex flex-wrap items-center justify-between gap-3", children: [
+            /* @__PURE__ */ jsxs10("div", { className: "flex gap-2", children: [
+              /* @__PURE__ */ jsx20(Button, { disabled: index === 0, type: "button", variant: "ghost", onClick: () => handleMoveSlide(index, index - 1), children: /* @__PURE__ */ jsx20(ChevronUpIcon, { className: "h-4 w-4" }) }),
+              /* @__PURE__ */ jsx20(Button, { disabled: index === slides.length - 1, type: "button", variant: "ghost", onClick: () => handleMoveSlide(index, index + 1), children: /* @__PURE__ */ jsx20(ChevronDownIcon, { className: "h-4 w-4" }) })
+            ] }),
+            /* @__PURE__ */ jsx20(Button, { className: "text-sm text-red-600 hover:text-red-700", type: "button", variant: "ghost", onClick: () => handleRemoveSlide(index), children: /* @__PURE__ */ jsx20(TrashIcon, { className: "h-4 w-4" }) })
+          ] })
+        ] }) }, `slider-slide-${index}`)),
+        /* @__PURE__ */ jsx20(Button, { className: "w-full", type: "button", variant: "outline", onClick: handleAddSlide, children: /* @__PURE__ */ jsx20(PlusIcon, { className: "h-4 w-4" }) })
       ] })
     }
   );
 }
 
 // src/config/baseEditorConfig.tsx
-import {
-  ArrowDownTrayIcon,
-  BookmarkIcon,
-  CheckCircleIcon,
-  LinkIcon as LinkIcon2,
-  TrashIcon as TrashIcon2
-} from "@heroicons/react/24/outline";
+import { ArrowDownTrayIcon, BookmarkIcon, CheckCircleIcon, LinkIcon as LinkIcon2, TrashIcon as TrashIcon2 } from "@heroicons/react/24/outline";
 import { Fragment as Fragment6, jsx as jsx21, jsxs as jsxs11 } from "react/jsx-runtime";
-var BaseFormInputField = ({
-  label,
-  className,
-  ...inputProps
-}) => /* @__PURE__ */ jsxs11("label", { className: "flex flex-col gap-2 text-sm font-medium text-gray-700", children: [
+var BaseFormInputField = ({ label, className, ...inputProps }) => /* @__PURE__ */ jsxs11("label", { className: "flex flex-col gap-2 text-sm font-medium text-gray-700", children: [
   label ? /* @__PURE__ */ jsx21("span", { children: label }) : null,
   /* @__PURE__ */ jsx21(
     "input",
@@ -2085,16 +1540,7 @@ var galleryItemImageModeField = {
     const buttonClasses = (isActive) => `rounded border px-4 py-2 text-left text-sm font-medium transition ${isActive ? "border-indigo-600 bg-indigo-50 text-indigo-700" : "border-gray-300 text-gray-600 hover:border-indigo-400"}`;
     return /* @__PURE__ */ jsxs11("div", { className: "flex flex-col gap-2", children: [
       /* @__PURE__ */ jsx21("span", { className: "text-sm font-medium text-gray-700", children: "G\xF6rsel Modu (Bu G\xF6rsel)" }),
-      /* @__PURE__ */ jsx21("div", { className: "flex gap-3", children: ["cover", "contain"].map((mode) => /* @__PURE__ */ jsx21(
-        "button",
-        {
-          className: buttonClasses(currentValue === mode),
-          type: "button",
-          onClick: () => onChange(mode),
-          children: mode === "cover" ? "Kapla" : "S\u0131\u011Fd\u0131r"
-        },
-        mode
-      )) })
+      /* @__PURE__ */ jsx21("div", { className: "flex gap-3", children: ["cover", "contain"].map((mode) => /* @__PURE__ */ jsx21("button", { className: buttonClasses(currentValue === mode), type: "button", onClick: () => onChange(mode), children: mode === "cover" ? "Kapla" : "S\u0131\u011Fd\u0131r" }, mode)) })
     ] });
   }
 };
@@ -2116,12 +1562,7 @@ var createBaseEditorConfig = (options = {}) => {
     },
     categories: {
       content: {
-        components: [
-          "HeadingBlock",
-          "RichTextBlock",
-          "AccordionBlock",
-          "SingleAccordion"
-        ],
+        components: ["HeadingBlock", "RichTextBlock", "AccordionBlock", "SingleAccordion"],
         title: "\u0130\xE7erik"
       },
       media: {
@@ -2182,14 +1623,8 @@ var createBaseEditorConfig = (options = {}) => {
               { label: "Hay\u0131r", value: false }
             ]
           },
-          textColorLight: colorInput(
-            "Metin Rengi (A\xE7\u0131k Tema)",
-            headingDefaultValues.textColorLight
-          ),
-          textColorDark: colorInput(
-            "Metin Rengi (Koyu Tema)",
-            headingDefaultValues.textColorDark
-          ),
+          textColorLight: colorInput("Metin Rengi (A\xE7\u0131k Tema)", headingDefaultValues.textColorLight),
+          textColorDark: colorInput("Metin Rengi (Koyu Tema)", headingDefaultValues.textColorDark),
           decorationEnabled: {
             label: "Alt \xC7izgi",
             type: "radio",
@@ -2213,14 +1648,8 @@ var createBaseEditorConfig = (options = {}) => {
             placeholder: "\xD6rn: 12",
             defaultValue: headingDefaultValues.decorationSpacing
           }),
-          decorationColorLight: colorInput(
-            "Alt \xC7izgi Rengi (A\xE7\u0131k Tema)",
-            headingDefaultValues.decorationColorLight
-          ),
-          decorationColorDark: colorInput(
-            "Alt \xC7izgi Rengi (Koyu Tema)",
-            headingDefaultValues.decorationColorDark
-          ),
+          decorationColorLight: colorInput("Alt \xC7izgi Rengi (A\xE7\u0131k Tema)", headingDefaultValues.decorationColorLight),
+          decorationColorDark: colorInput("Alt \xC7izgi Rengi (Koyu Tema)", headingDefaultValues.decorationColorDark),
           underlineMode: {
             label: "Alt \xC7izgi Modu",
             type: "radio",
@@ -2305,13 +1734,7 @@ var createBaseEditorConfig = (options = {}) => {
           if (normalizedSections.length < 1) {
             return /* @__PURE__ */ jsx21(Fragment6, {});
           }
-          return /* @__PURE__ */ jsx21(
-            AccordionBlock,
-            {
-              isEditing,
-              sections: normalizedSections
-            }
-          );
+          return /* @__PURE__ */ jsx21(AccordionBlock, { isEditing, sections: normalizedSections });
         }
       },
       SingleAccordion: {
@@ -2337,14 +1760,7 @@ var createBaseEditorConfig = (options = {}) => {
             ]
           }
         },
-        render: ({ title, content: Content, defaultOpen }) => /* @__PURE__ */ jsx21(
-          SingleAccordionBlock,
-          {
-            defaultOpen: Boolean(defaultOpen),
-            title,
-            children: Content ? /* @__PURE__ */ jsx21(Content, {}) : null
-          }
-        )
+        render: ({ title, content: Content, defaultOpen }) => /* @__PURE__ */ jsx21(SingleAccordionBlock, { defaultOpen: Boolean(defaultOpen), title, children: Content ? /* @__PURE__ */ jsx21(Content, {}) : null })
       },
       LinkBar: {
         label: "Ba\u011Flant\u0131 Listesi",
@@ -2353,19 +1769,11 @@ var createBaseEditorConfig = (options = {}) => {
             label: "Ba\u011Flant\u0131lar",
             type: "custom",
             render: ({ value, onChange }) => {
-              const items = Array.isArray(value) ? value.map(
-                (link) => ({
-                  label: link.label ?? "",
-                  path: link.path ?? ""
-                })
-              ) : [];
-              return /* @__PURE__ */ jsx21(
-                LinkBarClipboardField,
-                {
-                  value: items,
-                  onChange: (next) => onChange(next)
-                }
-              );
+              const items = Array.isArray(value) ? value.map((link) => ({
+                label: link.label ?? "",
+                path: link.path ?? ""
+              })) : [];
+              return /* @__PURE__ */ jsx21(LinkBarClipboardField, { value: items, onChange: (next) => onChange(next) });
             }
           }
         },
@@ -2377,14 +1785,7 @@ var createBaseEditorConfig = (options = {}) => {
           text: {
             label: "Buton Metni",
             type: "custom",
-            render: ({ value, onChange, id }) => /* @__PURE__ */ jsx21(
-              RichTextEditor,
-              {
-                initialData: value ?? "",
-                onChange
-              },
-              id ?? "button-link-text"
-            )
+            render: ({ value, onChange, id }) => /* @__PURE__ */ jsx21(RichTextEditor, { initialData: value ?? "", onChange }, id ?? "button-link-text")
           },
           url: {
             label: "Ba\u011Flant\u0131 URL'si",
@@ -2468,14 +1869,7 @@ var createBaseEditorConfig = (options = {}) => {
           slides: {
             label: "Slaytlar",
             type: "custom",
-            render: ({ value, onChange }) => /* @__PURE__ */ jsx21(
-              SlidesField,
-              {
-                ImageField,
-                value: Array.isArray(value) ? value : [],
-                onChange: (next) => onChange(next)
-              }
-            )
+            render: ({ value, onChange }) => /* @__PURE__ */ jsx21(SlidesField, { ImageField, value: Array.isArray(value) ? value : [], onChange: (next) => onChange(next) })
           },
           autoPlay: {
             label: "Otomatik oynatma",
@@ -2514,14 +1908,7 @@ var createBaseEditorConfig = (options = {}) => {
           slides: {
             label: "Slaytlar",
             type: "custom",
-            render: ({ value, onChange }) => /* @__PURE__ */ jsx21(
-              SlidesField,
-              {
-                ImageField,
-                value: Array.isArray(value) ? value : [],
-                onChange: (next) => onChange(next)
-              }
-            )
+            render: ({ value, onChange }) => /* @__PURE__ */ jsx21(SlidesField, { ImageField, value: Array.isArray(value) ? value : [], onChange: (next) => onChange(next) })
           },
           autoPlay: {
             label: "Otomatik oynatma",
@@ -2550,14 +1937,7 @@ var createBaseEditorConfig = (options = {}) => {
             defaultValue: 45
           })
         },
-        render: ({
-          slides,
-          autoPlay,
-          autoPlayInterval,
-          imageMode,
-          desktopHeight,
-          mobileHeight
-        }) => {
+        render: ({ slides, autoPlay, autoPlayInterval, imageMode, desktopHeight, mobileHeight }) => {
           const normalizedSlides = (slides ?? []).map((slide) => ({
             imageUrl: slide?.imageUrl ?? "",
             text: slide?.text ?? ""
@@ -2616,16 +1996,7 @@ var createBaseEditorConfig = (options = {}) => {
         },
         render: ({ url, title, startSeconds, autoPlay, muted }) => {
           const normalizedStart = typeof startSeconds === "number" && startSeconds > 0 ? startSeconds : void 0;
-          return /* @__PURE__ */ jsx21(
-            YoutubeEmbed,
-            {
-              autoPlay: Boolean(autoPlay),
-              muted: Boolean(muted),
-              startSeconds: normalizedStart,
-              title,
-              url
-            }
-          );
+          return /* @__PURE__ */ jsx21(YoutubeEmbed, { autoPlay: Boolean(autoPlay), muted: Boolean(muted), startSeconds: normalizedStart, title, url });
         }
       },
       GoogleMapsEmbed: {
@@ -2656,15 +2027,7 @@ var createBaseEditorConfig = (options = {}) => {
             ]
           }
         },
-        render: ({ url, title, height, allowFullScreen }) => /* @__PURE__ */ jsx21(
-          GoogleMapsEmbed,
-          {
-            allowFullScreen: Boolean(allowFullScreen),
-            height,
-            title,
-            url
-          }
-        )
+        render: ({ url, title, height, allowFullScreen }) => /* @__PURE__ */ jsx21(GoogleMapsEmbed, { allowFullScreen: Boolean(allowFullScreen), height, title, url })
       },
       Gallery: {
         label: "Galeri",
@@ -2709,13 +2072,7 @@ var createBaseEditorConfig = (options = {}) => {
               imageUrl: {
                 label: "G\xF6rsel",
                 type: "custom",
-                render: ({ value, onChange }) => /* @__PURE__ */ jsx21(
-                  ImageField,
-                  {
-                    value: typeof value === "string" ? value : "",
-                    onChange: (next) => onChange(next)
-                  }
-                )
+                render: ({ value, onChange }) => /* @__PURE__ */ jsx21(ImageField, { value: typeof value === "string" ? value : "", onChange: (next) => onChange(next) })
               },
               href: {
                 label: "Ba\u011Flant\u0131 URL'si",
@@ -2730,23 +2087,12 @@ var createBaseEditorConfig = (options = {}) => {
               imageMode: galleryItemImageModeField
             }
           },
-          gridSize: createButtonToggleField(
-            "Grid S\xFCtun Say\u0131s\u0131 (lg)",
-            galleryGridColumnsOptions,
-            3
-          ),
+          gridSize: createButtonToggleField("Grid S\xFCtun Say\u0131s\u0131 (lg)", galleryGridColumnsOptions, 3),
           imageMode: imageModeToggleField,
           text: {
             label: "A\xE7\u0131klama",
             type: "custom",
-            render: ({ value, onChange }) => /* @__PURE__ */ jsx21(Fragment6, { children: /* @__PURE__ */ jsx21(
-              "input",
-              {
-                className: "hidden",
-                value,
-                onChange: (e) => onChange(e.target.value)
-              }
-            ) })
+            render: ({ value, onChange }) => /* @__PURE__ */ jsx21(Fragment6, { children: /* @__PURE__ */ jsx21("input", { className: "hidden", value, onChange: (e) => onChange(e.target.value) }) })
           }
         },
         render: ({ text, items, gridSize, imageMode }) => /* @__PURE__ */ jsxs11(Fragment6, { children: [

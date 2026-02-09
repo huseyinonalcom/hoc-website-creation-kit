@@ -11,7 +11,7 @@ type AccordionBlockProps = {
     sections?: AccordionSection[];
     isEditing?: boolean;
 };
-declare function AccordionBlock({ sections, isEditing, }: AccordionBlockProps): react_jsx_runtime.JSX.Element;
+declare function AccordionBlock({ sections, isEditing }: AccordionBlockProps): react_jsx_runtime.JSX.Element;
 
 type Variant = "primary" | "secondary" | "outline" | "ghost" | "danger" | "subtle";
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -88,7 +88,7 @@ type LightboxProps = {
     onNext: () => void;
     onPrevious: () => void;
 };
-declare function Lightbox({ items, activeIndex, onClose, onNext, onPrevious, }: LightboxProps): react_jsx_runtime.JSX.Element | null;
+declare function Lightbox({ items, activeIndex, onClose, onNext, onPrevious }: LightboxProps): react_jsx_runtime.JSX.Element | null;
 
 type LinkBarBlockProps = {
     links?: {
@@ -103,7 +103,7 @@ type SingleAccordionBlockProps = {
     children?: ReactNode;
     defaultOpen?: boolean;
 };
-declare function SingleAccordionBlock({ title, children, defaultOpen, }: SingleAccordionBlockProps): react_jsx_runtime.JSX.Element;
+declare function SingleAccordionBlock({ title, children, defaultOpen }: SingleAccordionBlockProps): react_jsx_runtime.JSX.Element;
 
 type SliderSlideProps = {
     imageUrl: string;
@@ -115,7 +115,7 @@ type SliderProps = {
     autoPlayInterval?: number;
     imageMode?: "cover" | "contain";
 };
-declare function Slider({ slides, autoPlay, autoPlayInterval, imageMode, }: SliderProps): react_jsx_runtime.JSX.Element;
+declare function Slider({ slides, autoPlay, autoPlayInterval, imageMode }: SliderProps): react_jsx_runtime.JSX.Element;
 
 type SliderShowcaseProps = SliderProps & {
     desktopHeight?: number;
@@ -153,7 +153,7 @@ type PuckEditorProps = {
     onPublish?: (_data: Data) => void | Promise<void>;
     renderHeaderActions?: (_props: PuckEditorHeaderActionsProps) => ReactNode;
 };
-declare function PuckEditor({ config, data, height, path, viewports, onPublish, renderHeaderActions, }: PuckEditorProps): react_jsx_runtime.JSX.Element;
+declare function PuckEditor({ config, data, height, path, viewports, onPublish, renderHeaderActions }: PuckEditorProps): react_jsx_runtime.JSX.Element;
 
 type GoogleMapsEmbedProps = {
     url?: string;
@@ -161,7 +161,7 @@ type GoogleMapsEmbedProps = {
     height?: number;
     allowFullScreen?: boolean;
 };
-declare const GoogleMapsEmbed: ({ url, title, height, allowFullScreen, }: GoogleMapsEmbedProps) => react_jsx_runtime.JSX.Element;
+declare const GoogleMapsEmbed: ({ url, title, height, allowFullScreen }: GoogleMapsEmbedProps) => react_jsx_runtime.JSX.Element;
 
 type YoutubeEmbedProps = {
     url?: string;
@@ -170,7 +170,7 @@ type YoutubeEmbedProps = {
     autoPlay?: boolean;
     muted?: boolean;
 };
-declare const YoutubeEmbed: ({ url, title, startSeconds, autoPlay, muted, }: YoutubeEmbedProps) => react_jsx_runtime.JSX.Element;
+declare const YoutubeEmbed: ({ url, title, startSeconds, autoPlay, muted }: YoutubeEmbedProps) => react_jsx_runtime.JSX.Element;
 
 type ClipboardStatus = "idle" | "copied" | "pasted" | "mismatch" | "invalid" | "error" | "unsupported";
 type ClipboardFormSectionProps<T> = {
@@ -202,7 +202,7 @@ type LinkBarClipboardFieldProps = {
     value?: LinkListItem[];
     onChange: (next: LinkListItem[]) => void;
 };
-declare function LinkBarClipboardField({ value, onChange, }: LinkBarClipboardFieldProps): react_jsx_runtime.JSX.Element;
+declare function LinkBarClipboardField({ value, onChange }: LinkBarClipboardFieldProps): react_jsx_runtime.JSX.Element;
 
 type HeadingClipboardValue = {
     level: HeadingLevel;
