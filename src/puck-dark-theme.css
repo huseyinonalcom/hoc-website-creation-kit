@@ -21,3 +21,18 @@
   --puck-color-grey-11: #141b28;
   --puck-color-grey-12: #0b101a;
 }
+
+/* Puck nav items (inactive) */
+.puck-theme-dark [class*="NavItem"]:not([class*="NavItem--active"]) [class*="NavItem-link"] {
+  color: var(--puck-color-grey-07);
+}
+
+/* Puck nav items (active) */
+.puck-theme-dark [class*="NavItem"][class*="NavItem--active"] [class*="NavItem-link"] {
+  color: var(--puck-color-grey-08);
+}
+
+/* Puck outline labels */
+.puck-theme-dark [class*="Layer-name"] {
+  color: var(--puck-color-grey-07);
+}

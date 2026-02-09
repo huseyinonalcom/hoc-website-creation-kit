@@ -125,7 +125,7 @@ export function ClipboardFormSection<T>({
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
-          <p className="text-sm font-semibold text-gray-800">{title}</p>
+          <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">{title}</p>
           {status !== "idle" ? (
             <p className="text-xs text-gray-500">{mergedStatusMessages[status as Exclude<ClipboardStatus, "idle">]}</p>
           ) : description ? (
