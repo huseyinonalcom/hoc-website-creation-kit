@@ -39,20 +39,40 @@ export function PuckEditor({ config, data, height, path, viewports, theme = "lig
       return;
     }
 
+    let rafId: number | null = null;
+    let attempts = 0;
+
     const applyTheme = () => {
       const doc = frame.contentDocument;
       if (!doc) {
+        return false;
+      }
+
+      const isDark = theme === "dark";
+      doc.documentElement.classList.toggle("puck-theme-dark", isDark);
+      doc.body?.classList.toggle("puck-theme-dark", isDark);
+      return true;
+    };
+
+    const applyThemeWithRetry = () => {
+      if (applyTheme()) {
         return;
       }
 
-      doc.documentElement.classList.toggle("puck-theme-dark", theme === "dark");
+      if (attempts < 10) {
+        attempts += 1;
+        rafId = window.requestAnimationFrame(applyThemeWithRetry);
+      }
     };
 
-    applyTheme();
-    frame.addEventListener("load", applyTheme);
+    applyThemeWithRetry();
+    frame.addEventListener("load", applyThemeWithRetry);
 
     return () => {
-      frame.removeEventListener("load", applyTheme);
+      frame.removeEventListener("load", applyThemeWithRetry);
+      if (rafId !== null) {
+        window.cancelAnimationFrame(rafId);
+      }
     };
   }, [theme]);
 

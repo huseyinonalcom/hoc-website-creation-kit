@@ -36,3 +36,160 @@
 .puck-theme-dark [class*="Layer-name"] {
   color: var(--puck-color-grey-07);
 }
+
+/* Puck layout surfaces */
+.puck-theme-dark [class*="PuckHeader"],
+.puck-theme-dark [class*="MenuBar"] {
+  background: var(--puck-color-grey-12);
+  border-bottom: 1px solid var(--puck-color-grey-09);
+  color: var(--puck-color-grey-08);
+}
+
+.puck-theme-dark [class*="SidebarSection-title"] {
+  background: var(--puck-color-grey-11);
+  border-color: var(--puck-color-grey-09);
+  color: var(--puck-color-grey-08);
+}
+
+/* Sidebar section heading label override (visual only) */
+.puck-theme-dark [class*="SidebarSection-title"] [class*="Heading"] {
+  color: transparent;
+  position: relative;
+}
+
+.puck-theme-dark [class*="SidebarSection-title"] [class*="Heading"]::after {
+  content: "Meta";
+  color: var(--puck-color-grey-08);
+  position: absolute;
+  inset: 0;
+}
+
+/* Header title label override (visual only) */
+.puck-theme-dark [class*="PuckHeader-title"] [class*="Heading"] {
+  color: transparent;
+  position: relative;
+}
+
+.puck-theme-dark [class*="PuckHeader-title"] [class*="Heading"]::after {
+  content: "Sayfa";
+  color: var(--puck-color-grey-08);
+  position: absolute;
+  inset: 0;
+}
+
+.puck-theme-dark [class*="FieldsPlugin"],
+.puck-theme-dark [class*="FieldsPlugin-header"] {
+  background: var(--puck-color-grey-12);
+  border-color: var(--puck-color-grey-09);
+  color: var(--puck-color-grey-08);
+}
+
+.puck-theme-dark [class*="PuckFields-loadingOverlay"],
+.puck-theme-dark [class*="SidebarSection-loadingOverlay"],
+.puck-theme-dark [class*="Modal-inner"] {
+  background: var(--puck-color-grey-12);
+  border-color: var(--puck-color-grey-09);
+  color: var(--puck-color-grey-08);
+}
+
+/* Select menus */
+.puck-theme-dark [class*="Select-items"] {
+  background: var(--puck-color-grey-11);
+  border-color: var(--puck-color-grey-09);
+}
+
+.puck-theme-dark [class*="SelectItem"] {
+  color: var(--puck-color-grey-07);
+}
+
+/* Nav labels (visual only) */
+.puck-theme-dark [class*="Nav-list"] > [class*="NavItem"]:nth-child(1) [class*="NavItem-link"] > span:last-child,
+.puck-theme-dark [class*="Nav-list"] > [class*="NavItem"]:nth-child(2) [class*="NavItem-link"] > span:last-child,
+.puck-theme-dark [class*="Nav-list"] > [class*="NavItem"]:nth-child(3) [class*="NavItem-link"] > span:last-child {
+  color: transparent;
+  position: relative;
+}
+
+.puck-theme-dark [class*="Nav-list"] > [class*="NavItem"]:nth-child(1) [class*="NavItem-link"] > span:last-child::after {
+  content: "Elementler";
+  color: var(--puck-color-grey-08);
+  position: absolute;
+  inset: 0;
+}
+
+.puck-theme-dark [class*="Nav-list"] > [class*="NavItem"]:nth-child(2) [class*="NavItem-link"] > span:last-child::after {
+  content: "Sayfa";
+  color: var(--puck-color-grey-08);
+  position: absolute;
+  inset: 0;
+}
+
+.puck-theme-dark [class*="Nav-list"] > [class*="NavItem"]:nth-child(3) [class*="NavItem-link"] > span:last-child::after {
+  content: "İçerik";
+  color: var(--puck-color-grey-08);
+  position: absolute;
+  inset: 0;
+}
+
+/* Rich text editor (Quill) */
+.puck-theme-dark .ql-toolbar.ql-snow,
+.puck-theme-dark .ql-container.ql-snow {
+  background: var(--puck-color-grey-12);
+  border: 1px solid var(--puck-color-grey-09);
+}
+
+.puck-theme-dark .ql-snow .ql-picker-options,
+.puck-theme-dark .ql-snow .ql-tooltip {
+  background: var(--puck-color-grey-11);
+  border-color: var(--puck-color-grey-09);
+  box-shadow: none;
+  color: var(--puck-color-grey-08);
+}
+
+.puck-theme-dark .ql-snow .ql-picker,
+.puck-theme-dark .ql-snow .ql-tooltip a,
+.puck-theme-dark .ql-snow .ql-tooltip input[type="text"] {
+  color: var(--puck-color-grey-08);
+}
+
+.puck-theme-dark .ql-snow .ql-tooltip input[type="text"] {
+  background: var(--puck-color-grey-12);
+  border-color: var(--puck-color-grey-08);
+}
+
+.puck-theme-dark .ql-snow .ql-stroke {
+  stroke: var(--puck-color-grey-08);
+}
+
+.puck-theme-dark .ql-snow .ql-fill,
+.puck-theme-dark .ql-snow .ql-stroke.ql-fill {
+  fill: var(--puck-color-grey-08);
+}
+
+.puck-theme-dark .ql-snow .ql-editor blockquote {
+  border-left-color: var(--puck-color-grey-08);
+}
+
+.puck-theme-dark .ql-snow .ql-editor code,
+.puck-theme-dark .ql-snow .ql-editor .ql-code-block-container {
+  background-color: var(--puck-color-grey-10);
+}
+
+/* Rich text table UI */
+.puck-theme-dark .ql-table-border-shadow,
+.puck-theme-dark .ql-table-select-container,
+.puck-theme-dark .ql-table-dropdown-list,
+.puck-theme-dark .ql-table-dropdown-properties-list,
+.puck-theme-dark .ql-table-menus-container {
+  background: var(--puck-color-grey-11);
+  border-color: var(--puck-color-grey-09);
+  box-shadow: none;
+  color: var(--puck-color-grey-08);
+}
+
+.puck-theme-dark .ql-table-input,
+.puck-theme-dark .ql-table-color-container .label-field-view-color .property-input,
+.puck-theme-dark .ql-table-properties-form .property-input {
+  border-color: var(--puck-color-grey-08);
+  color: var(--puck-color-grey-08);
+}
