@@ -3,7 +3,7 @@
 import type { Config, Data, Viewport } from "@puckeditor/core";
 import type { ReactNode } from "react";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 
 import { createUsePuck, Puck } from "@puckeditor/core";
 
@@ -31,58 +31,22 @@ const usePuck = createUsePuck();
 export function PuckEditor({ config, data, height, path, viewports, theme = "light", className, onPublish, renderHeaderActions }: PuckEditorProps) {
   const themeClassName = theme === "dark" ? "puck-theme-dark" : undefined;
   const wrapperClassName = ["puck-editor", themeClassName, className].filter(Boolean).join(" ");
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const [editorData, setEditorData] = useState<Partial<Data>>(data);
 
   useEffect(() => {
-    const frame = wrapperRef.current?.querySelector("iframe");
-    if (!frame) {
-      return;
-    }
-
-    let rafId: number | null = null;
-    let attempts = 0;
-
-    const applyTheme = () => {
-      const doc = frame.contentDocument;
-      if (!doc) {
-        return false;
-      }
-
-      const isDark = theme === "dark";
-      doc.documentElement.classList.toggle("puck-theme-dark", isDark);
-      doc.body?.classList.toggle("puck-theme-dark", isDark);
-      doc.documentElement.style.colorScheme = isDark ? "dark" : "light";
-      return true;
-    };
-
-    const applyThemeWithRetry = () => {
-      if (applyTheme()) {
-        return;
-      }
-
-      if (attempts < 10) {
-        attempts += 1;
-        rafId = window.requestAnimationFrame(applyThemeWithRetry);
-      }
-    };
-
-    applyThemeWithRetry();
-    frame.addEventListener("load", applyThemeWithRetry);
-
-    return () => {
-      frame.removeEventListener("load", applyThemeWithRetry);
-      if (rafId !== null) {
-        window.cancelAnimationFrame(rafId);
-      }
-    };
-  }, [theme]);
+    setEditorData(data);
+  }, [data]);
 
   return (
-    <div className={wrapperClassName} ref={wrapperRef}>
+    <div className={wrapperClassName}>
       <Puck
+        key={theme}
         config={config}
-        data={data}
+        data={editorData}
         height={height}
+        onChange={(next) => {
+          setEditorData(next);
+        }}
         overrides={
           renderHeaderActions
             ? {
