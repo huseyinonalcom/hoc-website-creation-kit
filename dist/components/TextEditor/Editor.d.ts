@@ -1,5 +1,5 @@
-export declare const RichTextEditor: ({ initialData, onChange, }: {
-    initialData: string;
-    onChange: (_html: string) => void;
-}) => import("react/jsx-runtime").JSX.Element;
+import type { EditorProps } from "./Editor.client";
+declare const RichTextEditor: import("react").ComponentType<EditorProps>;
+export { RichTextEditor };
+export type { EditorProps };
 //# sourceMappingURL=Editor.d.ts.map
