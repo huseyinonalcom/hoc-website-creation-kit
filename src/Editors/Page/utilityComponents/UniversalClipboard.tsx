@@ -183,9 +183,9 @@ export function Clipboard({ componentName }: ClipboardProps) {
             <ClipboardIcon />
           </Button>
           {status === "success" ? (
-            <CheckCircleIcon className="text-green-500" aria-hidden="true" />
+            <CheckCircleIcon className="h-4 w-4 text-green-500" aria-hidden="true" />
           ) : status === "error" ? (
-            <XCircleIcon className="text-red-500" aria-hidden="true" />
+            <XCircleIcon className="h-4 w-4 text-red-500" aria-hidden="true" />
           ) : null}
         </div>
       </div>
