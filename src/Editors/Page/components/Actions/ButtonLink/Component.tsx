@@ -37,7 +37,7 @@ export const ButtonLink = ({ text, url, icon, openInNewTab, color, borderRadius 
       target={target}
     >
       {IconComponent ? <IconComponent className="h-5 w-5" /> : null}
-      {hasText ? <RichTextRenderer html={normalizedHtml} /> : "Buton"}
+      {hasText ? <RichTextRenderer content={normalizedHtml} /> : "Buton"}
     </a>
   );
 };

@@ -34,7 +34,7 @@ export const ImageWithText = ({ src, alt, content, imagePosition, stackOrder, he
       ) : null}
       {content && (
         <div className="lg:w-1/2">
-          <RichTextRenderer html={content} />
+          <RichTextRenderer content={content} />
         </div>
       )}
     </div>

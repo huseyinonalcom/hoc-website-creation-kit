@@ -1,20 +1,14 @@
-import type { Config } from "@puckeditor/core";
-
-import type { BaseEditorProps } from "./baseEditorConfig";
-import { createBaseEditorConfig } from "./baseEditorConfig";
+import { baseEditorConfig } from "./baseEditorConfig";
 import { RichTextRenderer } from "../../Text/Renderer";
+import { Config } from "@puckeditor/core";
 
-export const createBaseRendererConfig = (): Config<BaseEditorProps> => {
-  const baseConfig = createBaseEditorConfig();
-
-  return {
-    ...baseConfig,
-    components: {
-      ...baseConfig.components,
-      RichTextBlock: {
-        label: "Metin",
-        render: ({ content }) => <RichTextRenderer html={content ?? ""} />,
-      },
+export const baseRendererConfig: Config = {
+  ...baseEditorConfig,
+  components: {
+    ...baseEditorConfig.components,
+    RichTextBlock: {
+      label: "Metin",
+      render: ({ content }) => <RichTextRenderer content={content ?? ""} />,
     },
-  };
+  },
 };

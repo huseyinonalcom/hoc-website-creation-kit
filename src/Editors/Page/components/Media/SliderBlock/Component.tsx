@@ -49,7 +49,7 @@ export default function Slider({ slides = [], autoPlay = false, autoPlayInterval
           <div className="bg-white px-8 py-9">
             {currentSlide.text ? (
               <div className="richtext text-slate-900 **:text-current">
-                <RichTextRenderer html={currentSlide.text} />
+                <RichTextRenderer content={currentSlide.text} />
               </div>
             ) : null}
 

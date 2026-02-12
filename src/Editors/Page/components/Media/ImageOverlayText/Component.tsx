@@ -19,7 +19,7 @@ export const ImageOverlayText = ({ src, alt, overlay, height, imageMode, href }:
       {overlay && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/40 p-6 text-center">
           <div className="max-w-3xl text-white">
-            <RichTextRenderer html={overlay} />
+            <RichTextRenderer content={overlay} />
           </div>
         </div>
       )}

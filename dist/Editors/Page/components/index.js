@@ -17,7 +17,7 @@ import { linkBarConfig } from "./Actions/LinkBar/config";
 import { buttonLinkConfig } from "./Actions/ButtonLink/config";
 import { youtubeEmbedConfig } from "./Embed/YoutubeEmbed/config";
 import { googleMapsEmbedConfig } from "./Embed/GoogleMapsEmbed/config";
-export const createComponents = () => ({
+export const components = {
     TwoColumnLayout: twoColumnLayoutConfig,
     ThreeColumnLayout: threeColumnLayoutConfig,
     FourColumnLayout: fourColumnLayoutConfig,
@@ -37,5 +37,5 @@ export const createComponents = () => ({
     ButtonLink: buttonLinkConfig,
     YoutubeEmbed: youtubeEmbedConfig,
     GoogleMapsEmbed: googleMapsEmbedConfig,
-});
+};
 //# sourceMappingURL=index.js.map

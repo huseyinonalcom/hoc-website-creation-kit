@@ -17,6 +17,6 @@ export const richTextBlockConfig = {
             },
         },
     },
-    render: ({ content }) => _jsx(RichTextRenderer, { html: content ?? "" }),
+    render: ({ content }) => _jsx(RichTextRenderer, { content: content ?? "" }),
 };
 //# sourceMappingURL=config.js.map

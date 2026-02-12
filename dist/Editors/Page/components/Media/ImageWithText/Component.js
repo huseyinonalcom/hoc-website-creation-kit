@@ -13,6 +13,6 @@ export const ImageWithText = ({ src, alt, content, imagePosition, stackOrder, he
     const resolvedHref = typeof href === "string" ? href.trim() : "";
     const hasHref = resolvedHref.length > 0;
     const imageNode = src ? (_jsx("div", { className: "relative w-full overflow-hidden", style: { minHeight: `${resolvedHeight}px` }, children: _jsx(Image, { fill: true, alt: alt ?? "İlgili Görsel", className: objectFitClass, sizes: "(max-width: 1024px) 100vw, 50vw", src: src }) })) : null;
-    return (_jsxs("div", { className: `flex ${mobileOrderClass} gap-6 lg:items-center ${layoutClass}`, children: [imageNode ? (hasHref ? (_jsx(Link, { className: "block w-full lg:w-1/2", href: resolvedHref, children: imageNode })) : (_jsx("div", { className: "w-full lg:w-1/2", children: imageNode }))) : null, content && (_jsx("div", { className: "lg:w-1/2", children: _jsx(RichTextRenderer, { html: content }) }))] }));
+    return (_jsxs("div", { className: `flex ${mobileOrderClass} gap-6 lg:items-center ${layoutClass}`, children: [imageNode ? (hasHref ? (_jsx(Link, { className: "block w-full lg:w-1/2", href: resolvedHref, children: imageNode })) : (_jsx("div", { className: "w-full lg:w-1/2", children: imageNode }))) : null, content && (_jsx("div", { className: "lg:w-1/2", children: _jsx(RichTextRenderer, { content: content }) }))] }));
 };
 //# sourceMappingURL=Component.js.map

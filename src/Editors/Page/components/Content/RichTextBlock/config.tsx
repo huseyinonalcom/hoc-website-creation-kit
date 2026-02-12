@@ -21,5 +21,5 @@ export const richTextBlockConfig: Config<BaseEditorProps>["components"]["RichTex
       },
     },
   },
-  render: ({ content }) => <RichTextRenderer html={content ?? ""} />,
+  render: ({ content }) => <RichTextRenderer content={content ?? ""} />,
 };

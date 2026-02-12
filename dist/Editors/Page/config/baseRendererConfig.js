@@ -1,17 +1,14 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-import { createBaseEditorConfig } from "./baseEditorConfig";
+import { baseEditorConfig } from "./baseEditorConfig";
 import { RichTextRenderer } from "../../Text/Renderer";
-export const createBaseRendererConfig = () => {
-    const baseConfig = createBaseEditorConfig();
-    return {
-        ...baseConfig,
-        components: {
-            ...baseConfig.components,
-            RichTextBlock: {
-                label: "Metin",
-                render: ({ content }) => _jsx(RichTextRenderer, { html: content ?? "" }),
-            },
+export const baseRendererConfig = {
+    ...baseEditorConfig,
+    components: {
+        ...baseEditorConfig.components,
+        RichTextBlock: {
+            label: "Metin",
+            render: ({ content }) => _jsx(RichTextRenderer, { content: content ?? "" }),
         },
-    };
+    },
 };
 //# sourceMappingURL=baseRendererConfig.js.map

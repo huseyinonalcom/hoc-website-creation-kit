@@ -1,7 +1,3 @@
-import type { Config } from "@puckeditor/core";
-
-import type { BaseEditorProps } from "../config/types";
-
 import { twoColumnLayoutConfig } from "./Layout/TwoColumnLayout/config";
 import { threeColumnLayoutConfig } from "./Layout/ThreeColumnLayout/config";
 import { fourColumnLayoutConfig } from "./Layout/FourColumnLayout/config";
@@ -22,7 +18,7 @@ import { buttonLinkConfig } from "./Actions/ButtonLink/config";
 import { youtubeEmbedConfig } from "./Embed/YoutubeEmbed/config";
 import { googleMapsEmbedConfig } from "./Embed/GoogleMapsEmbed/config";
 
-export const createComponents = (): Config<BaseEditorProps>["components"] => ({
+export const components = {
   TwoColumnLayout: twoColumnLayoutConfig,
   ThreeColumnLayout: threeColumnLayoutConfig,
   FourColumnLayout: fourColumnLayoutConfig,
@@ -42,4 +38,4 @@ export const createComponents = (): Config<BaseEditorProps>["components"] => ({
   ButtonLink: buttonLinkConfig,
   YoutubeEmbed: youtubeEmbedConfig,
   GoogleMapsEmbed: googleMapsEmbedConfig,
-});
+};

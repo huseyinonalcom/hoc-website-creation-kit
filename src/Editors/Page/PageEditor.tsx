@@ -6,7 +6,7 @@ import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 
 import { createUsePuck, Puck } from "@puckeditor/core";
-import { createBaseEditorConfig } from "./config/baseEditorConfig";
+import { baseEditorConfig } from "./config/baseEditorConfig";
 
 export type PageEditorHeaderActionsProps = {
   appState: { data: Data } & Record<string, unknown>;
@@ -30,7 +30,7 @@ export type PageEditorProps = {
 const usePuck = createUsePuck();
 
 export function PageEditor({
-  config = createBaseEditorConfig(),
+  config = baseEditorConfig,
   data,
   height,
   path,

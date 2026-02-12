@@ -1,4 +1,3 @@
-import type { Config } from "@puckeditor/core";
-import type { BaseEditorProps } from "./baseEditorConfig";
-export declare const createBaseRendererConfig: () => Config<BaseEditorProps>;
+import { Config } from "@puckeditor/core";
+export declare const baseRendererConfig: Config;
 //# sourceMappingURL=baseRendererConfig.d.ts.map

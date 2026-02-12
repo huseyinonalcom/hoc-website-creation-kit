@@ -10,7 +10,7 @@ export const ImageOverlayText = ({ src, alt, overlay, height, imageMode, href })
     const objectFitClass = imageMode === "contain" ? "object-contain" : "object-cover";
     const resolvedHref = typeof href === "string" ? href.trim() : "";
     const hasHref = resolvedHref.length > 0;
-    const imageContent = (_jsxs("div", { className: "relative w-full overflow-hidden", style: { minHeight: `${resolvedHeight}px` }, children: [_jsx(Image, { fill: true, alt: alt ?? "İlgili Görsel", className: objectFitClass, sizes: "100vw", src: src }), overlay && (_jsx("div", { className: "absolute inset-0 flex items-center justify-center bg-black/40 p-6 text-center", children: _jsx("div", { className: "max-w-3xl text-white", children: _jsx(RichTextRenderer, { html: overlay }) }) }))] }));
+    const imageContent = (_jsxs("div", { className: "relative w-full overflow-hidden", style: { minHeight: `${resolvedHeight}px` }, children: [_jsx(Image, { fill: true, alt: alt ?? "İlgili Görsel", className: objectFitClass, sizes: "100vw", src: src }), overlay && (_jsx("div", { className: "absolute inset-0 flex items-center justify-center bg-black/40 p-6 text-center", children: _jsx("div", { className: "max-w-3xl text-white", children: _jsx(RichTextRenderer, { content: overlay }) }) }))] }));
     if (hasHref) {
         return (_jsx(Link, { className: "block", href: resolvedHref, children: imageContent }));
     }

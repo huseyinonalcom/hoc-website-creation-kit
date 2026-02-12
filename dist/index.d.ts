@@ -34,9 +34,9 @@ export { LinkListField } from "./Editors/Page/components/Actions/LinkBar/LinkLis
 export { SlidesField } from "./Editors/Page/utilityComponents/SlidesField";
 export { FilesBrowserClient, FilesDataProvider, FilesManagerClient, FilesMoveModal, FilesPickerModal, useFilesData } from "./FileManagement";
 export type { ActionResultState, CreateDirectoryInput, CreateDirectoryResponse, DeleteDirectoryInput, DeleteDirectoryResponse, DeleteFileInput, DeleteFileResponse, FilesBrowserClientProps, FilesManagerClientProps, FilesMoveModalProps, FilesPickerModalProps, SerializableDirectoryRecord, SerializableFileRecord, UpdateDirectoryInput, UpdateDirectoryResponse, UpdateFileInput, UpdateFileResponse, UploadFileInput, UploadFileState, } from "./FileManagement";
-export { createBaseEditorConfig, type BaseEditorProps, type BaseRootProps } from "./Editors/Page/config/baseEditorConfig";
+export { baseEditorConfig, type BaseEditorProps, type BaseRootProps } from "./Editors/Page/config/baseEditorConfig";
 export type { BaseComponentProps, FormInputFieldComponent, FormInputFieldProps } from "./Editors/Page/config/types";
-export { createBaseRendererConfig } from "./Editors/Page/config/baseRendererConfig";
+export { baseRendererConfig } from "./Editors/Page/config/baseRendererConfig";
 export { createFile } from "./server/files/create_file";
 export type { CreateFileResult } from "./server/files/create_file";
 export { r2 } from "./server/files/r2";

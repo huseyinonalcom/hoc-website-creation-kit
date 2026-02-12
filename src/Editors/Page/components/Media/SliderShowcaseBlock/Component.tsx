@@ -200,7 +200,7 @@ export default function SliderShowcase({
             <div className="flex w-full justify-center">
               <div className="bg-black px-6 py-4 text-sm text-white shadow-xl" style={{ width: `${CENTER_CARD_WIDTH_PERCENT}%` }}>
                 <div className="richtext text-current **:text-current">
-                  <RichTextRenderer html={currentSlide.text} />
+                  <RichTextRenderer content={currentSlide.text} />
                 </div>
               </div>
             </div>
@@ -214,7 +214,7 @@ export default function SliderShowcase({
             <div className="w-full">
               <div className="bg-black px-4 py-3 text-sm text-white shadow-xl">
                 <div className="richtext text-current **:text-current">
-                  <RichTextRenderer html={currentSlide.text} />
+                  <RichTextRenderer content={currentSlide.text} />
                 </div>
               </div>
             </div>

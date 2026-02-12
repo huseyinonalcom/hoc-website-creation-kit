@@ -1,1 +1,1 @@
-{"version":3,"file":"baseRendererConfig.d.ts","sourceRoot":"","sources":["../../../../src/Editors/Page/config/baseRendererConfig.tsx"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,MAAM,EAAE,MAAM,kBAAkB,CAAC;AAE/C,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,oBAAoB,CAAC;AAI1D,eAAO,MAAM,wBAAwB,QAAO,MAAM,CAAC,eAAe,CAajE,CAAC"}
+{"version":3,"file":"baseRendererConfig.d.ts","sourceRoot":"","sources":["../../../../src/Editors/Page/config/baseRendererConfig.tsx"],"names":[],"mappings":"AAEA,OAAO,EAAE,MAAM,EAAE,MAAM,kBAAkB,CAAC;AAE1C,eAAO,MAAM,kBAAkB,EAAE,MAShC,CAAC"}
