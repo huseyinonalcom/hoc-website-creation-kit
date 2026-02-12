@@ -1,0 +1,1 @@
+{"version":3,"file":"baseEditorConfig.d.ts","sourceRoot":"","sources":["../../../../src/Editors/Page/config/baseEditorConfig.tsx"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,MAAM,EAAE,MAAM,kBAAkB,CAAC;AAG/C,OAAO,KAAK,EAAE,eAAe,EAAE,aAAa,EAAE,MAAM,SAAS,CAAC;AAE9D,YAAY,EAAE,eAAe,EAAE,aAAa,EAAE,CAAC;AAE/C,eAAO,MAAM,sBAAsB,QAAO,MAAM,CAAC,eAAe,EAAE,aAAa,CAoC9E,CAAC"}

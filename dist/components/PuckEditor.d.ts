@@ -7,7 +7,7 @@ export type PuckEditorHeaderActionsProps = {
     path?: string;
 };
 export type PuckEditorProps = {
-    config: Config;
+    config?: Config;
     data: Partial<Data>;
     height?: string;
     path?: string;
@@ -17,5 +17,5 @@ export type PuckEditorProps = {
     onPublish?: (_data: Data) => void | Promise<void>;
     renderHeaderActions?: (_props: PuckEditorHeaderActionsProps) => ReactNode;
 };
-export declare function PuckEditor({ config, data, height, path, viewports, theme, className, onPublish, renderHeaderActions }: PuckEditorProps): import("react/jsx-runtime").JSX.Element;
+export declare function PuckEditor({ config, data, height, path, viewports, theme, className, onPublish, renderHeaderActions, }: PuckEditorProps): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=PuckEditor.d.ts.map

@@ -1,4 +1,5 @@
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+import Image from "next/image";
 import { ArrowDownTrayIcon, BookmarkIcon, CheckCircleIcon, LinkIcon, TrashIcon } from "@heroicons/react/24/outline";
 import AccordionBlock from "../components/AccordionBlock";
 import Gallery from "../components/Gallery";
@@ -15,6 +16,7 @@ import { YoutubeEmbed } from "../components/Embed/YoutubeEmbed";
 import { HeadingClipboardField } from "../fields/HeadingClipboardField";
 import { LinkBarClipboardField } from "../fields/LinkBarClipboardField";
 import { SlidesField } from "../fields/SlidesField";
+import Link from "next/link";
 const BaseFormInputField = ({ label, className, ...inputProps }) => (_jsxs("label", { className: "flex flex-col gap-2 text-sm font-medium text-gray-700", children: [label ? _jsx("span", { children: label }) : null, _jsx("input", { ...inputProps, className: `w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:outline-none ${className ?? ""}` })] }));
 const EmptyImageField = () => (_jsx("div", { className: "rounded-md border border-dashed border-gray-300 px-3 py-2 text-xs text-gray-500", children: "Image picker not configured." }));
 const createButtonToggleField = (label, options, defaultValue) => ({
@@ -25,10 +27,18 @@ const createButtonToggleField = (label, options, defaultValue) => ({
         return (_jsxs("div", { className: "flex flex-col gap-2", children: [_jsx("span", { className: "text-sm font-medium text-gray-700", children: label }), _jsx("div", { className: "flex gap-3", children: options.map((option) => (_jsx("button", { className: `rounded border px-4 py-2 text-left text-sm font-medium transition ${currentValue === option.value ? "border-indigo-600 bg-indigo-50 text-indigo-700" : "border-gray-300 text-gray-600 hover:border-indigo-400"}`, type: "button", onClick: () => onChange(option.value), children: option.label }, option.value))) })] }));
     },
 });
+const stackOrderToggleField = createButtonToggleField("Mobil Sıralama", [
+    { label: "Görsel Önce", value: "image-first" },
+    { label: "Metin Önce", value: "content-first" },
+], "image-first");
 const imageModeToggleField = createButtonToggleField("Görsel Modu", [
     { label: "Kapla", value: "cover" },
     { label: "Sığdır", value: "contain" },
 ], "cover");
+const imagePositionToggleField = createButtonToggleField("Görsel Konumu", [
+    { label: "Sol", value: "left" },
+    { label: "Sağ", value: "right" },
+], "left");
 const createNumberInputField = (FormInput, label, options = {}) => ({
     label,
     type: "custom",
@@ -117,17 +127,21 @@ export const createBaseEditorConfig = (options = {}) => {
             },
         },
         categories: {
+            layout: {
+                title: "Yerleşim",
+                components: ["TwoColumnLayout", "ThreeColumnLayout", "FourColumnLayout", "VerticalSpacer"],
+            },
             content: {
-                components: ["HeadingBlock", "RichTextBlock", "AccordionBlock", "SingleAccordion"],
                 title: "İçerik",
+                components: ["HeadingBlock", "RichTextBlock", "AccordionBlock", "SingleAccordion"],
             },
             media: {
                 title: "Görsel",
-                components: ["SliderBlock", "SliderShowcaseBlock", "Gallery"],
+                components: ["SingleImage", "ImageWithText", "ImageWithSlot", "ImageOverlayText", "SliderBlock", "SliderShowcaseBlock", "Gallery"],
             },
             actions: {
-                components: ["LinkBar", "ButtonLink"],
                 title: "Bağlantılar",
+                components: ["LinkBar", "ButtonLink"],
             },
             embed: {
                 title: "Gömülü İçerik",
@@ -135,6 +149,128 @@ export const createBaseEditorConfig = (options = {}) => {
             },
         },
         components: {
+            TwoColumnLayout: {
+                label: "2 Sütun",
+                fields: {
+                    left: {
+                        label: "Sol Sütun",
+                        type: "slot",
+                    },
+                    right: {
+                        label: "Sağ Sütun",
+                        type: "slot",
+                    },
+                    gap: numberInput("Sütun Aralığı (px)", {
+                        min: 0,
+                        placeholder: "Örn: 32",
+                    }),
+                    columnRatio: {
+                        label: "Sütun Oranı",
+                        type: "radio",
+                        options: [
+                            { label: "1:2", value: "1-2" },
+                            { label: "1:1", value: "1-1" },
+                            { label: "2:1", value: "2-1" },
+                        ],
+                    },
+                },
+                render: ({ left: Left, right: Right, gap, columnRatio }) => {
+                    if (!Left && !Right) {
+                        return _jsx(_Fragment, {});
+                    }
+                    const gapValue = typeof gap === "number" && gap >= 0 ? gap : 32;
+                    const ratio = columnRatio ?? "1-1";
+                    const containerClass = ratio === "1-1" ? "grid grid-cols-1 lg:grid-cols-2" : "grid grid-cols-1 lg:grid-cols-3";
+                    const leftColClass = (() => {
+                        if (ratio === "1-2")
+                            return "lg:col-span-1";
+                        if (ratio === "2-1")
+                            return "lg:col-span-2";
+                        return "";
+                    })();
+                    const rightColClass = (() => {
+                        if (ratio === "1-2")
+                            return "lg:col-span-2";
+                        if (ratio === "2-1")
+                            return "lg:col-span-1";
+                        return "";
+                    })();
+                    return (_jsxs("div", { className: containerClass, style: { gap: `${gapValue}px` }, children: [_jsx("div", { className: leftColClass, children: Left ? _jsx(Left, {}) : null }), _jsx("div", { className: rightColClass, children: Right ? _jsx(Right, {}) : null })] }));
+                },
+            },
+            ThreeColumnLayout: {
+                label: "3 Sütun",
+                fields: {
+                    first: {
+                        label: "Birinci Sütun",
+                        type: "slot",
+                    },
+                    second: {
+                        label: "İkinci Sütun",
+                        type: "slot",
+                    },
+                    third: {
+                        label: "Üçüncü Sütun",
+                        type: "slot",
+                    },
+                    gap: numberInput("Sütun Aralığı (px)", {
+                        min: 0,
+                        placeholder: "Örn: 32",
+                    }),
+                },
+                render: ({ first: First, second: Second, third: Third, gap }) => {
+                    if (!First && !Second && !Third) {
+                        return _jsx(_Fragment, {});
+                    }
+                    const gapValue = typeof gap === "number" && gap >= 0 ? gap : 24;
+                    return (_jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-3", style: { gap: `${gapValue}px` }, children: [_jsx("div", { children: First ? _jsx(First, {}) : null }), _jsx("div", { children: Second ? _jsx(Second, {}) : null }), _jsx("div", { children: Third ? _jsx(Third, {}) : null })] }));
+                },
+            },
+            FourColumnLayout: {
+                label: "4 Sütun",
+                fields: {
+                    first: {
+                        label: "Birinci Sütun",
+                        type: "slot",
+                    },
+                    second: {
+                        label: "İkinci Sütun",
+                        type: "slot",
+                    },
+                    third: {
+                        label: "Üçüncü Sütun",
+                        type: "slot",
+                    },
+                    fourth: {
+                        label: "Dördüncü Sütun",
+                        type: "slot",
+                    },
+                    gap: numberInput("Sütun Aralığı (px)", {
+                        min: 0,
+                        placeholder: "Örn: 24",
+                    }),
+                },
+                render: ({ first: First, second: Second, third: Third, fourth: Fourth, gap }) => {
+                    if (!First && !Second && !Third && !Fourth) {
+                        return _jsx(_Fragment, {});
+                    }
+                    const gapValue = typeof gap === "number" && gap >= 0 ? gap : 24;
+                    return (_jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-4", style: { gap: `${gapValue}px` }, children: [_jsx("div", { children: First ? _jsx(First, {}) : null }), _jsx("div", { children: Second ? _jsx(Second, {}) : null }), _jsx("div", { children: Third ? _jsx(Third, {}) : null }), _jsx("div", { children: Fourth ? _jsx(Fourth, {}) : null })] }));
+                },
+            },
+            VerticalSpacer: {
+                label: "Dikey Aralık",
+                fields: {
+                    height: numberInput("Yükseklik (px)", {
+                        min: 8,
+                        placeholder: "Örn: 48",
+                    }),
+                },
+                render: ({ height }) => {
+                    const resolvedHeight = typeof height === "number" && height > 0 ? height : 32;
+                    return _jsx("div", { "aria-hidden": "true", className: "w-full", style: { height: `${resolvedHeight}px` } });
+                },
+            },
             HeadingBlock: {
                 label: "Başlık",
                 defaultProps: {
@@ -599,6 +735,162 @@ export const createBaseEditorConfig = (options = {}) => {
                     },
                 },
                 render: ({ text, items, gridSize, imageMode }) => (_jsxs(_Fragment, { children: [_jsx("p", { className: "hidden", children: text }), _jsx(Gallery, { gridSize: isGalleryGridSize(gridSize) ? gridSize : undefined, imageMode: isGalleryImageMode(imageMode) ? imageMode : undefined, items: items })] })),
+            },
+            SingleImage: {
+                label: "Görsel Blok",
+                fields: {
+                    src: {
+                        label: "Görsel",
+                        type: "custom",
+                        render: ({ value, onChange }) => _jsx(EditorImage, { value: typeof value === "string" ? value : "", onChange: (next) => onChange(next) }),
+                    },
+                    alt: { type: "text", label: "Alternatif Metin" },
+                    height: numberInput("Yükseklik (px)", {
+                        min: 100,
+                        placeholder: "Örn: 480",
+                    }),
+                    imageMode: imageModeToggleField,
+                    href: {
+                        label: "Bağlantı URL'si",
+                        type: "text",
+                        placeholder: "https://...",
+                    },
+                },
+                render: ({ src, alt, height, imageMode, href }) => {
+                    if (!src)
+                        return _jsx(_Fragment, {});
+                    const resolvedHeight = typeof height === "number" && height > 0 ? height : 480;
+                    const objectFitClass = imageMode === "contain" ? "object-contain" : "object-cover";
+                    const resolvedHref = typeof href === "string" ? href.trim() : "";
+                    const hasHref = resolvedHref.length > 0;
+                    const imageContent = (_jsx("div", { className: "relative w-full overflow-hidden", style: { minHeight: `${resolvedHeight}px` }, children: _jsx(Image, { fill: true, alt: alt ?? "İlgili Görsel", className: objectFitClass, sizes: "100vw", src: src }) }));
+                    if (hasHref) {
+                        return (_jsx(Link, { className: "block", href: resolvedHref, children: imageContent }));
+                    }
+                    return imageContent;
+                },
+            },
+            ImageWithText: {
+                label: "Görsel + Metin",
+                fields: {
+                    src: {
+                        label: "Görsel",
+                        type: "custom",
+                        render: ({ value, onChange }) => _jsx(EditorImage, { value: typeof value === "string" ? value : "", onChange: onChange }),
+                    },
+                    imagePosition: imagePositionToggleField,
+                    stackOrder: stackOrderToggleField,
+                    height: numberInput("Görsel Yüksekliği (px)", {
+                        min: 150,
+                        placeholder: "Örn: 360",
+                    }),
+                    imageMode: imageModeToggleField,
+                    alt: { type: "text", label: "Alternatif Metin" },
+                    href: {
+                        label: "Bağlantı URL'si",
+                        type: "text",
+                        placeholder: "https://...",
+                    },
+                    content: {
+                        label: "Metin",
+                        type: "custom",
+                        render: ({ value, onChange, id }) => _jsx(RichTextEditor, { initialData: value ?? "", onChange: onChange }, id ?? "image-with-text"),
+                    },
+                },
+                render: ({ src, alt, content, imagePosition, stackOrder, height, imageMode, href }) => {
+                    if (!src && !content) {
+                        return _jsx(_Fragment, {});
+                    }
+                    const layoutClass = imagePosition === "right" ? "lg:flex-row-reverse" : "lg:flex-row";
+                    const mobileOrderClass = stackOrder === "content-first" ? "flex-col-reverse" : "flex-col";
+                    const resolvedHeight = typeof height === "number" && height > 0 ? height : 360;
+                    const objectFitClass = imageMode === "contain" ? "object-contain" : "object-cover";
+                    const resolvedHref = typeof href === "string" ? href.trim() : "";
+                    const hasHref = resolvedHref.length > 0;
+                    const imageNode = src ? (_jsx("div", { className: "relative w-full overflow-hidden", style: { minHeight: `${resolvedHeight}px` }, children: _jsx(Image, { fill: true, alt: alt ?? "İlgili Görsel", className: objectFitClass, sizes: "(max-width: 1024px) 100vw, 50vw", src: src }) })) : null;
+                    return (_jsxs("div", { className: `flex ${mobileOrderClass} gap-6 lg:items-center ${layoutClass}`, children: [imageNode ? (hasHref ? (_jsx(Link, { className: "block w-full lg:w-1/2", href: resolvedHref, children: imageNode })) : (_jsx("div", { className: "w-full lg:w-1/2", children: imageNode }))) : null, content && (_jsx("div", { className: "lg:w-1/2", children: _jsx(RichTextRenderer, { html: content }) }))] }));
+                },
+            },
+            ImageWithSlot: {
+                label: "Görsel + Boş Alan",
+                fields: {
+                    src: {
+                        label: "Görsel",
+                        type: "custom",
+                        render: ({ value, onChange }) => _jsx(EditorImage, { value: typeof value === "string" ? value : "", onChange: onChange }),
+                    },
+                    imagePosition: imagePositionToggleField,
+                    stackOrder: stackOrderToggleField,
+                    height: numberInput("Görsel Yüksekliği (px)", {
+                        min: 150,
+                        placeholder: "Örn: 360",
+                    }),
+                    imageMode: imageModeToggleField,
+                    alt: { type: "text", label: "Alternatif Metin" },
+                    href: {
+                        label: "Bağlantı URL'si",
+                        type: "text",
+                        placeholder: "https://...",
+                    },
+                    content: {
+                        label: "Boş Alan İçeriği",
+                        type: "slot",
+                    },
+                },
+                render: ({ src, alt, content: Content, imagePosition, stackOrder, height, imageMode, href }) => {
+                    if (!src && !Content) {
+                        return _jsx(_Fragment, {});
+                    }
+                    const layoutClass = imagePosition === "right" ? "lg:flex-row-reverse" : "lg:flex-row";
+                    const mobileOrderClass = stackOrder === "content-first" ? "flex-col-reverse" : "flex-col";
+                    const resolvedHeight = typeof height === "number" && height > 0 ? height : 360;
+                    const objectFitClass = imageMode === "contain" ? "object-contain" : "object-cover";
+                    const resolvedHref = typeof href === "string" ? href.trim() : "";
+                    const hasHref = resolvedHref.length > 0;
+                    const imageNode = src ? (_jsx("div", { className: "relative w-full overflow-hidden", style: { minHeight: `${resolvedHeight}px` }, children: _jsx(Image, { fill: true, alt: alt ?? "İlgili Görsel", className: objectFitClass, sizes: "(max-width: 1024px) 100vw, 50vw", src: src }) })) : null;
+                    return (_jsxs("div", { className: `flex ${mobileOrderClass} gap-6 lg:items-center ${layoutClass}`, children: [imageNode ? (hasHref ? (_jsx(Link, { className: "block w-full lg:w-1/2", href: resolvedHref, children: imageNode })) : (_jsx("div", { className: "w-full lg:w-1/2", children: imageNode }))) : null, Content && (_jsx("div", { className: "lg:w-1/2", children: _jsx(Content, {}) }))] }));
+                },
+            },
+            ImageOverlayText: {
+                label: "Üst Yazılı Görsel",
+                fields: {
+                    src: {
+                        label: "Görsel",
+                        type: "custom",
+                        render: ({ value, onChange }) => _jsx(EditorImage, { value: typeof value === "string" ? value : "", onChange: onChange }),
+                    },
+                    alt: { type: "text", label: "Alternatif Metin" },
+                    overlay: {
+                        label: "Metin",
+                        type: "custom",
+                        render: ({ value, onChange, id }) => _jsx(RichTextEditor, { initialData: value ?? "", onChange: onChange }, id ?? "image-overlay"),
+                    },
+                    height: numberInput("Yükseklik (px)", {
+                        min: 200,
+                        placeholder: "Örn: 400",
+                        defaultValue: 200,
+                    }),
+                    imageMode: imageModeToggleField,
+                    href: {
+                        label: "Bağlantı URL'si",
+                        type: "text",
+                        placeholder: "https://...",
+                    },
+                },
+                render: ({ src, alt, overlay, height, imageMode, href }) => {
+                    if (!src) {
+                        return _jsx(_Fragment, {});
+                    }
+                    const resolvedHeight = typeof height === "number" && height > 0 ? height : 420;
+                    const objectFitClass = imageMode === "contain" ? "object-contain" : "object-cover";
+                    const resolvedHref = typeof href === "string" ? href.trim() : "";
+                    const hasHref = resolvedHref.length > 0;
+                    const imageContent = (_jsxs("div", { className: "relative w-full overflow-hidden", style: { minHeight: `${resolvedHeight}px` }, children: [_jsx(Image, { fill: true, alt: alt ?? "İlgili Görsel", className: objectFitClass, sizes: "100vw", src: src }), overlay && (_jsx("div", { className: "absolute inset-0 flex items-center justify-center bg-black/40 p-6 text-center", children: _jsx("div", { className: "max-w-3xl text-white", children: _jsx(RichTextRenderer, { html: overlay }) }) }))] }));
+                    if (hasHref) {
+                        return (_jsx(Link, { className: "block", href: resolvedHref, children: imageContent }));
+                    }
+                    return imageContent;
+                },
             },
         },
     };

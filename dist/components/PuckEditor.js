@@ -2,8 +2,9 @@
 import { Fragment as _Fragment, jsx as _jsx } from "react/jsx-runtime";
 import { useEffect, useState } from "react";
 import { createUsePuck, Puck } from "@puckeditor/core";
+import { createBaseEditorConfig } from "../config/baseEditorConfig";
 const usePuck = createUsePuck();
-export function PuckEditor({ config, data, height, path, viewports, theme = "light", className, onPublish, renderHeaderActions }) {
+export function PuckEditor({ config = createBaseEditorConfig(), data, height, path, viewports, theme = "light", className, onPublish, renderHeaderActions, }) {
     const themeClassName = theme === "dark" ? "puck-theme-dark" : undefined;
     const wrapperClassName = ["puck-editor", themeClassName, className].filter(Boolean).join(" ");
     const [editorData, setEditorData] = useState(data);

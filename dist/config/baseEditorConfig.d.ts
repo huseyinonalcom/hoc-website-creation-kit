@@ -7,6 +7,28 @@ export type BaseRootProps = {
     description?: string;
 };
 export type BaseEditorProps = {
+    TwoColumnLayout: {
+        left?: Slot;
+        right?: Slot;
+        gap?: number;
+        columnRatio?: "1-2" | "1-1" | "2-1";
+    };
+    ThreeColumnLayout: {
+        first?: Slot;
+        second?: Slot;
+        third?: Slot;
+        gap?: number;
+    };
+    FourColumnLayout: {
+        first?: Slot;
+        second?: Slot;
+        third?: Slot;
+        fourth?: Slot;
+        gap?: number;
+    };
+    VerticalSpacer: {
+        height?: number;
+    };
     HeadingBlock: {
         text?: string;
         level?: HeadingLevel;
@@ -34,19 +56,51 @@ export type BaseEditorProps = {
     RichTextBlock: {
         content?: string;
     };
-    LinkBar: {
-        links?: {
-            label?: string;
-            path?: string;
+    AccordionBlock: {
+        sections?: {
+            title?: string;
+            content?: Slot;
         }[];
     };
-    ButtonLink: {
-        text?: string;
-        url?: string;
-        icon?: string;
-        openInNewTab?: boolean;
-        color?: string;
-        borderRadius?: number;
+    SingleAccordion: {
+        title?: string;
+        content?: Slot;
+        defaultOpen?: boolean;
+    };
+    SingleImage: {
+        src?: string;
+        alt?: string;
+        height?: number;
+        imageMode?: "cover" | "contain";
+        href?: string;
+    };
+    ImageWithText: {
+        src?: string;
+        alt?: string;
+        content?: string;
+        imagePosition?: "left" | "right";
+        stackOrder?: "image-first" | "content-first";
+        height?: number;
+        imageMode?: "cover" | "contain";
+        href?: string;
+    };
+    ImageWithSlot: {
+        src?: string;
+        alt?: string;
+        content?: Slot;
+        imagePosition?: "left" | "right";
+        stackOrder?: "image-first" | "content-first";
+        height?: number;
+        imageMode?: "cover" | "contain";
+        href?: string;
+    };
+    ImageOverlayText: {
+        src?: string;
+        alt?: string;
+        overlay?: string;
+        height?: number;
+        imageMode?: "cover" | "contain";
+        href?: string;
     };
     SliderBlock: {
         slides?: {
@@ -68,6 +122,26 @@ export type BaseEditorProps = {
         desktopHeight?: number;
         mobileHeight?: number;
     };
+    Gallery: {
+        text?: string;
+        items?: GalleryBlockItem[];
+        gridSize?: GalleryGridSize;
+        imageMode?: GalleryImageMode;
+    };
+    LinkBar: {
+        links?: {
+            label?: string;
+            path?: string;
+        }[];
+    };
+    ButtonLink: {
+        text?: string;
+        url?: string;
+        icon?: string;
+        openInNewTab?: boolean;
+        color?: string;
+        borderRadius?: number;
+    };
     YoutubeEmbed: {
         url?: string;
         title?: string;
@@ -80,23 +154,6 @@ export type BaseEditorProps = {
         title?: string;
         height?: number;
         allowFullScreen?: boolean;
-    };
-    AccordionBlock: {
-        sections?: {
-            title?: string;
-            content?: Slot;
-        }[];
-    };
-    SingleAccordion: {
-        title?: string;
-        content?: Slot;
-        defaultOpen?: boolean;
-    };
-    Gallery: {
-        text?: string;
-        items?: GalleryBlockItem[];
-        gridSize?: GalleryGridSize;
-        imageMode?: GalleryImageMode;
     };
 };
 export type ImageFieldProps = {
