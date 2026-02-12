@@ -3,7 +3,7 @@
 import type { Config, Data, Viewport } from "@puckeditor/core";
 import type { ReactNode } from "react";
 
-import { useEffect, useState } from "react";
+import { useRef } from "react";
 
 import { createUsePuck, Puck } from "@puckeditor/core";
 import { baseEditorConfig } from "./config/baseEditorConfig";
@@ -42,21 +42,17 @@ export function PageEditor({
 }: PageEditorProps) {
   const themeClassName = theme === "dark" ? "puck-theme-dark" : undefined;
   const wrapperClassName = ["puck-editor", themeClassName, className].filter(Boolean).join(" ");
-  const [editorData, setEditorData] = useState<Partial<Data>>(data);
-
-  useEffect(() => {
-    setEditorData(data);
-  }, [data]);
+  const editorDataRef = useRef<Partial<Data>>(data);
 
   return (
     <div className={wrapperClassName}>
       <Puck
         key={theme}
         config={config}
-        data={editorData}
+        data={editorDataRef.current}
         height={height}
         onChange={(next) => {
-          setEditorData(next);
+          editorDataRef.current = next;
         }}
         overrides={
           renderHeaderActions
