@@ -4,10 +4,16 @@ import { db } from "../../db/config";
 
 // Deletes a directory and its descendants only if no non-deleted files exist in them.
 export const deleteDirectory = async ({ id }: { id: string }) => {
-  const directories = await db.selectFrom("file_directories").selectAll().execute();
+  const directories = await db
+    .selectFrom("file_directories")
+    .selectAll()
+    .execute();
 
   // collect descendants (simple DFS)
-  const byParent = new Map<string | null, { id: string; parent_id: string | null }[]>();
+  const byParent = new Map<
+    string | null,
+    { id: string; parent_id: string | null }[]
+  >();
   directories.forEach((d: any) => {
     const list = byParent.get(d.parent_id ?? null) ?? [];
     list.push(d as any);
@@ -26,13 +32,23 @@ export const deleteDirectory = async ({ id }: { id: string }) => {
 
   if (targetIds.length === 0) throw new Error("Directory not found");
 
-  const filesInDir = await db.selectFrom("files").select(["id"]).where("is_deleted", "=", false).where("directory_id", "in", targetIds).execute();
+  const filesInDir = await db
+    .selectFrom("files")
+    .select(["id"])
+    .where("is_deleted", "=", false)
+    .where("directory_id", "in", targetIds)
+    .execute();
 
   if (filesInDir.length > 0) {
-    throw new Error("Cannot delete directory because it (or descendants) contain files");
+    throw new Error(
+      "Cannot delete directory because it (or descendants) contain files",
+    );
   }
 
-  await db.deleteFrom("file_directories").where("id", "in", targetIds).execute();
+  await db
+    .deleteFrom("file_directories")
+    .where("id", "in", targetIds)
+    .execute();
 
   return { deletedIds: targetIds };
 };

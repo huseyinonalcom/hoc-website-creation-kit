@@ -1,8 +1,7 @@
+import { DB } from "../types/dbtypes";
 import { Kysely, PostgresDialect } from "kysely";
 import { Pool } from "pg";
 import "dotenv/config";
-
-import type { DB } from "../../dbtypes";
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,

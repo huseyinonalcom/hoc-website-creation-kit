@@ -2,7 +2,13 @@ import "server-only";
 
 import { db } from "../../db/config";
 
-export const createDirectory = async ({ name, parentId }: { name: string; parentId?: string | null }) => {
+export const createDirectory = async ({
+  name,
+  parentId,
+}: {
+  name: string;
+  parentId?: string | null;
+}) => {
   const trimmed = String(name ?? "").trim();
   if (!trimmed) throw new Error("Directory name is required");
 
@@ -15,7 +21,9 @@ export const createDirectory = async ({ name, parentId }: { name: string; parent
     .executeTakeFirst();
 
   if (existing) {
-    throw new Error("A directory with this name already exists in the target parent");
+    throw new Error(
+      "A directory with this name already exists in the target parent",
+    );
   }
 
   const inserted = await db

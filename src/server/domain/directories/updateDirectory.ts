@@ -2,7 +2,15 @@ import "server-only";
 
 import { db } from "../../db/config";
 
-export const updateDirectory = async ({ id, name, parentId }: { id: string; name?: string | null; parentId?: string | null }) => {
+export const updateDirectory = async ({
+  id,
+  name,
+  parentId,
+}: {
+  id: string;
+  name?: string | null;
+  parentId?: string | null;
+}) => {
   const trimmedName = typeof name === "string" ? name.trim() : "";
   const nextName = trimmedName.length > 0 ? trimmedName : null;
 
@@ -14,7 +22,12 @@ export const updateDirectory = async ({ id, name, parentId }: { id: string; name
     throw new Error("No updates provided");
   }
 
-  const updated = await db.updateTable("file_directories").set(updatePayload).where("id", "=", id).returningAll().executeTakeFirstOrThrow();
+  const updated = await db
+    .updateTable("file_directories")
+    .set(updatePayload)
+    .where("id", "=", id)
+    .returningAll()
+    .executeTakeFirstOrThrow();
 
   return { result: updated };
 };

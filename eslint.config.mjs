@@ -13,7 +13,13 @@ import js from "@eslint/js";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-  globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
+  globalIgnores([ 
+    "dist/**",
+    "build/**",
+    ".next/**",
+    "node_modules/**",
+    "**/*.d.ts",
+  ]),
   js.configs.recommended,
   {
     files: ["src/**/*.{ts,tsx}"],
@@ -50,7 +56,7 @@ const eslintConfig = defineConfig([
     },
   },
   {
-    files: ["src/server/**/*.{ts,js}"],
+    files: ["src/server/**/*.{ts}"],
     languageOptions: {
       globals: {
         ...globals.node,
@@ -63,7 +69,7 @@ const eslintConfig = defineConfig([
     rules: {},
   },
   {
-    files: ["src/app/**/*.{tsx,jsx}", "src/components/**/*.{tsx,jsx}"],
+    files: ["src/**/*.{tsx}"],
     languageOptions: {
       parser,
       parserOptions: {

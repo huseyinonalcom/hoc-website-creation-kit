@@ -2,8 +2,8 @@ import "server-only";
 import React from "react";
 
 import FilesDataProvider from "../Providers/FilesDataProvider";
-import { listFiles } from "@/server/domain/files/listFiles";
-import { listDirectories } from "@/server/domain/files/listDirectories";
+import listFiles from "../../server/domain/files/listFiles";
+import listDirectories from "../../server/domain/directories/listDirectories";
 
 const mapDbFileToSerializable = (row: any) => ({
   id: row.id,
@@ -23,7 +23,11 @@ const mapDbDirToSerializable = (row: any) => ({
   updatedAt: row.updated_at?.toString?.() ?? null,
 });
 
-export default async function ServerFilesProvider({ children }: { children: React.ReactNode }) {
+export default async function ServerFilesProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const filesRes = await listFiles({ includeDeleted: true });
   const dirsRes = await listDirectories();
 
