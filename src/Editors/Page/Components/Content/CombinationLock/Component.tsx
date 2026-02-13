@@ -1,230 +1,143 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 export type CombinationLockProps = {
-  sequences?: string[]; // at least two strings (component will still work with 1)
-  interval?: number; // ms to show a completed string before transitioning to next
-  spinDuration?: number; // approximate duration (ms) of a single dial's spin
-  cycles?: number; // how many full charset rotations each dial does (min 1)
-  loop?: boolean; // repeat forever
+  sequences?: string[];
+  interval?: number;
+  spinDuration?: number;
+  cycles?: number;
+  scale?: number;
+  activeSequence?: number;
   className?: string;
 };
 
 const DEFAULT_CHARSET =
   " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-const ITEM_HEIGHT = 28; // px - visible height of each character cell
-
-const fillEmptySequences = (seqs: string[]) => {
-  const filled: string[] = [];
-  for (let i = 0; i < seqs.length; i++) {
-    if (seqs[i] && seqs[i].length > 0) {
-      filled.push(seqs[i]);
-    } else if (i > 0) {
-      filled.push(filled[i - 1]);
-    } else {
-      filled.push("code");
-    }
-  }
-  return filled;
-};
+const BASE_HEIGHT = 28;
 
 export default function CombinationLock({
-  sequences = ["code", "lock"],
-  interval = 2000,
-  spinDuration = 700,
+  sequences = ["Code", "Lock", "Sync"],
+  interval = 3000,
+  spinDuration = 1500,
   cycles = 1,
-  loop = true,
+  scale = 1,
+  activeSequence,
   className,
 }: CombinationLockProps) {
-  if (sequences.length === 0) {
-    sequences = ["code", "lock"];
-  }
-  if (sequences.length == 1) {
-    sequences.push(sequences[0]); // ensure at least 2 sequences for cycling logic
-  }
-  sequences = fillEmptySequences(sequences);
-  // Ensure charset contains all characters that appear in the sequences
-  const charsetArr = React.useMemo(() => {
+  const charset = useMemo(() => {
     const base = DEFAULT_CHARSET.split("");
-    const extras = Array.from(new Set(sequences.join("").split(""))).filter(
-      (c) => !base.includes(c),
-    );
-    return base.concat(extras);
+    const uniqueFromSeqs = Array.from(new Set(sequences.join("").split("")));
+    return Array.from(new Set([...base, ...uniqueFromSeqs]));
   }, [sequences]);
 
-  const charsetLen = charsetArr.length;
-
   const maxLen = Math.max(...sequences.map((s) => s.length));
-  const padded = sequences.map((s) => s.padEnd(maxLen, " "));
-
-  // current displayed index into charset for each dial
-  const [positions, setPositions] = useState<number[]>(() =>
-    padded[0].split("").map((ch) => Math.max(0, charsetArr.indexOf(ch))),
+  const paddedSequences = useMemo(
+    () => sequences.map((s) => s.padEnd(maxLen, " ")),
+    [sequences, maxLen],
   );
 
-  const seqIndexRef = useRef(0);
-  const timersRef = useRef<number[]>([]);
-  const runningRef = useRef(false);
-  const mountedRef = useRef(true);
+  // We track the raw cumulative indices here
+  const [targetIndices, setTargetIndices] = useState<number[]>(() =>
+    paddedSequences[0].split("").map((ch) => charset.indexOf(ch)),
+  );
 
-  useEffect(() => {
-    mountedRef.current = true;
-    return () => {
-      mountedRef.current = false;
-      // clear timers
-      timersRef.current.forEach((id) => clearTimeout(id));
-      timersRef.current = [];
-    };
-  }, []);
+  const [internalIndex, setInternalIndex] = useState(0);
 
-  // helper: spin a single dial from its current index to target index
-  const spinDialTo = (dialIndex: number, targetCharIndex: number) => {
-    return new Promise<void>((resolve) => {
-      const startIndex = (() => {
-        const cur = positions[dialIndex];
-        return typeof cur === "number" && !Number.isNaN(cur) ? cur : 0;
-      })();
+  // Function to calculate the next cumulative step
+  const moveToSequence = useCallback(
+    (index: number) => {
+      const nextWord = paddedSequences[index % paddedSequences.length];
 
-      // distance forward in the charset (wrap allowed)
-      const relativeDistance =
-        (targetCharIndex - startIndex + charsetLen) % charsetLen;
-      const totalSteps = relativeDistance + Math.max(1, cycles) * charsetLen;
+      setTargetIndices((prev) =>
+        nextWord.split("").map((char, i) => {
+          const charIndex = charset.indexOf(char);
+          const currentPos = prev[i];
 
-      // calculate per-step delay so approx spinDuration is used
-      const minTick = 12; // ms
-      const tick = Math.max(
-        minTick,
-        Math.floor(spinDuration / Math.max(1, totalSteps)),
+          const currentMod = currentPos % charset.length;
+          let diff = charIndex - currentMod;
+
+          // Always force forward motion (spinning "down")
+          if (diff <= 0) diff += charset.length;
+
+          return currentPos + diff + cycles * charset.length;
+        }),
       );
+    },
+    [charset, cycles, paddedSequences],
+  );
 
-      let step = 0;
-      const runStep = () => {
-        if (!mountedRef.current) return resolve();
-        setPositions((prev) => {
-          const copy = prev.slice();
-          copy[dialIndex] = (copy[dialIndex] + 1) % charsetLen;
-          return copy;
-        });
-        step += 1;
-        if (step >= totalSteps) {
-          window.setTimeout(resolve, 0);
-          return;
-        }
-        const id = window.setTimeout(runStep, tick);
-        timersRef.current.push(id);
-      };
-
-      // small stagger so dials don't all finish at exactly same frame (visual polish)
-      const initialDelay = Math.floor(Math.random() * 80);
-      const id0 = window.setTimeout(() => {
-        timersRef.current.push(window.setTimeout(runStep, 0));
-      }, initialDelay);
-      timersRef.current.push(id0);
-    });
-  };
-
-  // transition to next sequence (animated)
-  const doTransitionTo = async (nextSeqIndex: number) => {
-    if (!mountedRef.current) return;
-    if (runningRef.current) return; // avoid overlapping
-    runningRef.current = true;
-
-    const target = padded[nextSeqIndex];
-    const spins: Promise<void>[] = [];
-
-    for (let i = 0; i < maxLen; i++) {
-      const ch = target[i] ?? " ";
-      const targetIndex = Math.max(0, charsetArr.indexOf(ch));
-      spins.push(spinDialTo(i, targetIndex));
-    }
-
-    // wait for all dials to finish
-    await Promise.all(spins);
-    seqIndexRef.current = nextSeqIndex;
-    runningRef.current = false;
-  };
-
-  // cycle through sequences on an interval
+  // Effect for Manual Control: Watch the activeSequence prop
   useEffect(() => {
-    if (sequences.length < 2) return undefined;
-    let cancelled = false;
+    if (activeSequence !== undefined) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      moveToSequence(activeSequence);
+    }
+  }, [activeSequence, moveToSequence]);
 
-    const startCycle = async () => {
-      while (
-        !cancelled &&
-        (loop || seqIndexRef.current < sequences.length - 1)
-      ) {
-        const next = (seqIndexRef.current + 1) % sequences.length;
-        await doTransitionTo(next);
-        if (cancelled) break;
-        await new Promise((res) => {
-          const id = window.setTimeout(res, interval);
-          timersRef.current.push(id);
-        });
-      }
-    };
+  // Effect for Auto-Cycling: Only runs if activeSequence is undefined
+  useEffect(() => {
+    if (activeSequence !== undefined) return;
 
-    startCycle();
+    const timer = setTimeout(() => {
+      const nextIndex = (internalIndex + 1) % paddedSequences.length;
+      moveToSequence(nextIndex);
+      setInternalIndex(nextIndex);
+    }, interval + spinDuration);
 
-    return () => {
-      cancelled = true;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sequences.join("|"), interval, spinDuration, cycles, loop]);
+    return () => clearTimeout(timer);
+  }, [
+    internalIndex,
+    activeSequence,
+    interval,
+    spinDuration,
+    paddedSequences,
+    moveToSequence,
+  ]);
 
-  if (!sequences || sequences.length === 0) {
-    return <></>;
-  }
-
-  // show characters from charset at current positions
   return (
     <div
-      className={className}
-      aria-live="polite"
-      style={{ display: "inline-flex", gap: 8, alignItems: "center" }}
+      className={`inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-gray-100 p-2 shadow-inner dark:border-slate-700 dark:bg-slate-900 ${className}`}
+      style={{
+        transform: `scale(${scale})`,
+        transformOrigin: "center center",
+      }}
     >
-      {positions.map((pos, i) => (
+      {targetIndices.map((targetIdx, i) => (
         <div
           key={i}
-          style={{
-            width: ITEM_HEIGHT,
-            height: ITEM_HEIGHT,
-            overflow: "hidden",
-            borderRadius: 6,
-            background: "var(--bg, #fff)",
-            border: "1px solid rgba(0,0,0,0.06)",
-            boxShadow: "0 1px 0 rgba(0,0,0,0.02)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontFamily:
-              "ui-monospace, SFMono-Regular, Menlo, Monaco, monospace",
-            fontSize: 14,
-            color: "var(--fg, #0f172a)",
-          }}
-          aria-hidden={false}
+          className="relative w-7 overflow-hidden rounded-md border border-gray-400/30 bg-white shadow-sm dark:border-slate-600 dark:bg-slate-800"
+          style={{ height: BASE_HEIGHT }}
         >
+          {/* Mechanical Depth Shading */}
+          <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-2 bg-gradient-to-b from-black/10 to-transparent dark:from-black/50" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-2 bg-gradient-to-t from-black/10 to-transparent dark:from-black/50" />
+
+          {/* Subtle Horizontal Reflection */}
+          <div className="pointer-events-none absolute inset-x-0 top-[40%] z-20 h-[20%] bg-white/20 dark:bg-white/5" />
+
           <div
+            className="flex flex-col items-center justify-start transition-transform"
             style={{
-              transform: `translateY(-${pos * ITEM_HEIGHT}px)`,
-              transition: `transform ${Math.max(100, spinDuration)}ms cubic-bezier(.22,1,.36,1)`,
+              transform: `translateY(-${targetIdx * BASE_HEIGHT}px)`,
+              transitionDuration: `${spinDuration}ms`,
+              transitionTimingFunction: "cubic-bezier(0.45, 0, 0.55, 1)",
+              transitionDelay: `${i * 80}ms`,
             }}
           >
-            {Array.from({ length: 64 })
-              .map((_, n) => charsetArr[n % charsetLen])
-              .map((ch, k) => (
-                <div
-                  key={k}
-                  style={{
-                    height: ITEM_HEIGHT,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  {ch}
-                </div>
-              ))}
+            {/* Render enough charset iterations to cover the current cumulative index */}
+            {Array.from({
+              length:
+                Math.ceil((targetIdx + charset.length) / charset.length) *
+                charset.length,
+            }).map((_, k) => (
+              <div
+                key={k}
+                className="flex items-center justify-center font-mono text-lg font-bold text-slate-700 dark:text-slate-200"
+                style={{ height: BASE_HEIGHT }}
+              >
+                {charset[k % charset.length]}
+              </div>
+            ))}
           </div>
         </div>
       ))}

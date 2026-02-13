@@ -16,7 +16,6 @@ export const combinationLockConfig: Config<BaseEditorProps>["components"]["Combi
       interval: 2000,
       spinDuration: 700,
       cycles: 1,
-      loop: true,
     },
     fields: {
       clipboard: {
@@ -47,17 +46,13 @@ export const combinationLockConfig: Config<BaseEditorProps>["components"]["Combi
         defaultValue: 700,
       }),
       cycles: numberInput("Turlar", { min: 1, defaultValue: 1 }),
-      loop: {
-        label: "Tekrarla",
-        type: "radio",
-        options: [
-          { label: "Evet", value: true },
-          { label: "Hayır", value: false },
-        ],
-      },
+      scale: numberInput("Ölçek", {
+        min: 0.5,
+        defaultValue: 1,
+      }),
     },
     render: (props) => {
-      const { sequences, interval, spinDuration, cycles, loop } = props;
+      const { sequences, interval, spinDuration, cycles, scale } = props;
       const mappedSequences = Array.isArray(sequences)
         ? sequences.map((item) => item?.value ?? "")
         : [];
@@ -66,8 +61,8 @@ export const combinationLockConfig: Config<BaseEditorProps>["components"]["Combi
           interval={interval}
           spinDuration={spinDuration}
           cycles={cycles}
-          loop={loop}
           sequences={mappedSequences}
+          scale={scale}
         />
       );
     },
