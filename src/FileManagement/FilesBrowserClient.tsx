@@ -6,6 +6,7 @@ import Image from "next/image";
 import { DragEvent, MouseEvent, useMemo, useRef, useState } from "react";
 
 import cn from "../utils/classnames";
+import * as FMApi from "./api";
 
 import type { CreateDirectoryInput, CreateDirectoryResponse, SerializableDirectoryRecord, SerializableFileRecord, UploadFileInput } from "./types";
 
@@ -62,6 +63,42 @@ export function FilesBrowserClient({
   enableDragDrop = false,
   selectedFileIds,
 }: FilesBrowserClientProps) {
+  // Provide default implementations that call the package API so the component
+  // works out-of-the-box when props are not supplied.
+  const uploadFileDefault = async (input: UploadFileInput) => {
+    try {
+      const data = await FMApi.uploadFile(input);
+      if (data && data.result === "success" && data.file) {
+        return {
+          result: "success",
+          error: "",
+          uploadedFile: FMApi.mapDbFileToSerializable(data.file),
+        } as UploadFileState;
+      }
+
+      return { result: "error", error: data?.error || "Upload failed", uploadedFile: null } as UploadFileState;
+    } catch (err: any) {
+      return { result: "error", error: err?.message || String(err), uploadedFile: null } as UploadFileState;
+    }
+  };
+
+  const createDirectoryDefault = async (input: CreateDirectoryInput) => {
+    try {
+      const data = await FMApi.createDirectory(input);
+      // API may wrap the result in different shapes; attempt to extract the directory row
+      const dirRow = data?.directory ?? data?.result?.directory ?? data?.result?.result?.directory ?? null;
+      if (dirRow) {
+        return { result: "success", directory: FMApi.mapDbDirToSerializable(dirRow) };
+      }
+
+      return { result: "error", error: data?.error || "Could not create directory" };
+    } catch (err: any) {
+      return { result: "error", error: err?.message || String(err) };
+    }
+  };
+
+  const resolvedOnUploadFile = onUploadFile ?? uploadFileDefault;
+  const resolvedOnCreateDirectory = onCreateDirectory ?? createDirectoryDefault;
   const [internalDirectoryId, setInternalDirectoryId] = useState<string | null>(initialDirectoryId ?? null);
   const [internalSelectedIds, setInternalSelectedIds] = useState<string[]>([]);
   const [lastSelectedIndex, setLastSelectedIndex] = useState<number | null>(null);
@@ -72,8 +109,8 @@ export function FilesBrowserClient({
   const [dragOverTarget, setDragOverTarget] = useState<string | null>(null);
   const activeDirectoryId = controlledDirectoryId !== undefined ? controlledDirectoryId : internalDirectoryId;
   const resolvedSelectedIds = selectedFileIds ?? internalSelectedIds;
-  const canCreateDirectory = showDirectoryCreate && Boolean(onCreateDirectory);
-  const canUpload = showUpload && Boolean(onUploadFile);
+  const canCreateDirectory = showDirectoryCreate && Boolean(resolvedOnCreateDirectory);
+  const canUpload = showUpload && Boolean(resolvedOnUploadFile);
 
   const updateSelectedIds = (next: string[]) => {
     if (onSelectionChange) {
@@ -217,7 +254,7 @@ export function FilesBrowserClient({
       return;
     }
 
-    if (!onCreateDirectory) {
+    if (!resolvedOnCreateDirectory) {
       setClientError("Klasor olusturma yapilandirilmamis.");
       return;
     }
@@ -226,7 +263,7 @@ export function FilesBrowserClient({
     setIsCreatingDirectory(true);
 
     try {
-      const response = await onCreateDirectory({
+      const response = await resolvedOnCreateDirectory({
         name: directoryName,
         parentId: activeDirectoryId,
       });
@@ -253,7 +290,7 @@ export function FilesBrowserClient({
       return;
     }
 
-    if (!onUploadFile) {
+    if (!resolvedOnUploadFile) {
       setClientError("Dosya yukleme yapilandirilmamis.");
       return;
     }
@@ -264,7 +301,7 @@ export function FilesBrowserClient({
     try {
       setUploadState(() => ({ ...uploadFileInitialState }));
 
-      const result = await onUploadFile({
+      const result = await resolvedOnUploadFile({
         file: selectedFile,
         directoryId: activeDirectoryId,
       });

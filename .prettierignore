@@ -1,0 +1,6 @@
+# Ignore artifacts:
+*.config.ts
+*.md
+*.mjs
+*.d.ts
+dist

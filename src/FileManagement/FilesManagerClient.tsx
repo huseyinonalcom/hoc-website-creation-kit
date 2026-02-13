@@ -21,6 +21,7 @@ import type {
 
 import { useFilesData } from "./Providers/FilesDataProvider";
 import { FilesBrowserClient } from "./FilesBrowserClient";
+import * as FMApi from "./api";
 import { FilesMoveModal } from "./FilesMoveModal";
 import cn from "../utils/classnames";
 import type { UploadFileState } from "./state";
@@ -34,10 +35,10 @@ type StatusState = { type: "success" | "error"; message: string } | null;
 export type FilesManagerClientProps = {
   onUploadFile?: (input: UploadFileInput) => Promise<UploadFileState>;
   onCreateDirectory?: (input: CreateDirectoryInput) => Promise<CreateDirectoryResponse>;
-  onUpdateFile: (input: UpdateFileInput) => Promise<UpdateFileResponse>;
-  onDeleteFile: (input: DeleteFileInput) => Promise<DeleteFileResponse>;
-  onUpdateDirectory: (input: UpdateDirectoryInput) => Promise<UpdateDirectoryResponse>;
-  onDeleteDirectory: (input: DeleteDirectoryInput) => Promise<DeleteDirectoryResponse>;
+  onUpdateFile?: (input: UpdateFileInput) => Promise<UpdateFileResponse>;
+  onDeleteFile?: (input: DeleteFileInput) => Promise<DeleteFileResponse>;
+  onUpdateDirectory?: (input: UpdateDirectoryInput) => Promise<UpdateDirectoryResponse>;
+  onDeleteDirectory?: (input: DeleteDirectoryInput) => Promise<DeleteDirectoryResponse>;
 };
 
 export function FilesManagerClient({
@@ -48,6 +49,29 @@ export function FilesManagerClient({
   onUpdateDirectory,
   onDeleteDirectory,
 }: FilesManagerClientProps) {
+  // Default handlers that call the package API so the manager works without props.
+  const uploadFileDefault = async (input: UploadFileInput) => {
+    try {
+      const data = await FMApi.uploadFile(input);
+      if (data && data.result === "success" && data.file) {
+        return {
+          result: "success",
+          error: "",
+          uploadedFile: FMApi.mapDbFileToSerializable(data.file),
+        } as UploadFileState;
+      }
+      return { result: "error", error: data?.error || "Upload failed", uploadedFile: null } as UploadFileState;
+    } catch (err: any) {
+      return { result: "error", error: err?.message || String(err), uploadedFile: null } as UploadFileState;
+    }
+  };
+
+  const resolvedOnUploadFile = onUploadFile ?? uploadFileDefault;
+  const resolvedOnCreateDirectory = onCreateDirectory ?? (async (input: CreateDirectoryInput) => await FMApi.createDirectory(input));
+  const resolvedOnUpdateFile = onUpdateFile ?? (async (input: UpdateFileInput) => await FMApi.updateFile(input));
+  const resolvedOnDeleteFile = onDeleteFile ?? (async (input: DeleteFileInput) => await FMApi.deleteFile(input.id));
+  const resolvedOnUpdateDirectory = onUpdateDirectory ?? (async (input: UpdateDirectoryInput) => await FMApi.updateDirectory(input));
+  const resolvedOnDeleteDirectory = onDeleteDirectory ?? (async (input: DeleteDirectoryInput) => await FMApi.deleteDirectory(input.id));
   const { files, directories, addFile, addDirectory, updateDirectory, updateFile, removeFile, removeDirectory } = useFilesData();
   const [selectedFile, setSelectedFile] = useState<SerializableFileRecord | null>(null);
   const [selectedFileIds, setSelectedFileIds] = useState<string[]>([]);
@@ -98,7 +122,7 @@ export function FilesManagerClient({
     setStatus(null);
 
     startTransition(async () => {
-      const response = await onUpdateFile({
+      const response = await resolvedOnUpdateFile({
         id: selectedFile.id,
         label,
         directoryId: selectedFile.directoryId ?? null,
@@ -130,7 +154,7 @@ export function FilesManagerClient({
     }
 
     startTransition(async () => {
-      const response = await onDeleteFile({ id: selectedFile.id });
+      const response = await resolvedOnDeleteFile({ id: selectedFile.id });
 
       if (response.result === "error") {
         setStatus({
@@ -179,7 +203,7 @@ export function FilesManagerClient({
     setStatus(null);
 
     startTransition(async () => {
-      const results = await Promise.all(fileIds.map((id) => onUpdateFile({ id, directoryId, label: undefined })));
+      const results = await Promise.all(fileIds.map((id) => resolvedOnUpdateFile({ id, directoryId, label: undefined })));
 
       const hasError = results.find((result) => result.result === "error");
       if (hasError && hasError.result === "error") {
@@ -218,7 +242,7 @@ export function FilesManagerClient({
     }
 
     startTransition(async () => {
-      const response = await onDeleteDirectory({ id: activeDirectoryId });
+      const response = await resolvedOnDeleteDirectory({ id: activeDirectoryId });
 
       if (response.result === "error") {
         setStatus({
@@ -244,7 +268,7 @@ export function FilesManagerClient({
     setStatus(null);
 
     startTransition(async () => {
-      const response = await onUpdateDirectory({
+      const response = await resolvedOnUpdateDirectory({
         id: activeDirectoryId,
         name: directoryLabel,
       });
@@ -271,7 +295,7 @@ export function FilesManagerClient({
     setStatus(null);
 
     startTransition(async () => {
-      const response = await onUpdateDirectory({
+      const response = await resolvedOnUpdateDirectory({
         id: activeDirectoryId,
         parentId: directoryId,
       });
@@ -309,16 +333,16 @@ export function FilesManagerClient({
         directories={directories}
         files={files}
         selectedFileIds={selectedFileIds}
-        showDirectoryCreate={Boolean(onCreateDirectory)}
-        showUpload={Boolean(onUploadFile)}
-        onCreateDirectory={onCreateDirectory}
+        showDirectoryCreate={Boolean(resolvedOnCreateDirectory)}
+        showUpload={Boolean(resolvedOnUploadFile)}
+        onCreateDirectory={resolvedOnCreateDirectory}
         onDirectoryChange={handleDirectoryChange}
         onDirectoryCreate={addDirectory}
         onFileCreate={addFile}
         onMoveFiles={handleMoveFiles}
         onSelect={handleSelectFile}
         onSelectionChange={handleSelectionChange}
-        onUploadFile={onUploadFile}
+        onUploadFile={resolvedOnUploadFile}
       />
 
       <section className="space-y-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-gray-900">
