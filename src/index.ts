@@ -1,61 +1,61 @@
-export { default as AccordionBlock } from "./Editors/Page/Componentsa/Content/AccordionBlock/Component";
+export { default as AccordionBlock } from "./Editors/Page/Components/Content/AccordionBlock/Component";
 export type {
   AccordionBlockProps,
   AccordionSection,
-} from "./Editors/Page/Componentsa/Content/AccordionBlock/type";
+} from "./Editors/Page/Components/Content/AccordionBlock/type";
 
 export {
   Button,
   ButtonLink,
-} from "./Editors/Page/Componentsa/Actions/ButtonLink/Button";
+} from "./Editors/Page/Components/Actions/ButtonLink/Button";
 export {
   ButtonLink as ButtonLinkComponent,
   buttonIconOptions,
-} from "./Editors/Page/Componentsa/Actions/ButtonLink/Component";
+} from "./Editors/Page/Components/Actions/ButtonLink/Component";
 
-export { default as Gallery } from "./Editors/Page/Componentsa/Media/Gallery/Gallery";
+export { default as Gallery } from "./Editors/Page/Components/Media/Gallery/Gallery";
 export type {
   GalleryBlockItem,
   GalleryBlockItemSize,
   GalleryGridSize,
   GalleryImageMode,
-} from "./Editors/Page/Componentsa/Media/Gallery/type";
+} from "./Editors/Page/Components/Media/Gallery/type";
 
-export { default as HeadingBlock } from "./Editors/Page/Componentsa/Content/HeadingBlock/Component";
+export { default as HeadingBlock } from "./Editors/Page/Components/Content/HeadingBlock/Component";
 export type {
   HeadingAlignment,
   HeadingBlockProps,
   HeadingLevel,
-} from "./Editors/Page/Componentsa/Content/HeadingBlock/type";
+} from "./Editors/Page/Components/Content/HeadingBlock/type";
 export {
   HEADING_DECORATION_COLOR_DARK,
   HEADING_DECORATION_COLOR_LIGHT,
   HEADING_TEXT_COLOR_DARK,
   HEADING_TEXT_COLOR_LIGHT,
   headingDefaultValues,
-} from "./Editors/Page/Componentsa/Content/HeadingBlock/HeadingBlock.defaults";
+} from "./Editors/Page/Components/Content/HeadingBlock/HeadingBlock.defaults";
 
-export { default as Lightbox } from "./Editors/Page/Componentsa/Media/Lightbox";
-export type { LightboxItem } from "./Editors/Page/Componentsa/Media/type";
+export { default as Lightbox } from "./Editors/Page/Components/Media/Lightbox";
+export type { LightboxItem } from "./Editors/Page/Components/Media/type";
 
-export { LinkBarBlock } from "./Editors/Page/Componentsa/Actions/LinkBar/Component";
-export type { LinkBarProps } from "./Editors/Page/Componentsa/Actions/LinkBar/type";
+export { LinkBarBlock } from "./Editors/Page/Components/Actions/LinkBar/Component";
+export type { LinkBarProps } from "./Editors/Page/Components/Actions/LinkBar/type";
 
-export { default as SingleAccordionBlock } from "./Editors/Page/Componentsa/Content/SingleAccordion/Component";
-export type { SingleAccordionBlockProps } from "./Editors/Page/Componentsa/Content/SingleAccordion/type";
+export { default as SingleAccordionBlock } from "./Editors/Page/Components/Content/SingleAccordion/Component";
+export type { SingleAccordionBlockProps } from "./Editors/Page/Components/Content/SingleAccordion/type";
 
-export { default as Slider } from "./Editors/Page/Componentsa/Media/SliderBlock/Component";
+export { default as Slider } from "./Editors/Page/Components/Media/SliderBlock/Component";
 
-export { default as SliderShowcase } from "./Editors/Page/Componentsa/Media/SliderShowcaseBlock/Component";
+export { default as SliderShowcase } from "./Editors/Page/Components/Media/SliderShowcaseBlock/Component";
 
-export { VerticalSpacer } from "./Editors/Page/Componentsa/Layout/VerticalSpacer/Component";
+export { VerticalSpacer } from "./Editors/Page/Components/Layout/VerticalSpacer/Component";
 
-export { SingleImage } from "./Editors/Page/Componentsa/Media/SingleImage/Component";
-export { ImageWithText } from "./Editors/Page/Componentsa/Media/ImageWithText/Component";
-export { ImageOverlayText } from "./Editors/Page/Componentsa/Media/ImageOverlayText/Component";
+export { SingleImage } from "./Editors/Page/Components/Media/SingleImage/Component";
+export { ImageWithText } from "./Editors/Page/Components/Media/ImageWithText/Component";
+export { ImageOverlayText } from "./Editors/Page/Components/Media/ImageOverlayText/Component";
 
-export { GoogleMapsEmbed } from "./Editors/Page/Componentsa/Embed/GoogleMapsEmbed/Component";
-export { YoutubeEmbed } from "./Editors/Page/Componentsa/Embed/YoutubeEmbed/Component";
+export { GoogleMapsEmbed } from "./Editors/Page/Components/Embed/GoogleMapsEmbed/Component";
+export { YoutubeEmbed } from "./Editors/Page/Components/Embed/YoutubeEmbed/Component";
 
 export { RichTextEditor } from "./Editors/Text/Editor";
 export { RichTextRenderer } from "./Editors/Text/Renderer";
@@ -67,11 +67,11 @@ export type {
   PageEditorProps,
 } from "./Editors/Page/PageEditor";
 
-export { Clipboard } from "./Editors/Page/UtilityComponentsd/UniversalClipboard";
-export { EditorImage } from "./Editors/Page/UtilityComponentsd/EditorImage";
-export type { LinkListItem } from "./Editors/Page/Componentsa/Actions/LinkBar/type";
-export { LinkListField } from "./Editors/Page/Componentsa/Actions/LinkBar/LinkListField";
-export { SlidesField } from "./Editors/Page/UtilityComponentsd/SlidesField";
+export { Clipboard } from "./Editors/Page/UtilityComponents/UniversalClipboard";
+export { EditorImage } from "./Editors/Page/UtilityComponents/EditorImage";
+export type { LinkListItem } from "./Editors/Page/Components/Actions/LinkBar/type";
+export { LinkListField } from "./Editors/Page/Components/Actions/LinkBar/LinkListField";
+export { SlidesField } from "./Editors/Page/UtilityComponents/SlidesField";
 
 export { FilesDataProvider, useFilesData } from "./FileManagement";
 export type {

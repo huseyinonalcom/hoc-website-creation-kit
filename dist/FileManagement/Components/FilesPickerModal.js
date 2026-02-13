@@ -2,7 +2,7 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { Button } from "../../Editors/Page/Componentsa/Actions/ButtonLink/Button";
+import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
 import { FilesBrowserClient } from "./FilesBrowserClient";
 export function FilesPickerModal({ open, onClose, files, directories, onSelect, onFileCreate, onDirectoryCreate, onUploadFile, onCreateDirectory, title = "Dosya Sec", closeOnSelect = true, }) {
     const handleSelect = (file) => {

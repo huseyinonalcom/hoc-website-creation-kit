@@ -3,7 +3,7 @@
 import { CheckCircleIcon, CheckIcon } from "@heroicons/react/24/outline";
 import { ComponentProps, ComponentType, ReactNode } from "react";
 
-import { Button } from "../../Editors/Page/Componentsa/Actions/ButtonLink/Button";
+import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
 import { FormTextareaField } from "./FormTextArea";
 import { FormSelectField } from "./FormSelect";
 import { FormToggleField } from "./FormToggle";

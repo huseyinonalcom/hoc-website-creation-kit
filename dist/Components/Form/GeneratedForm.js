@@ -1,7 +1,7 @@
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { CheckCircleIcon, CheckIcon } from "@heroicons/react/24/outline";
-import { Button } from "../../Editors/Page/Componentsa/Actions/ButtonLink/Button";
+import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
 import { FormToggleField } from "./FormToggle";
 import { FormInputField } from "./FormInput";
 import { FormSection } from "./FormSection";

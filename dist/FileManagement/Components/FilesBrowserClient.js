@@ -4,7 +4,7 @@ import { ArrowUturnLeftIcon, FolderIcon, XMarkIcon, } from "@heroicons/react/24/
 import { useMemo, useRef, useState } from "react";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import Image from "next/image";
-import { Button } from "../../Editors/Page/Componentsa/Actions/ButtonLink/Button";
+import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
 import { uploadFileInitialState } from "../state";
 import cn from "../../utils/classnames";
 import * as FMApi from "../api";

@@ -17,7 +17,7 @@ import type {
   UploadFileInput,
 } from "../types";
 
-import { Button } from "../../Editors/Page/Componentsa/Actions/ButtonLink/Button";
+import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
 import { uploadFileInitialState, type UploadFileState } from "../state";
 import cn from "../../utils/classnames";
 import * as FMApi from "../api";
