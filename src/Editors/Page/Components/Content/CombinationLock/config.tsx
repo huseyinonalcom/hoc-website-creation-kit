@@ -4,7 +4,7 @@ import type { BaseEditorProps } from "../../../config/types";
 
 import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
-import CombinationLockEditor from "./Component";
+import CombinationLock from "./Component";
 
 const { numberInput } = defaultFieldHelpers;
 
@@ -57,10 +57,18 @@ export const combinationLockConfig: Config<BaseEditorProps>["components"]["Combi
       },
     },
     render: (props) => {
-      const { sequences, ...rest } = props;
+      const { sequences, interval, spinDuration, cycles, loop } = props;
       const mappedSequences = Array.isArray(sequences)
         ? sequences.map((item) => item?.value ?? "")
         : [];
-      return <CombinationLockEditor {...rest} sequences={mappedSequences} />;
+      return (
+        <CombinationLock
+          interval={interval}
+          spinDuration={spinDuration}
+          cycles={cycles}
+          loop={loop}
+          sequences={mappedSequences}
+        />
+      );
     },
   };
