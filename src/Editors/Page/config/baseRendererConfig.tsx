@@ -1,6 +1,7 @@
-import { baseEditorConfig } from "./baseEditorConfig";
-import { RichTextRenderer } from "../../Text/Renderer";
 import { Config } from "@puckeditor/core";
+
+import { RichTextRenderer } from "../../Text/Renderer";
+import { baseEditorConfig } from "./baseEditorConfig";
 
 export const baseRendererConfig: Config = {
   ...baseEditorConfig,

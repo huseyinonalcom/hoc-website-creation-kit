@@ -3,9 +3,9 @@
 import type { Config, Data, Viewport } from "@puckeditor/core";
 import type { ReactNode } from "react";
 
+import { createUsePuck, Puck } from "@puckeditor/core";
 import { useRef } from "react";
 
-import { createUsePuck, Puck } from "@puckeditor/core";
 import { baseEditorConfig } from "./config/baseEditorConfig";
 
 export type PageEditorHeaderActionsProps = {
@@ -21,9 +21,9 @@ export type PageEditorProps = {
   viewports?: Viewport[];
   theme?: "light" | "dark";
   className?: string;
-  // eslint-disable-next-line no-unused-vars
+   
   onPublish?: (_data: Data) => void | Promise<void>;
-  // eslint-disable-next-line no-unused-vars
+   
   renderHeaderActions?: (_props: PageEditorHeaderActionsProps) => ReactNode;
 };
 

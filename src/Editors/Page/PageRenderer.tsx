@@ -1,6 +1,7 @@
 import type { Config, Data } from "@puckeditor/core";
 
 import { Render } from "@puckeditor/core";
+
 import { baseRendererConfig } from "./config/baseRendererConfig";
 
 export type PageRendererProps = {

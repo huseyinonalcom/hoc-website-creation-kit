@@ -22,7 +22,7 @@ const buildSizePickerCss = () => {
 
 export type EditorProps = {
   initialData?: string;
-  // eslint-disable-next-line no-unused-vars
+   
   onChange: (_html: string) => void;
 };
 

@@ -1,9 +1,9 @@
 import { jsx as _jsx } from "react/jsx-runtime";
+import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
+import { EditorImage } from "../../../UtilityComponents/EditorImage";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
-import { EditorImage } from "../../../utilityComponents/EditorImage";
-import { Clipboard } from "../../../utilityComponents/UniversalClipboard";
-import { ImageOverlayText } from "./Component";
 import { RichTextEditor } from "../../../../Text/Editor.client";
+import { ImageOverlayText } from "./Component";
 const { imageModeToggleField, numberInput } = defaultFieldHelpers;
 export const imageOverlayTextConfig = {
     label: "Üst Yazılı Görsel",
@@ -15,13 +15,13 @@ export const imageOverlayTextConfig = {
         src: {
             label: "Görsel",
             type: "custom",
-            render: ({ value, onChange }) => _jsx(EditorImage, { value: typeof value === "string" ? value : "", onChange: onChange }),
+            render: ({ value, onChange }) => (_jsx(EditorImage, { value: typeof value === "string" ? value : "", onChange: onChange })),
         },
         alt: { type: "text", label: "Alternatif Metin" },
         overlay: {
             label: "Metin",
             type: "custom",
-            render: ({ value, onChange, id }) => _jsx(RichTextEditor, { initialData: value ?? "", onChange: onChange }, id ?? "image-overlay"),
+            render: ({ value, onChange, id }) => (_jsx(RichTextEditor, { initialData: value ?? "", onChange: onChange }, id ?? "image-overlay")),
         },
         height: numberInput("Yükseklik (px)", {
             min: 200,

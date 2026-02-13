@@ -1,8 +1,8 @@
 "use client";
 import { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { ChevronUpIcon } from "@heroicons/react/24/outline";
 import { useMemo, useState } from "react";
 import cn from "../../../../../utils/classnames";
-import { ChevronUpIcon } from "@heroicons/react/24/outline";
 export default function AccordionBlock({ sections = [], isEditing = false }) {
     const sanitizedSections = useMemo(() => {
         return sections.filter((section) => Boolean(section));

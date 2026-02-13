@@ -1,7 +1,7 @@
 import { jsx as _jsx } from "react/jsx-runtime";
+import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
 import { headingDefaultValues } from "./HeadingBlock.defaults";
-import { Clipboard } from "../../../utilityComponents/UniversalClipboard";
 import HeadingBlock from "./Component";
 const headingLevelOptions = [
     { label: "H1", value: "h1" },

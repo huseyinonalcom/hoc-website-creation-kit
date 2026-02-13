@@ -1,10 +1,10 @@
 import { jsx as _jsx } from "react/jsx-runtime";
+import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
+import { EditorImage } from "../../../UtilityComponents/EditorImage";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
-import { EditorImage } from "../../../utilityComponents/EditorImage";
-import { Clipboard } from "../../../utilityComponents/UniversalClipboard";
-import { ImageWithText } from "./Component";
 import { RichTextEditor } from "../../../../Text/Editor.client";
-const { imageModeToggleField, imagePositionToggleField, numberInput, stackOrderToggleField } = defaultFieldHelpers;
+import { ImageWithText } from "./Component";
+const { imageModeToggleField, imagePositionToggleField, numberInput, stackOrderToggleField, } = defaultFieldHelpers;
 export const imageWithTextConfig = {
     label: "Görsel + Metin",
     fields: {
@@ -15,7 +15,7 @@ export const imageWithTextConfig = {
         src: {
             label: "Görsel",
             type: "custom",
-            render: ({ value, onChange }) => _jsx(EditorImage, { value: typeof value === "string" ? value : "", onChange: onChange }),
+            render: ({ value, onChange }) => (_jsx(EditorImage, { value: typeof value === "string" ? value : "", onChange: onChange })),
         },
         imagePosition: imagePositionToggleField,
         stackOrder: stackOrderToggleField,
@@ -33,7 +33,7 @@ export const imageWithTextConfig = {
         content: {
             label: "Metin",
             type: "custom",
-            render: ({ value, onChange, id }) => _jsx(RichTextEditor, { initialData: value ?? "", onChange: onChange }, id ?? "image-with-text"),
+            render: ({ value, onChange, id }) => (_jsx(RichTextEditor, { initialData: value ?? "", onChange: onChange }, id ?? "image-with-text")),
         },
     },
     render: ImageWithText,

@@ -1,5 +1,6 @@
-import { components } from "../components";
 import type { BaseEditorProps, BaseRootProps } from "./types";
+
+import { components } from "../Components";
 
 export type { BaseEditorProps, BaseRootProps };
 
@@ -17,15 +18,34 @@ export const baseEditorConfig = {
   categories: {
     layout: {
       title: "Yerleşim",
-      components: ["TwoColumnLayout", "ThreeColumnLayout", "FourColumnLayout", "VerticalSpacer"],
+      components: [
+        "TwoColumnLayout",
+        "ThreeColumnLayout",
+        "FourColumnLayout",
+        "VerticalSpacer",
+      ],
     },
     content: {
       title: "İçerik",
-      components: ["HeadingBlock", "RichTextBlock", "AccordionBlock", "SingleAccordion"],
+      components: [
+        "HeadingBlock",
+        "RichTextBlock",
+        "AccordionBlock",
+        "SingleAccordion",
+        "CombinationLock",
+      ],
     },
     media: {
       title: "Görsel",
-      components: ["SingleImage", "ImageWithText", "ImageWithSlot", "ImageOverlayText", "SliderBlock", "SliderShowcaseBlock", "Gallery"],
+      components: [
+        "SingleImage",
+        "ImageWithText",
+        "ImageWithSlot",
+        "ImageOverlayText",
+        "SliderBlock",
+        "SliderShowcaseBlock",
+        "Gallery",
+      ],
     },
     actions: {
       title: "Bağlantılar",

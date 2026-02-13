@@ -1,6 +1,6 @@
 import { jsx as _jsx } from "react/jsx-runtime";
+import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
-import { Clipboard } from "../../../utilityComponents/UniversalClipboard";
 import GoogleMapsEmbed from "./Component";
 const { numberInput } = defaultFieldHelpers;
 export const googleMapsEmbedConfig = {

@@ -1,6 +1,6 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
+import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
-import { Clipboard } from "../../../utilityComponents/UniversalClipboard";
 const { numberInput } = defaultFieldHelpers;
 export const twoColumnLayoutConfig = {
     label: "2 Sütun",
@@ -37,7 +37,9 @@ export const twoColumnLayoutConfig = {
         }
         const gapValue = typeof gap === "number" && gap >= 0 ? gap : 32;
         const ratio = columnRatio ?? "1-1";
-        const containerClass = ratio === "1-1" ? "grid grid-cols-1 lg:grid-cols-2" : "grid grid-cols-1 lg:grid-cols-3";
+        const containerClass = ratio === "1-1"
+            ? "grid grid-cols-1 lg:grid-cols-2"
+            : "grid grid-cols-1 lg:grid-cols-3";
         const leftColClass = (() => {
             if (ratio === "1-2")
                 return "lg:col-span-1";

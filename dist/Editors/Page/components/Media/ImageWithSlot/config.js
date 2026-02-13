@@ -1,10 +1,10 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
-import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
-import { EditorImage } from "../../../utilityComponents/EditorImage";
-import { Clipboard } from "../../../utilityComponents/UniversalClipboard";
 import Image from "next/image";
 import Link from "next/link";
-const { imageModeToggleField, imagePositionToggleField, numberInput, stackOrderToggleField } = defaultFieldHelpers;
+import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
+import { EditorImage } from "../../../UtilityComponents/EditorImage";
+import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
+const { imageModeToggleField, imagePositionToggleField, numberInput, stackOrderToggleField, } = defaultFieldHelpers;
 export const imageWithSlotConfig = {
     label: "Görsel + Boş Alan",
     fields: {
@@ -15,7 +15,7 @@ export const imageWithSlotConfig = {
         src: {
             label: "Görsel",
             type: "custom",
-            render: ({ value, onChange }) => _jsx(EditorImage, { value: typeof value === "string" ? value : "", onChange: onChange }),
+            render: ({ value, onChange }) => (_jsx(EditorImage, { value: typeof value === "string" ? value : "", onChange: onChange })),
         },
         imagePosition: imagePositionToggleField,
         stackOrder: stackOrderToggleField,
@@ -35,7 +35,7 @@ export const imageWithSlotConfig = {
             type: "slot",
         },
     },
-    render: ({ src, alt, content: Content, imagePosition, stackOrder, height, imageMode, href }) => {
+    render: ({ src, alt, content: Content, imagePosition, stackOrder, height, imageMode, href, }) => {
         if (!src && !Content) {
             return _jsx(_Fragment, {});
         }

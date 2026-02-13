@@ -50,7 +50,7 @@ export declare const components: {
         permissions?: Partial<import("@puckeditor/core").Permissions>;
         inline?: boolean;
         resolveFields?: ((data: Omit<import("@puckeditor/core").ComponentData<import("./Layout/ThreeColumnLayout/type").ThreeColumnLayoutProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, params: {
-            changed: Partial<Record<"clipboard" | "first" | "gap" | "second" | "third", boolean> & {
+            changed: Partial<Record<"clipboard" | "first" | "second" | "third" | "gap", boolean> & {
                 id: string;
             }>;
             fields: import("@puckeditor/core").Fields<import("./Layout/ThreeColumnLayout/type").ThreeColumnLayoutProps, {}>;
@@ -61,7 +61,7 @@ export declare const components: {
             parent: import("@puckeditor/core").ComponentData | null;
         }) => import("@puckeditor/core").Fields<import("./Layout/ThreeColumnLayout/type").ThreeColumnLayoutProps, {}> | Promise<import("@puckeditor/core").Fields<import("./Layout/ThreeColumnLayout/type").ThreeColumnLayoutProps, {}>>) | undefined;
         resolveData?: ((data: Omit<import("@puckeditor/core").ComponentData<import("./Layout/ThreeColumnLayout/type").ThreeColumnLayoutProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, params: {
-            changed: Partial<Record<"clipboard" | "first" | "gap" | "second" | "third", boolean> & {
+            changed: Partial<Record<"clipboard" | "first" | "second" | "third" | "gap", boolean> & {
                 id: string;
             }>;
             lastData: Omit<import("@puckeditor/core").ComponentData<import("./Layout/ThreeColumnLayout/type").ThreeColumnLayoutProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type"> | null;
@@ -74,7 +74,7 @@ export declare const components: {
             props?: Partial<import("./Layout/ThreeColumnLayout/type").ThreeColumnLayoutProps> | undefined;
         }>) | undefined;
         resolvePermissions?: ((data: Omit<import("@puckeditor/core").ComponentData<import("./Layout/ThreeColumnLayout/type").ThreeColumnLayoutProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, params: {
-            changed: Partial<Record<"clipboard" | "first" | "gap" | "second" | "third", boolean> & {
+            changed: Partial<Record<"clipboard" | "first" | "second" | "third" | "gap", boolean> & {
                 id: string;
             }>;
             lastPermissions: Partial<import("@puckeditor/core").Permissions>;
@@ -93,7 +93,7 @@ export declare const components: {
         permissions?: Partial<import("@puckeditor/core").Permissions>;
         inline?: boolean;
         resolveFields?: ((data: Omit<import("@puckeditor/core").ComponentData<import("./Layout/FourColumnLayout/type").FourColumnLayoutProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, params: {
-            changed: Partial<Record<"clipboard" | "first" | "gap" | "second" | "third" | "fourth", boolean> & {
+            changed: Partial<Record<"clipboard" | "first" | "second" | "third" | "gap" | "fourth", boolean> & {
                 id: string;
             }>;
             fields: import("@puckeditor/core").Fields<import("./Layout/FourColumnLayout/type").FourColumnLayoutProps, {}>;
@@ -104,7 +104,7 @@ export declare const components: {
             parent: import("@puckeditor/core").ComponentData | null;
         }) => import("@puckeditor/core").Fields<import("./Layout/FourColumnLayout/type").FourColumnLayoutProps, {}> | Promise<import("@puckeditor/core").Fields<import("./Layout/FourColumnLayout/type").FourColumnLayoutProps, {}>>) | undefined;
         resolveData?: ((data: Omit<import("@puckeditor/core").ComponentData<import("./Layout/FourColumnLayout/type").FourColumnLayoutProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, params: {
-            changed: Partial<Record<"clipboard" | "first" | "gap" | "second" | "third" | "fourth", boolean> & {
+            changed: Partial<Record<"clipboard" | "first" | "second" | "third" | "gap" | "fourth", boolean> & {
                 id: string;
             }>;
             lastData: Omit<import("@puckeditor/core").ComponentData<import("./Layout/FourColumnLayout/type").FourColumnLayoutProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type"> | null;
@@ -117,7 +117,7 @@ export declare const components: {
             props?: Partial<import("./Layout/FourColumnLayout/type").FourColumnLayoutProps> | undefined;
         }>) | undefined;
         resolvePermissions?: ((data: Omit<import("@puckeditor/core").ComponentData<import("./Layout/FourColumnLayout/type").FourColumnLayoutProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, params: {
-            changed: Partial<Record<"clipboard" | "first" | "gap" | "second" | "third" | "fourth", boolean> & {
+            changed: Partial<Record<"clipboard" | "first" | "second" | "third" | "gap" | "fourth", boolean> & {
                 id: string;
             }>;
             lastPermissions: Partial<import("@puckeditor/core").Permissions>;
@@ -339,6 +339,49 @@ export declare const components: {
             permissions: Partial<import("@puckeditor/core").Permissions>;
             appState: import("@puckeditor/core").AppState;
             lastData: Omit<import("@puckeditor/core").ComponentData<import("./Content/SingleAccordion/type").SingleAccordionProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type"> | null;
+            parent: import("@puckeditor/core").ComponentData | null;
+        }) => Promise<Partial<import("@puckeditor/core").Permissions>> | Partial<import("@puckeditor/core").Permissions>) | undefined;
+        metadata?: import("@puckeditor/core").ComponentMetadata;
+    } & import("@puckeditor/core").ComponentConfigExtensions, "type">;
+    CombinationLock: Omit<{
+        render: import("@puckeditor/core").PuckComponent<import("./Content/CombinationLock/type").CombinationLockProps>;
+        label?: string;
+        defaultProps?: import("./Content/CombinationLock/type").CombinationLockProps | undefined;
+        fields?: import("@puckeditor/core").Fields<import("./Content/CombinationLock/type").CombinationLockProps, {}> | undefined;
+        permissions?: Partial<import("@puckeditor/core").Permissions>;
+        inline?: boolean;
+        resolveFields?: ((data: Omit<import("@puckeditor/core").ComponentData<import("./Content/CombinationLock/type").CombinationLockProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, params: {
+            changed: Partial<Record<"clipboard" | "loop" | "sequences" | "interval" | "spinDuration" | "cycles", boolean> & {
+                id: string;
+            }>;
+            fields: import("@puckeditor/core").Fields<import("./Content/CombinationLock/type").CombinationLockProps, {}>;
+            lastFields: import("@puckeditor/core").Fields<import("./Content/CombinationLock/type").CombinationLockProps, {}>;
+            lastData: Omit<import("@puckeditor/core").ComponentData<import("./Content/CombinationLock/type").CombinationLockProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type"> | null;
+            metadata: import("@puckeditor/core").ComponentMetadata;
+            appState: import("@puckeditor/core").AppState;
+            parent: import("@puckeditor/core").ComponentData | null;
+        }) => import("@puckeditor/core").Fields<import("./Content/CombinationLock/type").CombinationLockProps, {}> | Promise<import("@puckeditor/core").Fields<import("./Content/CombinationLock/type").CombinationLockProps, {}>>) | undefined;
+        resolveData?: ((data: Omit<import("@puckeditor/core").ComponentData<import("./Content/CombinationLock/type").CombinationLockProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, params: {
+            changed: Partial<Record<"clipboard" | "loop" | "sequences" | "interval" | "spinDuration" | "cycles", boolean> & {
+                id: string;
+            }>;
+            lastData: Omit<import("@puckeditor/core").ComponentData<import("./Content/CombinationLock/type").CombinationLockProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type"> | null;
+            metadata: import("@puckeditor/core").ComponentMetadata;
+            trigger: import("@puckeditor/core").ResolveDataTrigger;
+            parent: import("@puckeditor/core").ComponentData | null;
+        }) => (Omit<Omit<import("@puckeditor/core").ComponentData<import("./Content/CombinationLock/type").CombinationLockProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, "props"> & {
+            props?: Partial<import("./Content/CombinationLock/type").CombinationLockProps> | undefined;
+        }) | Promise<Omit<Omit<import("@puckeditor/core").ComponentData<import("./Content/CombinationLock/type").CombinationLockProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, "props"> & {
+            props?: Partial<import("./Content/CombinationLock/type").CombinationLockProps> | undefined;
+        }>) | undefined;
+        resolvePermissions?: ((data: Omit<import("@puckeditor/core").ComponentData<import("./Content/CombinationLock/type").CombinationLockProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, params: {
+            changed: Partial<Record<"clipboard" | "loop" | "sequences" | "interval" | "spinDuration" | "cycles", boolean> & {
+                id: string;
+            }>;
+            lastPermissions: Partial<import("@puckeditor/core").Permissions>;
+            permissions: Partial<import("@puckeditor/core").Permissions>;
+            appState: import("@puckeditor/core").AppState;
+            lastData: Omit<import("@puckeditor/core").ComponentData<import("./Content/CombinationLock/type").CombinationLockProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type"> | null;
             parent: import("@puckeditor/core").ComponentData | null;
         }) => Promise<Partial<import("@puckeditor/core").Permissions>> | Partial<import("@puckeditor/core").Permissions>) | undefined;
         metadata?: import("@puckeditor/core").ComponentMetadata;

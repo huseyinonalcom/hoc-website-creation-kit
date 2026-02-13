@@ -35,7 +35,7 @@ export const createButtonToggleField = <T extends string | number>(label: string
     onChange,
   }: {
     value?: T;
-    // eslint-disable-next-line no-unused-vars
+     
     onChange: (next: T | undefined) => void;
     field: Field;
     id: string;
@@ -100,7 +100,7 @@ const numberInput = (label: string, options: NumberFieldOptions = {}): Field => 
     onChange,
   }: {
     value?: number;
-    // eslint-disable-next-line no-unused-vars
+     
     onChange: (next: number | undefined) => void;
     field: Field;
     id: string;
@@ -139,7 +139,7 @@ const colorInput = (label: string, defaultValue: string): Field => ({
     onChange,
   }: {
     value?: string;
-    // eslint-disable-next-line no-unused-vars
+     
     onChange: (next: string | undefined) => void;
     field: Field;
     id: string;

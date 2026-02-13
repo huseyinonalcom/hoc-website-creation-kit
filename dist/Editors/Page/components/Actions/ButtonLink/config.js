@@ -1,8 +1,8 @@
 import { jsx as _jsx } from "react/jsx-runtime";
+import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
-import { Clipboard } from "../../../utilityComponents/UniversalClipboard";
-import { ButtonLink, buttonIconOptions } from "./Component";
 import { RichTextEditor } from "../../../../Text/Editor.client";
+import { ButtonLink, buttonIconOptions } from "./Component";
 const { colorInput, numberInput } = defaultFieldHelpers;
 export const buttonLinkConfig = {
     label: "Buton",
@@ -14,7 +14,7 @@ export const buttonLinkConfig = {
         text: {
             label: "Buton Metni",
             type: "custom",
-            render: ({ value, onChange, id }) => _jsx(RichTextEditor, { initialData: value ?? "", onChange: onChange }, id ?? "button-link-text"),
+            render: ({ value, onChange, id }) => (_jsx(RichTextEditor, { initialData: value ?? "", onChange: onChange }, id ?? "button-link-text")),
         },
         url: {
             label: "Bağlantı URL'si",

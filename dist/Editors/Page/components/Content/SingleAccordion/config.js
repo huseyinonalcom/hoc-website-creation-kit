@@ -1,5 +1,5 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-import { Clipboard } from "../../../utilityComponents/UniversalClipboard";
+import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
 import SingleAccordion from "./Component";
 export const singleAccordionConfig = {
     label: "Tekli Akordeon",

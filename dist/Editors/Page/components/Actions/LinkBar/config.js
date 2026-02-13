@@ -1,5 +1,5 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-import { Clipboard } from "../../../utilityComponents/UniversalClipboard";
+import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
 import { LinkListField } from "./LinkListField";
 import { LinkBarBlock } from "./Component";
 export const linkBarConfig = {
