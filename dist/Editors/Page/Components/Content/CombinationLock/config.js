@@ -1,7 +1,7 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
-import CombinationLockEditor from "./Component";
+import CombinationLock from "./Component";
 const { numberInput } = defaultFieldHelpers;
 export const combinationLockConfig = {
     label: "Kombinasyon Kilidi",
@@ -50,11 +50,11 @@ export const combinationLockConfig = {
         },
     },
     render: (props) => {
-        const { sequences, ...rest } = props;
+        const { sequences, interval, spinDuration, cycles, loop } = props;
         const mappedSequences = Array.isArray(sequences)
             ? sequences.map((item) => item?.value ?? "")
             : [];
-        return _jsx(CombinationLockEditor, { ...rest, sequences: mappedSequences });
+        return (_jsx(CombinationLock, { interval: interval, spinDuration: spinDuration, cycles: cycles, loop: loop, sequences: mappedSequences }));
     },
 };
 //# sourceMappingURL=config.js.map
