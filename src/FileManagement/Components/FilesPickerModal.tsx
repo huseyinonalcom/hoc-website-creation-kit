@@ -10,7 +10,7 @@ import {
   SerializableFileRecord,
   UploadFileInput,
 } from "../types";
-import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
+import { Button } from "../../Editors/Page/Componentsa/Actions/ButtonLink/Button";
 import { FilesBrowserClient } from "./FilesBrowserClient";
 import { UploadFileState } from "../state";
 

@@ -18,7 +18,7 @@ import {
   SerializableFileRecord,
   SerializableDirectoryRecord,
 } from "../types";
-import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
+import { Button } from "../../Editors/Page/Componentsa/Actions/ButtonLink/Button";
 import { useFilesData } from "../Providers/FilesDataProvider";
 import { FilesBrowserClient } from "./FilesBrowserClient";
 import { FilesMoveModal } from "./FilesMoveModal";

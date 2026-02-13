@@ -1,27 +1,27 @@
 import type { ChangeEvent, ComponentType } from "react";
 
-import type { SliderShowcaseBlockProps } from "../Components/Media/SliderShowcaseBlock/type";
-import type { ThreeColumnLayoutProps } from "../Components/Layout/ThreeColumnLayout/type";
-import type { FourColumnLayoutProps } from "../Components/Layout/FourColumnLayout/type";
-import type { SingleAccordionProps } from "../Components/Content/SingleAccordion/type";
-import type { ImageOverlayTextProps } from "../Components/Media/ImageOverlayText/type";
-import type { CombinationLockProps } from "../Components/Content/CombinationLock/type";
-import type { TwoColumnLayoutProps } from "../Components/Layout/TwoColumnLayout/type";
-import type { GoogleMapsEmbedProps } from "../Components/Embed/GoogleMapsEmbed/type";
-import type { VerticalSpacerProps } from "../Components/Layout/VerticalSpacer/type";
-import type { AccordionBlockData } from "../Components/Content/AccordionBlock/type";
-import type { RichTextBlockProps } from "../Components/Content/RichTextBlock/type";
-import type { HeadingBlockProps } from "../Components/Content/HeadingBlock/type";
-import type { ImageWithTextProps } from "../Components/Media/ImageWithText/type";
-import type { ImageWithSlotProps } from "../Components/Media/ImageWithSlot/type";
-import type { YoutubeEmbedProps } from "../Components/Embed/YoutubeEmbed/type";
-import type { SingleImageProps } from "../Components/Media/SingleImage/type";
-import type { SliderBlockProps } from "../Components/Media/SliderBlock/type";
-import type { ButtonLinkProps } from "../Components/Actions/ButtonLink/type";
-import type { LinkBarProps } from "../Components/Actions/LinkBar/type";
-import type { GalleryProps } from "../Components/Media/Gallery/type";
+import type { SliderShowcaseBlockProps } from "../Componentsa/Media/SliderShowcaseBlock/type";
+import type { ThreeColumnLayoutProps } from "../Componentsa/Layout/ThreeColumnLayout/type";
+import type { FourColumnLayoutProps } from "../Componentsa/Layout/FourColumnLayout/type";
+import type { SingleAccordionProps } from "../Componentsa/Content/SingleAccordion/type";
+import type { ImageOverlayTextProps } from "../Componentsa/Media/ImageOverlayText/type";
+import type { CombinationLockProps } from "../Componentsa/Content/CombinationLock/type";
+import type { TwoColumnLayoutProps } from "../Componentsa/Layout/TwoColumnLayout/type";
+import type { GoogleMapsEmbedProps } from "../Componentsa/Embed/GoogleMapsEmbed/type";
+import type { VerticalSpacerProps } from "../Componentsa/Layout/VerticalSpacer/type";
+import type { AccordionBlockData } from "../Componentsa/Content/AccordionBlock/type";
+import type { RichTextBlockProps } from "../Componentsa/Content/RichTextBlock/type";
+import type { HeadingBlockProps } from "../Componentsa/Content/HeadingBlock/type";
+import type { ImageWithTextProps } from "../Componentsa/Media/ImageWithText/type";
+import type { ImageWithSlotProps } from "../Componentsa/Media/ImageWithSlot/type";
+import type { YoutubeEmbedProps } from "../Componentsa/Embed/YoutubeEmbed/type";
+import type { SingleImageProps } from "../Componentsa/Media/SingleImage/type";
+import type { SliderBlockProps } from "../Componentsa/Media/SliderBlock/type";
+import type { ButtonLinkProps } from "../Componentsa/Actions/ButtonLink/type";
+import type { LinkBarProps } from "../Componentsa/Actions/LinkBar/type";
+import type { GalleryProps } from "../Componentsa/Media/Gallery/type";
 
-export type { BaseComponentProps } from "../Components/type";
+export type { BaseComponentProps } from "../Componentsa/type";
 
 export type BaseRootProps = {
   title?: string;

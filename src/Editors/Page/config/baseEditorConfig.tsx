@@ -1,6 +1,6 @@
 import type { BaseEditorProps, BaseRootProps } from "./types";
 
-import { components } from "../Components";
+import { components } from "../Componentsa";
 
 export type { BaseEditorProps, BaseRootProps };
 
