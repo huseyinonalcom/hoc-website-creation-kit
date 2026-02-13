@@ -2,7 +2,7 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useMemo, useState, useTransition } from "react";
 import Image from "next/image";
-import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
+import { Button } from "../../Editors/Page/Componentsa/Actions/ButtonLink/Button";
 import { useFilesData } from "../Providers/FilesDataProvider";
 import { FilesBrowserClient } from "./FilesBrowserClient";
 import { FilesMoveModal } from "./FilesMoveModal";

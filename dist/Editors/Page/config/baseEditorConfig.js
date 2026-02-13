@@ -1,4 +1,4 @@
-import { components } from "../Components";
+import { components } from "../Componentsa";
 export const baseEditorConfig = {
     root: {
         defaultProps: {
