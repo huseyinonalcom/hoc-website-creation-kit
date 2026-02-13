@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+
 import { RichTextRenderer } from "../../../../Text/Renderer";
 import { ImageOverlayTextProps } from "./type";
 

@@ -1,9 +1,8 @@
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
 import { SelectHTMLAttributes, forwardRef } from "react";
 
-import cn from "@/utils/classnames";
-
 import { FormField, FormFieldProps } from "./FormField";
+import cn from "../../utils/classnames";
 
 type FormSelectProps = SelectHTMLAttributes<HTMLSelectElement> & {
   hideChevron?: boolean;
@@ -11,7 +10,7 @@ type FormSelectProps = SelectHTMLAttributes<HTMLSelectElement> & {
 
 const baseSelectClasses =
   "block w-full appearance-none rounded-md border-0 bg-white px-3 py-2 text-sm text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 dark:bg-white/5 dark:text-white dark:ring-white/10 dark:focus:ring-indigo-500";
-  
+
 export const FormSelect = forwardRef<HTMLSelectElement, FormSelectProps>(
   function FormSelect({ className, hideChevron = false, ...props }, ref) {
     return (

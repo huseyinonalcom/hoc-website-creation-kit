@@ -1,12 +1,11 @@
 import type { Config } from "@puckeditor/core";
 
 import type { BaseEditorProps } from "../../../config/types";
+
+import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
+import { SlidesField } from "../../../utilityComponentsa/SlidesField";
+import { EditorImage } from "../../../utilityComponentsa/EditorImage";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
-
-import { SlidesField } from "../../../UtilityComponents/SlidesField";
-import { EditorImage } from "../../../UtilityComponents/EditorImage";
-import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
-
 import Slider from "./Component";
 
 const { imageModeToggleField, numberInput } = defaultFieldHelpers;

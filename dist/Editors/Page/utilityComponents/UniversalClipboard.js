@@ -1,9 +1,9 @@
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { createUsePuck } from "@puckeditor/core";
+import { ClipboardIcon, DocumentDuplicateIcon, CheckCircleIcon, XCircleIcon, } from "@heroicons/react/20/solid";
 import { useEffect, useRef, useState } from "react";
-import { ClipboardIcon, DocumentDuplicateIcon, CheckCircleIcon, XCircleIcon } from "@heroicons/react/20/solid";
-import { Button } from "../components/Actions/ButtonLink/Button";
+import { createUsePuck } from "@puckeditor/core";
+import { Button } from "../Components/Actions/ButtonLink/Button";
 const usePuckStore = createUsePuck();
 const isPlainObject = (value) => {
     return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -87,7 +87,9 @@ export function Clipboard({ componentName }) {
                 scheduleStatusReset("error");
                 return;
             }
-            const sanitized = isPlainObject(parsed?.value) ? stripId(parsed.value) : null;
+            const sanitized = isPlainObject(parsed?.value)
+                ? stripId(parsed.value)
+                : null;
             if (!sanitized) {
                 scheduleStatusReset("error");
                 return;
@@ -114,7 +116,9 @@ export function Clipboard({ componentName }) {
                     });
                     if (selector.zone && previous.zones?.[selector.zone]) {
                         const zoneItems = previous.zones[selector.zone];
-                        const updatedZone = zoneItems.map((item, index) => index === selector.index ? updateItemProps(item) : item);
+                        const updatedZone = zoneItems.map((item, index) => index === selector.index
+                            ? updateItemProps(item)
+                            : item);
                         return {
                             zones: {
                                 ...previous.zones,
@@ -122,7 +126,9 @@ export function Clipboard({ componentName }) {
                             },
                         };
                     }
-                    const updatedContent = previous.content.map((item, index) => index === selector.index ? updateItemProps(item) : item);
+                    const updatedContent = previous.content.map((item, index) => index === selector.index
+                        ? updateItemProps(item)
+                        : item);
                     return {
                         content: updatedContent,
                     };
@@ -137,6 +143,6 @@ export function Clipboard({ componentName }) {
             setIsBusy(false);
         }
     };
-    return (_jsx("div", { className: "space-y-4", children: _jsxs("div", { className: "flex flex-wrap items-center justify-between gap-2", children: [_jsx("div", { children: _jsx("p", { className: "text-sm font-semibold text-gray-800 dark:text-gray-200", children: componentName }) }), _jsxs("div", { className: "flex gap-2", children: [_jsx(Button, { disabled: !clipboardSupported || isBusy, type: "button", variant: "outline", onClick: handleCopy, children: _jsx(DocumentDuplicateIcon, {}) }), _jsx(Button, { disabled: !clipboardSupported || isBusy, type: "button", variant: "outline", onClick: handlePaste, children: _jsx(ClipboardIcon, {}) }), status === "success" ? (_jsx(CheckCircleIcon, { className: "text-green-500", "aria-hidden": "true" })) : status === "error" ? (_jsx(XCircleIcon, { className: "text-red-500", "aria-hidden": "true" })) : null] })] }) }));
+    return (_jsx("div", { className: "space-y-4", children: _jsxs("div", { className: "flex flex-wrap items-center justify-between gap-2", children: [_jsx("div", { children: _jsx("p", { className: "text-sm font-semibold text-gray-800 dark:text-gray-200", children: componentName }) }), _jsxs("div", { className: "flex gap-2", children: [_jsx(Button, { disabled: !clipboardSupported || isBusy, type: "button", variant: "outline", onClick: handleCopy, children: _jsx(DocumentDuplicateIcon, {}) }), _jsx(Button, { disabled: !clipboardSupported || isBusy, type: "button", variant: "outline", onClick: handlePaste, children: _jsx(ClipboardIcon, {}) }), status === "success" ? (_jsx(CheckCircleIcon, { className: "h-4 w-4 text-green-500", "aria-hidden": "true" })) : status === "error" ? (_jsx(XCircleIcon, { className: "h-4 w-4 text-red-500", "aria-hidden": "true" })) : null] })] }) }));
 }
 //# sourceMappingURL=UniversalClipboard.js.map

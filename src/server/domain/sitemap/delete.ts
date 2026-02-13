@@ -1,6 +1,6 @@
 import "server-only";
 
-import { del } from "@/server/db/query";
+import { del } from "../../db/query";
 
 export const deleteRoute = async ({ id }: { id: string }) => {
   return {

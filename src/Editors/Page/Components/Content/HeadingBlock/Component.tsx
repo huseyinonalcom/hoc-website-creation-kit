@@ -1,5 +1,7 @@
 import type { CSSProperties, JSX, ReactElement } from "react";
 
+import type { HeadingAlignment, HeadingBlockProps, HeadingContainerStyle, HeadingLevel } from "./type";
+
 import {
   HEADING_DECORATION_COLOR_DARK,
   HEADING_DECORATION_COLOR_LIGHT,
@@ -7,7 +9,6 @@ import {
   HEADING_TEXT_COLOR_LIGHT,
   headingDefaultValues,
 } from "./HeadingBlock.defaults";
-import type { HeadingAlignment, HeadingBlockProps, HeadingContainerStyle, HeadingLevel } from "./type";
 
 const headingAlignmentMap: Record<HeadingAlignment, CSSProperties["alignItems"]> = {
   left: "flex-start",

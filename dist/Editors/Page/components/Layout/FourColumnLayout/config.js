@@ -1,6 +1,6 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
+import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
-import { Clipboard } from "../../../utilityComponents/UniversalClipboard";
 const { numberInput } = defaultFieldHelpers;
 export const fourColumnLayoutConfig = {
     label: "4 Sütun",
@@ -30,7 +30,7 @@ export const fourColumnLayoutConfig = {
             placeholder: "Örn: 24",
         }),
     },
-    render: ({ first: First, second: Second, third: Third, fourth: Fourth, gap }) => {
+    render: ({ first: First, second: Second, third: Third, fourth: Fourth, gap, }) => {
         if (!First && !Second && !Third && !Fourth) {
             return _jsx(_Fragment, {});
         }

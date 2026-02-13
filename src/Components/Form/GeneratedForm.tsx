@@ -1,15 +1,14 @@
 "use client";
 
+import { CheckCircleIcon, CheckIcon } from "@heroicons/react/24/outline";
 import { ComponentProps, ComponentType, ReactNode } from "react";
-import { CheckCircleIcon } from "@heroicons/react/24/outline";
-import { useTranslations } from "next-intl";
 
+import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
 import { FormTextareaField } from "./FormTextArea";
 import { FormSelectField } from "./FormSelect";
 import { FormToggleField } from "./FormToggle";
 import { FormInputField } from "./FormInput";
 import { FormSection } from "./FormSection";
-import { Button } from "../Simple/Button";
 import FormRow from "./FormRow";
 
 type BuiltInFieldComponents =
@@ -184,7 +183,6 @@ export default function GeneratedForm({
   state,
   successMessage,
 }: GenerateFormProps) {
-  const t = useTranslations("form");
   const sectionsToRender =
     sections ?? (fields && fields.length ? [{ fields }] : []);
   const hiddenFields: GenerateFormFieldProps[] = [];
@@ -258,7 +256,7 @@ export default function GeneratedForm({
           </p>
         )}
         <Button disabled={pending} type="submit">
-          {t("kaydet")}
+          <CheckIcon className="h-5 w-5" />
         </Button>
       </div>
       {hiddenFields.length > 0 && (

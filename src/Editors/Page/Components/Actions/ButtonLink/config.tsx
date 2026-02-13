@@ -1,12 +1,11 @@
 import type { Config } from "@puckeditor/core";
 
 import type { BaseEditorProps } from "../../../config/types";
+
+import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
-
-import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
-
-import { ButtonLink, buttonIconOptions } from "./Component";
 import { RichTextEditor } from "../../../../Text/Editor.client";
+import { ButtonLink, buttonIconOptions } from "./Component";
 
 const { colorInput, numberInput } = defaultFieldHelpers;
 

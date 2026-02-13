@@ -1,0 +1,1 @@
+{"version":3,"file":"000_init.d.ts","sourceRoot":"","sources":["../../../../src/server/db/migrations/000_init.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,kBAAkB,EAAE,MAAM,EAAO,MAAM,QAAQ,CAAC;AAIzD,wBAAsB,EAAE,CAAC,EAAE,EAAE,MAAM,CAAC,kBAAkB,CAAC,GAAG,OAAO,CAAC,IAAI,CAAC,CA8HtE"}

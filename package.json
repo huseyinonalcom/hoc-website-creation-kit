@@ -31,7 +31,9 @@
     "build": "tsc --build tsconfig.build.json",
     "dev": "tsc --build tsconfig.build.json --watch",
     "build:css": "node ./scripts/build-css.mjs",
-    "releaseprep": "npm run clean && npm run build && npm run build:css"
+    "releaseprep": "npm run clean && npm run build && npm run build:css",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix"
   },
   "peerDependencies": {
     "react": "19.2.4",

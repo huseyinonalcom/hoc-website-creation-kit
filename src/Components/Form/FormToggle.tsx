@@ -1,6 +1,5 @@
-import cn from "@/utils/classnames";
-
 import { FormField, FormFieldProps } from "./FormField";
+import cn from "../../utils/classnames";
 
 type ToggleSwitchProps = {
   checked: boolean;

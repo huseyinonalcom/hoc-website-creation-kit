@@ -1,0 +1,27 @@
+import "server-only";
+import nodemailer from "nodemailer";
+const { MAILUSER, MAILPASS, MAILHOST, MAILPORT } = process.env;
+if (!MAILUSER || !MAILPASS || !MAILHOST || !MAILPORT) {
+    throw new Error("Missing required mail environment variables");
+}
+const transporter = nodemailer.createTransport({
+    host: MAILHOST,
+    port: Number(MAILPORT),
+    secure: Number(MAILPORT) === 465,
+    auth: {
+        user: MAILUSER,
+        pass: MAILPASS,
+    },
+});
+export async function sendMail({ to, subject, text, html, from = MAILUSER, replyTo, attachments, }) {
+    await transporter.sendMail({
+        to,
+        from,
+        replyTo,
+        subject,
+        text,
+        html,
+        attachments,
+    });
+}
+//# sourceMappingURL=sendmail.js.map

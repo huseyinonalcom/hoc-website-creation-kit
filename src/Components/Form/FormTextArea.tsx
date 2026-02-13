@@ -1,9 +1,8 @@
-import { forwardRef, TextareaHTMLAttributes } from "react";
-
-import cn from "@/utils/classnames";
+import { forwardRef, TextareaHTMLAttributes, InputEventHandler } from "react";
 
 import { FormField, FormFieldProps } from "./FormField";
 import { baseInputClasses } from "./FormInput";
+import cn from "../../utils/classnames";
 
 const baseTextareaClasses = `${baseInputClasses} min-h-24`;
 
@@ -11,8 +10,8 @@ export const FormTextarea = forwardRef<
   HTMLTextAreaElement,
   TextareaHTMLAttributes<HTMLTextAreaElement>
 >(function FormTextarea({ className, rows = 3, ...props }, ref) {
-  const handleInput = (e: { target: any }) => {
-    const el = e.target;
+  const handleInput: InputEventHandler<HTMLTextAreaElement> = (e) => {
+    const el = e.currentTarget;
     el.style.height = "auto";
     el.style.height = el.scrollHeight + "px";
   };

@@ -1,8 +1,7 @@
 import "server-only";
 
-import { get } from "@/server/db/query";
-
 import { GetUserOptions, GetUserResponse } from "../types";
+import { get } from "../../../db/query";
 
 export const getUserByMail = async <
   T extends GetUserOptions = { includePasswordHash?: false },

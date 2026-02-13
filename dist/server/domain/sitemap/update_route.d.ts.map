@@ -1,0 +1,1 @@
+{"version":3,"file":"update_route.d.ts","sourceRoot":"","sources":["../../../../src/server/domain/sitemap/update_route.ts"],"names":[],"mappings":"AAAA,OAAO,CAAC,MAAM,KAAK,CAAC;AACpB,OAAO,aAAa,CAAC;AAIrB,QAAA,MAAM,iBAAiB;;;;;iBAKrB,CAAC;AAEH,eAAO,MAAM,WAAW,GAAU,WAE/B;IACD,IAAI,EAAE,CAAC,CAAC,KAAK,CAAC,OAAO,iBAAiB,CAAC,CAAC;CACzC;;;;;;;;;;;EAaA,CAAC"}

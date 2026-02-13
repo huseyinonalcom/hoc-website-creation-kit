@@ -1,5 +1,6 @@
-import cn from "../../../../../utils/classnames";
 import type { ButtonLinkComponentProps, ButtonProps, ButtonVariant } from "./type";
+
+import cn from "../../../../../utils/classnames";
 
 const baseClasses =
   "inline-flex items-center justify-center rounded-md px-3 py-2 text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50";

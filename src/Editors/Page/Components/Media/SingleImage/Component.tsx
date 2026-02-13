@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+
 import { SingleImageProps } from "./type";
 
 export const SingleImage = ({ src, alt, height, imageMode, href }: SingleImageProps) => {

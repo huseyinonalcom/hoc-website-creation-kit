@@ -1,7 +1,7 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-import { RichTextEditor } from "../../../../Text/Editor";
-import { Clipboard } from "../../../utilityComponents/UniversalClipboard";
+import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
 import { RichTextRenderer } from "../../../../Text/Renderer";
+import { RichTextEditor } from "../../../../Text/Editor";
 export const richTextBlockConfig = {
     label: "Metin",
     fields: {
@@ -11,9 +11,9 @@ export const richTextBlockConfig = {
         },
         content: {
             type: "custom",
-            render: ({ value, onChange, id }) => {
+            render: ({ value, onChange, id, }) => {
                 const key = id ?? "richtext";
-                return _jsx(RichTextEditor, { initialData: value ?? "", onChange: onChange }, key);
+                return (_jsx(RichTextEditor, { initialData: value ?? "", onChange: onChange }, key));
             },
         },
     },

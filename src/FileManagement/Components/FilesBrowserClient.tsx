@@ -5,11 +5,9 @@ import {
   FolderIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import { DragEvent, MouseEvent, useMemo, useRef, useState } from "react";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import Image from "next/image";
-import { DragEvent, MouseEvent, useMemo, useRef, useState } from "react";
-
-import * as FMApi from "../api";
 
 import type {
   CreateDirectoryInput,
@@ -19,9 +17,10 @@ import type {
   UploadFileInput,
 } from "../types";
 
-import { uploadFileInitialState, type UploadFileState } from "../state";
 import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
+import { uploadFileInitialState, type UploadFileState } from "../state";
 import cn from "../../utils/classnames";
+import * as FMApi from "../api";
 
 const inputClassName =
   "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm transition placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-indigo-400 dark:focus:ring-indigo-400";

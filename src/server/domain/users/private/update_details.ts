@@ -2,9 +2,8 @@ import { Updateable } from "kysely";
 import z from "zod";
 import "server-only";
 
-import { update } from "@/server/db/query";
-import { Users } from "@/server/dbtypes";
-
+import { Users } from "../../../types/dbtypes";
+import { update } from "../../../db/query";
 import { userStatuses } from "../types";
 
 const userSchema = z.object({

@@ -3,9 +3,8 @@ import "server-only";
 import { cookies } from "next/headers";
 import { ZodError } from "zod";
 
-import { verifyAccessToken } from "@/server/domain/auth/utils/jwt";
-import { UserRoles } from "@/server/domain/users/types";
-
+import { verifyAccessToken } from "../../server/domain/auth/utils/jwt";
+import { UserRoles } from "../../server/domain/users/types";
 import { isCustomError } from "../errors/customerrors";
 
 // --- Shared Types ---

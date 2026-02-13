@@ -1,9 +1,9 @@
 import type { Config } from "@puckeditor/core";
 
 import type { BaseEditorProps } from "../../../config/types";
-import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
 
-import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
+import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
+import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
 
 const { numberInput } = defaultFieldHelpers;
 

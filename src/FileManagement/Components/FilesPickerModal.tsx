@@ -3,17 +3,16 @@
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-import type {
+import {
   CreateDirectoryInput,
   CreateDirectoryResponse,
   SerializableDirectoryRecord,
   SerializableFileRecord,
   UploadFileInput,
-} from "./types";
-
-import type { UploadFileState } from "./state";
+} from "../types";
+import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
 import { FilesBrowserClient } from "./FilesBrowserClient";
-import { Button } from "../Editors/Page/Components/Actions/ButtonLink/Button";
+import { UploadFileState } from "../state";
 
 export type FilesPickerModalProps = {
   open: boolean;

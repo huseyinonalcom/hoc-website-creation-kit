@@ -1,9 +1,8 @@
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { ChevronDownIcon, ChevronUpIcon, PlusIcon, TrashIcon, } from "@heroicons/react/24/outline";
+import { Button } from "../Components/Actions/ButtonLink/Button";
 import { RichTextEditor } from "../../Text/Editor";
-import { Clipboard } from "./UniversalClipboard";
-import { ChevronDownIcon, ChevronUpIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { Button } from "../components/Actions/ButtonLink/Button";
 const sanitizeSlides = (raw) => {
     if (!Array.isArray(raw)) {
         return null;
@@ -13,7 +12,7 @@ const sanitizeSlides = (raw) => {
         text: typeof slide?.text === "string" ? slide.text : "",
     }));
 };
-export function SlidesField({ value, onChange, ImageField, componentName }) {
+export function SlidesField({ value, onChange, ImageField, componentName, }) {
     const slides = sanitizeSlides(value) ?? [];
     const updateSlide = (index, payload) => {
         const cloned = [...slides];

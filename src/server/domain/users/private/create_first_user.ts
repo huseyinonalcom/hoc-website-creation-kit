@@ -2,11 +2,9 @@ import { Insertable } from "kysely";
 import "server-only";
 import z from "zod";
 
-import { usersEmpty } from "@/instrumentation";
-import { insert } from "@/server/db/query";
-import { Users } from "@/server/dbtypes";
-
 import { hashPassword } from "../../auth/utils/pwd";
+import { Users } from "../../../types/dbtypes";
+import { insert } from "../../../db/query";
 
 const firstAdminUserSchema = z.object({
   full_name: z
@@ -26,13 +24,13 @@ export const createFirstAdminUser = async (
   data: Insertable<Users> & { password: string },
 ) => {
   try {
-    const noUsers = await usersEmpty();
+    /* const noUsers = await usersEmpty();
 
     if (!noUsers) {
       return new Error(
         "İlk yönetici kullanıcı yalnızca boş bir veritabanında oluşturulabilir.",
       );
-    }
+    } */
 
     const rawFirstAdminUserData = firstAdminUserSchema.parse(data);
 

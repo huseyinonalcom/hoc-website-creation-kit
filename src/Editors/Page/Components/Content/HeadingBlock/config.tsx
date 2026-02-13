@@ -1,11 +1,11 @@
 import type { Config } from "@puckeditor/core";
 
 import type { BaseEditorProps } from "../../../config/types";
-import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
-
 import type { HeadingAlignment, HeadingLevel } from "./type";
+
+import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
+import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
 import { headingDefaultValues } from "./HeadingBlock.defaults";
-import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
 import HeadingBlock from "./Component";
 
 const headingLevelOptions: { label: string; value: HeadingLevel }[] = [

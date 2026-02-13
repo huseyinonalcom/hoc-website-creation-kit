@@ -1,6 +1,6 @@
 import type { SliderProps } from "../SliderBlock/type";
 import type { BaseComponentProps } from "../../type";
-import { SlideProps } from "../../../utilityComponents/SlidesField";
+import { SlideProps } from "../../../utilityComponentsa/SlidesField";
 export type SliderShowcaseBlockProps = BaseComponentProps & {
     slides?: SlideProps[];
     autoPlay?: boolean;

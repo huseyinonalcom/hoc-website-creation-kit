@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
-import { RichTextRenderer } from "../../../../Text/Renderer";
 import type { SliderShowcaseProps } from "./type";
 
+import { RichTextRenderer } from "../../../../Text/Renderer";
 import Lightbox from "../Lightbox";
 
 const SIDE_CARD_HEIGHT_RATIO = 0.78;

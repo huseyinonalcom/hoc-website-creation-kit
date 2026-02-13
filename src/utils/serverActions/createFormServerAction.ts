@@ -2,14 +2,13 @@
 import { redirect } from "next/navigation";
 import "server-only";
 
-import { UserRoles } from "@/server/domain/users/types";
-
 import {
   ActionContext,
   ActionState,
   checkAuth,
   handleActionError,
 } from "./helpers";
+import { UserRoles } from "../../server/domain/users/types";
 import { formDataToObject } from "../formDataToObject";
 
 /**

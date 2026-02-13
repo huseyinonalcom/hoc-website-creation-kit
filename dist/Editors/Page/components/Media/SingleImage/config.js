@@ -1,7 +1,7 @@
 import { jsx as _jsx } from "react/jsx-runtime";
+import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
+import { EditorImage } from "../../../utilityComponentsa/EditorImage";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
-import { EditorImage } from "../../../utilityComponents/EditorImage";
-import { Clipboard } from "../../../utilityComponents/UniversalClipboard";
 import { SingleImage } from "./Component";
 const { imageModeToggleField, numberInput } = defaultFieldHelpers;
 export const singleImageConfig = {
@@ -14,7 +14,7 @@ export const singleImageConfig = {
         src: {
             label: "Görsel",
             type: "custom",
-            render: ({ value, onChange }) => _jsx(EditorImage, { value: typeof value === "string" ? value : "", onChange: (next) => onChange(next) }),
+            render: ({ value, onChange }) => (_jsx(EditorImage, { value: typeof value === "string" ? value : "", onChange: (next) => onChange(next) })),
         },
         alt: { type: "text", label: "Alternatif Metin" },
         height: numberInput("Yükseklik (px)", {

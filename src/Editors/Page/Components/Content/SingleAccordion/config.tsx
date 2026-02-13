@@ -2,7 +2,7 @@ import type { Config } from "@puckeditor/core";
 
 import type { BaseEditorProps } from "../../../config/types";
 
-import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
+import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
 import SingleAccordion from "./Component";
 
 export const singleAccordionConfig: Config<BaseEditorProps>["components"]["SingleAccordion"] =

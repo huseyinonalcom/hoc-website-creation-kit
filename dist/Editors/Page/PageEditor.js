@@ -1,18 +1,15 @@
 "use client";
 import { Fragment as _Fragment, jsx as _jsx } from "react/jsx-runtime";
-import { useEffect, useState } from "react";
 import { createUsePuck, Puck } from "@puckeditor/core";
+import { useRef } from "react";
 import { baseEditorConfig } from "./config/baseEditorConfig";
 const usePuck = createUsePuck();
 export function PageEditor({ config = baseEditorConfig, data, height, path, viewports, theme = "light", className, onPublish, renderHeaderActions, }) {
     const themeClassName = theme === "dark" ? "puck-theme-dark" : undefined;
     const wrapperClassName = ["puck-editor", themeClassName, className].filter(Boolean).join(" ");
-    const [editorData, setEditorData] = useState(data);
-    useEffect(() => {
-        setEditorData(data);
-    }, [data]);
-    return (_jsx("div", { className: wrapperClassName, children: _jsx(Puck, { config: config, data: editorData, height: height, onChange: (next) => {
-                setEditorData(next);
+    const editorDataRef = useRef(data);
+    return (_jsx("div", { className: wrapperClassName, children: _jsx(Puck, { config: config, data: editorDataRef.current, height: height, onChange: (next) => {
+                editorDataRef.current = next;
             }, overrides: renderHeaderActions
                 ? {
                     headerActions: () => {

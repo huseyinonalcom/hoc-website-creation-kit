@@ -1,6 +1,6 @@
 import z from "zod";
 
-import { insert, update } from "@/server/db/query";
+import { insert, update } from "../../db/query";
 
 export const updateMetaSchema = z.object({
   name: z.string(),

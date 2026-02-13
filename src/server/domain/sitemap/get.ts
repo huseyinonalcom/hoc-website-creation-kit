@@ -1,9 +1,8 @@
 import "server-only";
 import type { Data } from "hoc-website-creation-kit";
 
-import { get } from "@/server/db/query";
-
 import { getPageById } from "../pages/get";
+import { get } from "../../db/query";
 
 export const getSitemap = async ({ getAll }: { getAll?: boolean }) => {
   const query = get("site_map").selectAll();

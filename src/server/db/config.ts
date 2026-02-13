@@ -1,6 +1,7 @@
-import { DB } from "../types/dbtypes";
 import { Kysely, PostgresDialect } from "kysely";
 import { Pool } from "pg";
+
+import { DB } from "../types/dbtypes";
 import "dotenv/config";
 
 const pool = new Pool({

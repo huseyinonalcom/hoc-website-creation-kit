@@ -1,13 +1,12 @@
 import "server-only";
 
-import { sendMail } from "@/utils/mail/sendmail";
-
 import {
   createPasswordResetToken,
   verifyPasswordResetToken,
 } from "./utils/jwt";
 import { updateUserPassword } from "../users/private/update_password";
 import { getUserByMail } from "../users/private/get_user_by_mail";
+import { sendMail } from "../../../utils/mail/sendmail";
 
 export const resetPassword = async ({
   token,

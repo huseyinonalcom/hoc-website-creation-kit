@@ -1,11 +1,10 @@
 import type { Config } from "@puckeditor/core";
 
 import type { BaseEditorProps } from "../../../config/types";
+
+import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
+import { EditorImage } from "../../../utilityComponentsa/EditorImage";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
-
-import { EditorImage } from "../../../UtilityComponents/EditorImage";
-import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
-
 import { SingleImage } from "./Component";
 
 const { imageModeToggleField, numberInput } = defaultFieldHelpers;

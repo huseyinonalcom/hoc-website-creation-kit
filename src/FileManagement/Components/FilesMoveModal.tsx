@@ -4,10 +4,9 @@ import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
-import type { SerializableDirectoryRecord } from "./types";
-
+import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
 import { FilesBrowserClient } from "./FilesBrowserClient";
-import { Button } from "../Editors/Page/Components/Actions/ButtonLink/Button";
+import { SerializableDirectoryRecord } from "../types";
 
 export type FilesMoveModalProps = {
   open: boolean;

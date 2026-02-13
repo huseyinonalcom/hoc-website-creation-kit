@@ -1,9 +1,8 @@
 import z from "zod";
 import "server-only";
 
-import { update } from "@/server/db/query";
-
 import { hashPassword } from "../../auth/utils/pwd";
+import { update } from "../../../db/query";
 
 const userSchema = z.object({
   id: z.uuidv4({ error: "Kullanıcı ID'si Geçersiz" }),

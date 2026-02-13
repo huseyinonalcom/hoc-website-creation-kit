@@ -1,5 +1,6 @@
 import type { Slot } from "@puckeditor/core";
 import type { ReactNode } from "react";
+
 import type { BaseComponentProps } from "../../type";
 
 export type SingleAccordionBlockProps = BaseComponentProps & {

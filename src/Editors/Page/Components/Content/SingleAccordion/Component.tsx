@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 
-import cn from "../../../../../utils/classnames";
 import type { SingleAccordionBlockProps } from "./type";
+
+import cn from "../../../../../utils/classnames";
 
 export default function SingleAccordion({ title, children, defaultOpen = false }: SingleAccordionBlockProps) {
   const [isOpen, setIsOpen] = useState(Boolean(defaultOpen));

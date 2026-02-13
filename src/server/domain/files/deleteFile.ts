@@ -1,7 +1,7 @@
 import "server-only";
+import { sql } from "kysely";
 
 import { db } from "../../db/config";
-import { sql } from "kysely";
 
 export const deleteFile = async ({ id }: { id: string }) => {
   const updated = await db

@@ -3,29 +3,28 @@
 import { useMemo, useState, useTransition } from "react";
 import Image from "next/image";
 
-import type {
+import {
+  UploadFileInput,
   CreateDirectoryInput,
   CreateDirectoryResponse,
-  DeleteDirectoryInput,
-  DeleteDirectoryResponse,
-  DeleteFileInput,
-  DeleteFileResponse,
-  SerializableDirectoryRecord,
-  SerializableFileRecord,
-  UpdateDirectoryInput,
-  UpdateDirectoryResponse,
   UpdateFileInput,
   UpdateFileResponse,
-  UploadFileInput,
-} from "./types";
-
-import { useFilesData } from "./Providers/FilesDataProvider";
+  DeleteFileInput,
+  DeleteFileResponse,
+  UpdateDirectoryInput,
+  UpdateDirectoryResponse,
+  DeleteDirectoryInput,
+  DeleteDirectoryResponse,
+  SerializableFileRecord,
+  SerializableDirectoryRecord,
+} from "../types";
+import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
+import { useFilesData } from "../Providers/FilesDataProvider";
 import { FilesBrowserClient } from "./FilesBrowserClient";
-import * as FMApi from "./api";
 import { FilesMoveModal } from "./FilesMoveModal";
-import cn from "../utils/classnames";
-import type { UploadFileState } from "./state";
-import { Button } from "../Editors/Page/Components/Actions/ButtonLink/Button";
+import { UploadFileState } from "../state";
+import cn from "../../utils/classnames";
+import * as FMApi from "../api";
 
 const inputClassName =
   "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm transition placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-indigo-400 dark:focus:ring-indigo-400";
@@ -71,10 +70,10 @@ export function FilesManagerClient({
         error: data?.error || "Upload failed",
         uploadedFile: null,
       } as UploadFileState;
-    } catch (err: any) {
+    } catch (err: unknown) {
       return {
         result: "error",
-        error: err?.message || String(err),
+        error: (err as Error)?.message || String(err),
         uploadedFile: null,
       } as UploadFileState;
     }
@@ -303,7 +302,7 @@ export function FilesManagerClient({
       }
 
       const parentId = getParentDirectoryId(directories, activeDirectoryId);
-      response.deletedIds.forEach((id) => removeDirectory(id));
+      response.deletedIds.forEach((id: string) => removeDirectory(id));
       setActiveDirectoryId(parentId);
       setDirectoryLabel("");
       setStatus({ type: "success", message: "Klasor silindi." });

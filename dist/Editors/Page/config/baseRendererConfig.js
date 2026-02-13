@@ -1,6 +1,6 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-import { baseEditorConfig } from "./baseEditorConfig";
 import { RichTextRenderer } from "../../Text/Renderer";
+import { baseEditorConfig } from "./baseEditorConfig";
 export const baseRendererConfig = {
     ...baseEditorConfig,
     components: {

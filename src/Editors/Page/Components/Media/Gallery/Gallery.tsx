@@ -5,11 +5,10 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import cn from "../../../../../utils/classnames";
-
-import Lightbox from "../Lightbox";
-
 import type { GalleryBlockItem, GalleryBlockItemSize, GalleryGridSize, GalleryImageMode, GalleryProps, NormalizedGalleryItem } from "./type";
+
+import cn from "../../../../../utils/classnames";
+import Lightbox from "../Lightbox";
 
 const sizeClassNames: Record<GalleryBlockItemSize, string> = {
   "1x1": "",

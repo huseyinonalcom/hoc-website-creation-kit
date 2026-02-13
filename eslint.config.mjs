@@ -33,7 +33,6 @@ const eslintConfig = defineConfig([
       },
     },
     plugins: {
-      "@typescript-eslint": tsPlugin,
       perfectionist,
     },
     rules: {
@@ -86,7 +85,6 @@ const eslintConfig = defineConfig([
     plugins: {
       react,
       "react-hooks": reactHooks,
-      "@typescript-eslint": tsPlugin,
     },
     settings: {
       react: { version: "detect" },

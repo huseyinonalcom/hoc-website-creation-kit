@@ -1,16 +1,16 @@
 import type { Config } from "@puckeditor/core";
 
-import type { BaseEditorProps } from "../../../config/types";
-import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
-
-import { EditorImage } from "../../../UtilityComponents/EditorImage";
-import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
 import type {
   GalleryBlockItem,
   GalleryBlockItemSize,
   GalleryGridSize,
   GalleryImageMode,
 } from "./type";
+import type { BaseEditorProps } from "../../../config/types";
+
+import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
+import { EditorImage } from "../../../utilityComponentsa/EditorImage";
+import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
 import { GalleryBlock, isGalleryImageMode } from "./Component";
 
 const gallerySizeOptions: { label: string; value: GalleryBlockItemSize }[] = [
@@ -37,7 +37,7 @@ const galleryItemImageModeField = {
     onChange,
   }: {
     value?: GalleryImageMode;
-    // eslint-disable-next-line no-unused-vars
+
     onChange: (next: GalleryImageMode | undefined) => void;
     field: unknown;
     id: string;

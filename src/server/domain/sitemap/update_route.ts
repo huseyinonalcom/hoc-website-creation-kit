@@ -1,7 +1,7 @@
 import z from "zod";
-
-import { update } from "@/server/db/query";
 import "server-only";
+
+import { update } from "../../db/query";
 
 const updateRouteSchema = z.object({
   id: z.uuidv4(),

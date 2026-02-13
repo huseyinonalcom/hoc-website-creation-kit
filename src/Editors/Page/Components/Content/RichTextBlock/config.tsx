@@ -2,9 +2,9 @@ import type { Config } from "@puckeditor/core";
 
 import type { BaseEditorProps } from "../../../config/types";
 
-import { RichTextEditor } from "../../../../Text/Editor";
-import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
+import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
 import { RichTextRenderer } from "../../../../Text/Renderer";
+import { RichTextEditor } from "../../../../Text/Editor";
 
 export const richTextBlockConfig: Config<BaseEditorProps>["components"]["RichTextBlock"] =
   {

@@ -1,5 +1,6 @@
-import { components } from "../Components";
 import type { BaseEditorProps, BaseRootProps } from "./types";
+
+import { components } from "../Components";
 
 export type { BaseEditorProps, BaseRootProps };
 
@@ -31,6 +32,7 @@ export const baseEditorConfig = {
         "RichTextBlock",
         "AccordionBlock",
         "SingleAccordion",
+        "CombinationLock",
       ],
     },
     media: {

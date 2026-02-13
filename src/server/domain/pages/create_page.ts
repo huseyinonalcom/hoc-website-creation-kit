@@ -1,7 +1,7 @@
 import z from "zod";
 import "server-only";
 
-import { insert } from "@/server/db/query";
+import { insert } from "../../db/query";
 
 export const createPageSchema = z.object({
   site_map_id: z.uuidv4("Site haritası ID'si geçerli değil").optional(),

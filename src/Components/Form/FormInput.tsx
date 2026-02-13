@@ -1,8 +1,7 @@
 import { forwardRef, InputHTMLAttributes } from "react";
 
-import cn from "@/utils/classnames";
-
 import { FormField, FormFieldProps } from "./FormField";
+import cn from "../../utils/classnames";
 
 export const baseInputClasses =
   "w-full block rounded-md border-0 bg-white px-3 py-2 text-sm text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-600 dark:bg-white/5 dark:text-white dark:ring-white/10 dark:placeholder:text-gray-500 dark:focus:ring-indigo-500";

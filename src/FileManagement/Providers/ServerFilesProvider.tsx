@@ -1,9 +1,9 @@
 import "server-only";
 import React from "react";
 
+import listDirectories from "../../server/domain/directories/listDirectories";
 import FilesDataProvider from "../Providers/FilesDataProvider";
 import listFiles from "../../server/domain/files/listFiles";
-import listDirectories from "../../server/domain/directories/listDirectories";
 
 const mapDbFileToSerializable = (row: any) => ({
   id: row.id,
@@ -36,7 +36,7 @@ export default async function ServerFilesProvider({
 
   return (
     // FilesDataProvider is a client component
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
+     
     <FilesDataProvider initialFiles={files} initialDirectories={directories}>
       {children}
     </FilesDataProvider>

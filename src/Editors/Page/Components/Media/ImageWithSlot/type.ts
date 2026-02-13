@@ -1,4 +1,5 @@
 import type { Slot } from "@puckeditor/core";
+
 import type { BaseComponentProps } from "../../type";
 
 export type ImageWithSlotProps = BaseComponentProps & {

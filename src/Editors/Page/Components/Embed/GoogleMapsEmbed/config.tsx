@@ -1,10 +1,9 @@
 import type { Config } from "@puckeditor/core";
 
 import type { BaseEditorProps } from "../../../config/types";
+
+import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
-
-import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
-
 import GoogleMapsEmbed from "./Component";
 
 const { numberInput } = defaultFieldHelpers;

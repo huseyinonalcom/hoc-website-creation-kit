@@ -1,10 +1,9 @@
 import "server-only";
 
-import { get } from "@/server/db/query";
-
 import { GetUserOptions, GetUserResponse } from "../types";
 import { generatePlaceholderUser } from "../placeholder";
 import { authCheckMiddleware } from "../../auth/acCheck";
+import { get } from "../../../db/query";
 
 const getUserByIdInternal = async <
   T extends GetUserOptions = { includePasswordHash?: false },

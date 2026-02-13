@@ -1,7 +1,7 @@
 import "server-only";
 
-import { verifyAccessToken } from "./utils/jwt";
 import { AuthenticatedRequest } from "../../types/apitypes";
+import { verifyAccessToken } from "./utils/jwt";
 
 export async function extractAuthenticatedUser(
   token: string | undefined,

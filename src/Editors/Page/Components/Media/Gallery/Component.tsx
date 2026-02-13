@@ -1,5 +1,6 @@
-import Gallery from "./Gallery";
 import type { GalleryGridSize, GalleryImageMode, GalleryProps } from "./type";
+
+import Gallery from "./Gallery";
 
 export const isGalleryGridSize = (value: unknown): value is GalleryGridSize => value === 2 || value === 3 || value === 4;
 

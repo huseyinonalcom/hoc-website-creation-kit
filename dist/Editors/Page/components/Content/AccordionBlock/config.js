@@ -1,5 +1,5 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-import { Clipboard } from "../../../utilityComponents/UniversalClipboard";
+import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
 import AccordionBlock from "./Component";
 export const accordionBlockConfig = {
     label: "Akordeon Listesi",
@@ -15,7 +15,8 @@ export const accordionBlockConfig = {
             defaultItemProps: {
                 title: "Yeni Bölüm",
             },
-            getItemSummary: (item, index) => item?.title?.trim() || `Bölüm ${typeof index === "number" ? index + 1 : 1}`,
+            getItemSummary: (item, index) => item?.title?.trim() ||
+                `Bölüm ${typeof index === "number" ? index + 1 : 1}`,
             arrayFields: {
                 title: {
                     label: "Başlık",

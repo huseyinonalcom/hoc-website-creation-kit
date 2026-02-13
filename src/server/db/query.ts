@@ -2,8 +2,7 @@ import type { Kysely, Selectable } from "kysely";
 
 import "server-only";
 
-import type { DB } from "../dbtypes";
-
+import { DB } from "../types/dbtypes";
 import { db, dbRo } from "./config";
 
 type TableName = keyof DB;

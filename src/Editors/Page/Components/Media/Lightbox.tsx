@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+
 import type { LightboxProps } from "./type";
 
 export default function Lightbox({ items, activeIndex, onClose, onNext, onPrevious }: LightboxProps) {

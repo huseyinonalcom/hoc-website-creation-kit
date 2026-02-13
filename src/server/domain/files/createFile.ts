@@ -1,5 +1,4 @@
 import "server-only";
-
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { randomUUID } from "crypto";
 import { sql } from "kysely";
@@ -12,7 +11,7 @@ const publicBase = process.env.R2_PUBLIC_URL ? process.env.R2_PUBLIC_URL.replace
 
 if (!bucketName || !publicBase) {
   // warn early; callers should handle the error
-  // eslint-disable-next-line no-console
+   
   console.warn("R2_BUCKET or R2_PUBLIC_URL not configured; createFile will fail until set.");
 }
 

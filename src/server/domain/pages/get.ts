@@ -1,6 +1,6 @@
 import "server-only";
 
-import { get } from "@/server/db/query";
+import { get } from "../../db/query";
 
 export const getPageById = async ({ id }: { id: string }) => {
   return {

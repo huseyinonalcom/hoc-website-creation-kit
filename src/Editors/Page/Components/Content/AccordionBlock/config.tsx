@@ -2,7 +2,7 @@ import type { Config } from "@puckeditor/core";
 
 import type { BaseEditorProps } from "../../../config/types";
 
-import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
+import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
 import AccordionBlock from "./Component";
 
 export const accordionBlockConfig: Config<BaseEditorProps>["components"]["AccordionBlock"] =

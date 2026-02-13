@@ -67,20 +67,13 @@ export type {
   PageEditorProps,
 } from "./Editors/Page/PageEditor";
 
-export { Clipboard } from "./Editors/Page/UtilityComponents/UniversalClipboard";
-export { EditorImage } from "./Editors/Page/UtilityComponents/EditorImage";
+export { Clipboard } from "./Editors/Page/utilityComponentsa/UniversalClipboard";
+export { EditorImage } from "./Editors/Page/utilityComponentsa/EditorImage";
 export type { LinkListItem } from "./Editors/Page/Components/Actions/LinkBar/type";
 export { LinkListField } from "./Editors/Page/Components/Actions/LinkBar/LinkListField";
-export { SlidesField } from "./Editors/Page/UtilityComponents/SlidesField";
+export { SlidesField } from "./Editors/Page/utilityComponentsa/SlidesField";
 
-export {
-  FilesBrowserClient,
-  FilesDataProvider,
-  FilesManagerClient,
-  FilesMoveModal,
-  FilesPickerModal,
-  useFilesData,
-} from "./FileManagement";
+export { FilesDataProvider, useFilesData } from "./FileManagement";
 export type {
   ActionResultState,
   CreateDirectoryInput,
@@ -89,10 +82,6 @@ export type {
   DeleteDirectoryResponse,
   DeleteFileInput,
   DeleteFileResponse,
-  FilesBrowserClientProps,
-  FilesManagerClientProps,
-  FilesMoveModalProps,
-  FilesPickerModalProps,
   SerializableDirectoryRecord,
   SerializableFileRecord,
   UpdateDirectoryInput,
@@ -114,9 +103,5 @@ export type {
   FormInputFieldProps,
 } from "./Editors/Page/config/types";
 export { baseRendererConfig } from "./Editors/Page/config/baseRendererConfig";
-
-export { createFile } from "./server/files/create_file";
-export type { CreateFileResult } from "./server/files/create_file";
-export { r2 } from "./server/files/r2";
 
 export type { Config, Data, Slot } from "@puckeditor/core";

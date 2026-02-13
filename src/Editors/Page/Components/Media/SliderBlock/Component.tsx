@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
-import { RichTextRenderer } from "../../../../Text/Renderer";
 import type { SliderProps } from "./type";
+
+import { RichTextRenderer } from "../../../../Text/Renderer";
 
 export default function Slider({ slides = [], autoPlay = false, autoPlayInterval = 6000, imageMode = "cover" }: SliderProps) {
   const normalizedSlides = slides

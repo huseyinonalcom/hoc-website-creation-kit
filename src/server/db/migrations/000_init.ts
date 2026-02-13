@@ -1,4 +1,5 @@
 import { DatabaseConnection, Kysely, sql } from "kysely";
+
 import withUuid from "../utils/withUuid";
 
 export async function up(db: Kysely<DatabaseConnection>): Promise<void> {

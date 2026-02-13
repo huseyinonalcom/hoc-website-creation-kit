@@ -1,9 +1,8 @@
 import "server-only";
 
-import { dbRo } from "@/server/db/config";
-import { get } from "@/server/db/query";
-
 import { authCheckMiddleware } from "../../auth/acCheck";
+import { dbRo } from "../../../db/config";
+import { get } from "../../../db/query";
 
 export const getUsers = authCheckMiddleware({
   allowedRoles: ["admin"],

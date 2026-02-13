@@ -1,7 +1,7 @@
 import z from "zod";
 import "server-only";
 
-import { insert } from "@/server/db/query";
+import { insert } from "../../db/query";
 
 const NULL_OR_BACKSLASH = new RegExp(`[${String.fromCharCode(0)}\\\\]`, "g");
 

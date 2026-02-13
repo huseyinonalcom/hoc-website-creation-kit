@@ -1,10 +1,11 @@
 "use client";
 
+import { ChevronUpIcon } from "@heroicons/react/24/outline";
 import { useMemo, useState } from "react";
 
-import cn from "../../../../../utils/classnames";
 import type { AccordionBlockProps, AccordionSection } from "./type";
-import { ChevronUpIcon } from "@heroicons/react/24/outline";
+
+import cn from "../../../../../utils/classnames";
 
 export default function AccordionBlock({ sections = [], isEditing = false }: AccordionBlockProps) {
   const sanitizedSections = useMemo(() => {

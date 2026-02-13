@@ -1,22 +1,23 @@
-import { twoColumnLayoutConfig } from "./Layout/TwoColumnLayout/config";
+import { sliderShowcaseBlockConfig } from "./Media/SliderShowcaseBlock/config";
 import { threeColumnLayoutConfig } from "./Layout/ThreeColumnLayout/config";
 import { fourColumnLayoutConfig } from "./Layout/FourColumnLayout/config";
-import { verticalSpacerConfig } from "./Layout/VerticalSpacer/config";
-import { headingBlockConfig } from "./Content/HeadingBlock/config";
-import { richTextBlockConfig } from "./Content/RichTextBlock/config";
-import { accordionBlockConfig } from "./Content/AccordionBlock/config";
 import { singleAccordionConfig } from "./Content/SingleAccordion/config";
-import { singleImageConfig } from "./Media/SingleImage/config";
+import { combinationLockConfig } from "./Content/CombinationLock/config";
+import { imageOverlayTextConfig } from "./Media/ImageOverlayText/config";
+import { twoColumnLayoutConfig } from "./Layout/TwoColumnLayout/config";
+import { accordionBlockConfig } from "./Content/AccordionBlock/config";
+import { googleMapsEmbedConfig } from "./Embed/GoogleMapsEmbed/config";
+import { verticalSpacerConfig } from "./Layout/VerticalSpacer/config";
+import { richTextBlockConfig } from "./Content/RichTextBlock/config";
+import { headingBlockConfig } from "./Content/HeadingBlock/config";
 import { imageWithTextConfig } from "./Media/ImageWithText/config";
 import { imageWithSlotConfig } from "./Media/ImageWithSlot/config";
-import { imageOverlayTextConfig } from "./Media/ImageOverlayText/config";
-import { sliderBlockConfig } from "./Media/SliderBlock/config";
-import { sliderShowcaseBlockConfig } from "./Media/SliderShowcaseBlock/config";
-import { galleryConfig } from "./Media/Gallery/config";
-import { linkBarConfig } from "./Actions/LinkBar/config";
-import { buttonLinkConfig } from "./Actions/ButtonLink/config";
 import { youtubeEmbedConfig } from "./Embed/YoutubeEmbed/config";
-import { googleMapsEmbedConfig } from "./Embed/GoogleMapsEmbed/config";
+import { singleImageConfig } from "./Media/SingleImage/config";
+import { sliderBlockConfig } from "./Media/SliderBlock/config";
+import { buttonLinkConfig } from "./Actions/ButtonLink/config";
+import { linkBarConfig } from "./Actions/LinkBar/config";
+import { galleryConfig } from "./Media/Gallery/config";
 
 export const components = {
   TwoColumnLayout: twoColumnLayoutConfig,
@@ -27,6 +28,7 @@ export const components = {
   RichTextBlock: richTextBlockConfig,
   AccordionBlock: accordionBlockConfig,
   SingleAccordion: singleAccordionConfig,
+  CombinationLock: combinationLockConfig,
   SingleImage: singleImageConfig,
   ImageWithText: imageWithTextConfig,
   ImageWithSlot: imageWithSlotConfig,
