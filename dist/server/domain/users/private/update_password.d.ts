@@ -5,16 +5,16 @@ declare const userSchema: z.ZodObject<{
     password: z.ZodString;
 }, z.core.$strip>;
 export declare const updateUserPassword: (data: z.infer<typeof userSchema>) => Promise<{
-    id: string;
-    role: string;
-    status: string;
+    created_at: import("kysely").ColumnType<Date, string | Date | undefined, string | Date> & Date;
     email: string;
-    created_at: Date;
-    updated_at: Date;
     full_name: string;
-    last_login_at: Date | null;
+    id: import("kysely").ColumnType<string, string | undefined, string> & string;
+    last_login_at: (import("../../../types/dbtypes").Timestamp & Date) | null;
     password_hash: string;
-    verified_at: Date | null;
+    role: import("kysely").ColumnType<string, string | undefined, string> & string;
+    status: import("kysely").ColumnType<string, string | undefined, string> & string;
+    updated_at: import("kysely").ColumnType<Date, string | Date | undefined, string | Date> & Date;
+    verified_at: (import("../../../types/dbtypes").Timestamp & Date) | null;
 }>;
 export {};
 //# sourceMappingURL=update_password.d.ts.map

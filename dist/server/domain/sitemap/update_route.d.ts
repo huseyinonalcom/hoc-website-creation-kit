@@ -10,13 +10,13 @@ export declare const updateRoute: ({ data, }: {
     data: z.infer<typeof updateRouteSchema>;
 }) => Promise<{
     result: {
-        id: string;
-        url: string;
-        created_at: Date;
-        updated_at: Date;
-        updated_by_user_id: string | null;
         active_page_id: string | null;
-        is_active: boolean;
+        created_at: import("kysely").ColumnType<Date, string | Date | undefined, string | Date> & Date;
+        id: import("kysely").ColumnType<string, string | undefined, string> & string;
+        is_active: (import("kysely").ColumnType<false, false | undefined, false> | import("kysely").ColumnType<true, true | undefined, true>) & boolean;
+        updated_at: import("kysely").ColumnType<Date, string | Date | undefined, string | Date> & Date;
+        updated_by_user_id: string | null;
+        url: string;
     };
     total: number;
 }>;

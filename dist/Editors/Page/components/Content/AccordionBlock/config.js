@@ -1,5 +1,5 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
+import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
 import AccordionBlock from "./Component";
 export const accordionBlockConfig = {
     label: "Akordeon Listesi",

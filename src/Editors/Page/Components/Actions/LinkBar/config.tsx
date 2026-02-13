@@ -2,7 +2,7 @@ import type { Config } from "@puckeditor/core";
 
 import type { BaseEditorProps } from "../../../config/types";
 
-import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
+import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
 import { LinkListField } from "./LinkListField";
 import { LinkBarBlock } from "./Component";
 

@@ -1,5 +1,5 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
-import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
+import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
 const { numberInput } = defaultFieldHelpers;
 export const twoColumnLayoutConfig = {

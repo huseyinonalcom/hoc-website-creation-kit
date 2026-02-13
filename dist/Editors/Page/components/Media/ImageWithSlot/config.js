@@ -1,8 +1,8 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 import Image from "next/image";
 import Link from "next/link";
-import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
-import { EditorImage } from "../../../utilityComponentsa/EditorImage";
+import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
+import { EditorImage } from "../../../UtilityComponents/EditorImage";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
 const { imageModeToggleField, imagePositionToggleField, numberInput, stackOrderToggleField, } = defaultFieldHelpers;
 export const imageWithSlotConfig = {

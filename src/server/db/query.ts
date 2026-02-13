@@ -1,4 +1,10 @@
-import type { Kysely, Selectable } from "kysely";
+import type {
+  DeleteQueryBuilder,
+  Kysely,
+  Selectable,
+  SelectQueryBuilder,
+  UpdateQueryBuilder,
+} from "kysely";
 
 import "server-only";
 
@@ -29,20 +35,20 @@ function applyIdFilter<T extends TableWithId, QB>(
 export function get<T extends TableWithId>(
   table: T,
   options?: { id?: IdOf<T>; db?: DbLike },
-) {
+): SelectQueryBuilder<DB, T, Selectable<DB[T]>> {
   const usedDb: DbLike = options?.db ?? dbRo;
   let builder = usedDb.selectFrom(table);
   const id = options?.id;
   if (id !== undefined) {
     builder = applyIdFilter<T, typeof builder>(builder, id);
   }
-  return builder;
+  return builder as SelectQueryBuilder<DB, T, Selectable<DB[T]>>;
 }
 
 export function update<T extends TableWithId>(
   table: T,
   options?: { id?: IdOf<T>; db?: DbLike },
-) {
+): UpdateQueryBuilder<DB, T, T, DB[T]> {
   const usedDb: DbLike = options?.db ?? db;
   let builder = usedDb.updateTable(table);
 
@@ -51,7 +57,7 @@ export function update<T extends TableWithId>(
     builder = applyIdFilter<T, typeof builder>(builder, id);
   }
 
-  return builder;
+  return builder as UpdateQueryBuilder<DB, T, T, DB[T]>;
 }
 
 export function insert<T extends TableName>(
@@ -65,7 +71,7 @@ export function insert<T extends TableName>(
 export function del<T extends TableWithId>(
   table: T,
   options?: { id?: IdOf<T>; db?: DbLike },
-) {
+): DeleteQueryBuilder<DB, T, DB[T]> {
   const usedDb: DbLike = options?.db ?? db;
   let builder = usedDb.deleteFrom(table);
   const id = options?.id;
@@ -73,5 +79,5 @@ export function del<T extends TableWithId>(
     builder = applyIdFilter<T, typeof builder>(builder, id);
   }
 
-  return builder;
+  return builder as DeleteQueryBuilder<DB, T, DB[T]>;
 }

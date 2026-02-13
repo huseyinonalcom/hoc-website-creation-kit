@@ -2,7 +2,7 @@ import type { Config } from "@puckeditor/core";
 
 import type { BaseEditorProps } from "../../../config/types";
 
-import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
+import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
 
 const { numberInput } = defaultFieldHelpers;

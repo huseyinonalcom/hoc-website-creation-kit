@@ -1,6 +1,6 @@
 import type { BaseComponentProps } from "../../type";
 
-import { SlideProps } from "../../../utilityComponentsa/SlidesField";
+import { SlideProps } from "../../../UtilityComponents/SlidesField";
 
 export type SliderBlockProps = BaseComponentProps & {
   slides?: { imageUrl?: string; text?: string }[];

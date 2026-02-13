@@ -2,8 +2,8 @@ import type { Config } from "@puckeditor/core";
 
 import type { BaseEditorProps } from "../../../config/types";
 
-import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
-import { EditorImage } from "../../../utilityComponentsa/EditorImage";
+import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
+import { EditorImage } from "../../../UtilityComponents/EditorImage";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
 import { RichTextEditor } from "../../../../Text/Editor.client";
 import { ImageWithText } from "./Component";

@@ -8,8 +8,8 @@ import type {
 } from "./type";
 import type { BaseEditorProps } from "../../../config/types";
 
-import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
-import { EditorImage } from "../../../utilityComponentsa/EditorImage";
+import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
+import { EditorImage } from "../../../UtilityComponents/EditorImage";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
 import { GalleryBlock, isGalleryImageMode } from "./Component";
 

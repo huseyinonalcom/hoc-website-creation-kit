@@ -1,7 +1,7 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
-import { SlidesField } from "../../../utilityComponentsa/SlidesField";
-import { EditorImage } from "../../../utilityComponentsa/EditorImage";
+import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
+import { SlidesField } from "../../../UtilityComponents/SlidesField";
+import { EditorImage } from "../../../UtilityComponents/EditorImage";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
 import SliderShowcase from "./Component";
 const { imageModeToggleField, numberInput } = defaultFieldHelpers;

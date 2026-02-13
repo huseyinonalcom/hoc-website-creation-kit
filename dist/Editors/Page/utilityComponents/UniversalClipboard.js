@@ -9,7 +9,7 @@ const isPlainObject = (value) => {
     return typeof value === "object" && value !== null && !Array.isArray(value);
 };
 const stripId = (value) => {
-    const { id, ...rest } = value;
+    const { _id, ...rest } = value;
     return rest;
 };
 export function Clipboard({ componentName }) {

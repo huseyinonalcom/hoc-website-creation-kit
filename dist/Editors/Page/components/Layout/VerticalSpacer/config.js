@@ -1,5 +1,5 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
+import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
 import { VerticalSpacer } from "./Component";
 const { numberInput } = defaultFieldHelpers;

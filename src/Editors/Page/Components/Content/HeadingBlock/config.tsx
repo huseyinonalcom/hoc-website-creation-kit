@@ -3,7 +3,7 @@ import type { Config } from "@puckeditor/core";
 import type { BaseEditorProps } from "../../../config/types";
 import type { HeadingAlignment, HeadingLevel } from "./type";
 
-import { Clipboard } from "../../../utilityComponentsa/UniversalClipboard";
+import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
 import { headingDefaultValues } from "./HeadingBlock.defaults";
 import HeadingBlock from "./Component";

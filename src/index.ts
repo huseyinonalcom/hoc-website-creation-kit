@@ -67,11 +67,11 @@ export type {
   PageEditorProps,
 } from "./Editors/Page/PageEditor";
 
-export { Clipboard } from "./Editors/Page/utilityComponentsa/UniversalClipboard";
-export { EditorImage } from "./Editors/Page/utilityComponentsa/EditorImage";
+export { Clipboard } from "./Editors/Page/UtilityComponents/UniversalClipboard";
+export { EditorImage } from "./Editors/Page/UtilityComponents/EditorImage";
 export type { LinkListItem } from "./Editors/Page/Components/Actions/LinkBar/type";
 export { LinkListField } from "./Editors/Page/Components/Actions/LinkBar/LinkListField";
-export { SlidesField } from "./Editors/Page/utilityComponentsa/SlidesField";
+export { SlidesField } from "./Editors/Page/UtilityComponents/SlidesField";
 
 export { FilesDataProvider, useFilesData } from "./FileManagement";
 export type {
