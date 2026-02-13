@@ -1,3 +1,4 @@
+"use client";
 import { Fragment as _Fragment, jsx as _jsx } from "react/jsx-runtime";
 import React, { useEffect, useRef, useState } from "react";
 const DEFAULT_CHARSET = " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
