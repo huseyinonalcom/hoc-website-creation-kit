@@ -13,14 +13,32 @@ const DEFAULT_CHARSET =
   " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 const ITEM_HEIGHT = 28; // px - visible height of each character cell
 
+const fillEmptySequences = (seqs: string[]) => {
+  const filled: string[] = [];
+  for (let i = 0; i < seqs.length; i++) {
+    if (seqs[i] && seqs[i].length > 0) {
+      filled.push(seqs[i]);
+    } else if (i > 0) {
+      filled.push(filled[i - 1]);
+    } else {
+      filled.push("code");
+    }
+  }
+  return filled;
+};
+
 export default function CombinationLock({
-  sequences = [],
+  sequences = ["code", "lock"],
   interval = 2000,
   spinDuration = 700,
   cycles = 1,
   loop = true,
   className,
 }: CombinationLockProps) {
+  if (sequences.length == 1) {
+    sequences.push(sequences[0]); // ensure at least 2 sequences for cycling logic
+  }
+  sequences = fillEmptySequences(sequences);
   // Ensure charset contains all characters that appear in the sequences
   const charsetArr = React.useMemo(() => {
     const base = DEFAULT_CHARSET.split("");
