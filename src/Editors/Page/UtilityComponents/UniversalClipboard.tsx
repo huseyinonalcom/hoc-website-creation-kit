@@ -207,7 +207,7 @@ export function Clipboard({ componentName }: ClipboardProps) {
             variant="outline"
             onClick={handleCopy}
           >
-            <DocumentDuplicateIcon />
+            <DocumentDuplicateIcon className="h-4 w-4" />
           </Button>
           <Button
             disabled={!clipboardSupported || isBusy}
@@ -215,7 +215,7 @@ export function Clipboard({ componentName }: ClipboardProps) {
             variant="outline"
             onClick={handlePaste}
           >
-            <ClipboardIcon />
+            <ClipboardIcon className="h-4 w-4" />
           </Button>
           {status === "success" ? (
             <CheckCircleIcon
