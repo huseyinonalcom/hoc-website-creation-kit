@@ -18,6 +18,9 @@ const fillEmptySequences = (seqs) => {
     return filled;
 };
 export default function CombinationLock({ sequences = ["code", "lock"], interval = 2000, spinDuration = 700, cycles = 1, loop = true, className, }) {
+    if (sequences.length === 0) {
+        sequences = ["code", "lock"];
+    }
     if (sequences.length == 1) {
         sequences.push(sequences[0]); // ensure at least 2 sequences for cycling logic
     }

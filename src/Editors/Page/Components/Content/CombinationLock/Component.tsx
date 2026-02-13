@@ -35,6 +35,9 @@ export default function CombinationLock({
   loop = true,
   className,
 }: CombinationLockProps) {
+  if (sequences.length === 0) {
+    sequences = ["code", "lock"];
+  }
   if (sequences.length == 1) {
     sequences.push(sequences[0]); // ensure at least 2 sequences for cycling logic
   }
