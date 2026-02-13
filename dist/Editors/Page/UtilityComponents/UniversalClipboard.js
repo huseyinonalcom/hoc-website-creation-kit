@@ -9,7 +9,10 @@ const isPlainObject = (value) => {
     return typeof value === "object" && value !== null && !Array.isArray(value);
 };
 const stripId = (value) => {
-    const { _id, ...rest } = value;
+    // remove any identifying fields so clipboard payloads don't copy
+    // instance-specific IDs into other elements
+    const { _id, id, ...rest } = value;
+    void id;
     return rest;
 };
 export function Clipboard({ componentName }) {

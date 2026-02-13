@@ -26,7 +26,13 @@ const isPlainObject = (value: unknown): value is Record<string, unknown> => {
 };
 
 const stripId = (value: Record<string, unknown>): Record<string, unknown> => {
-  const { _id, ...rest } = value;
+  // remove any identifying fields so clipboard payloads don't copy
+  // instance-specific IDs into other elements
+  const { _id, id, ...rest } = value as Record<string, unknown> & {
+    _id?: unknown;
+    id?: unknown;
+  };
+  void id;
   return rest;
 };
 
