@@ -31,12 +31,12 @@ export function EditorImage({ value, onChange }: EditorImageProps) {
     <div className="space-y-4 rounded-2xl border border-gray-200 p-4 shadow-sm">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <p className="text-sm font-semibold text-gray-900">Secilen Gorsel</p>
+          <p className="text-sm font-semibold text-gray-900">Seçilen Görsel</p>
         </div>
         <div className="flex gap-2">
           {value && (
             <Button type="button" variant="ghost" onClick={handleClear}>
-              Kaldir
+              Kaldır
             </Button>
           )}
           <Button
@@ -44,7 +44,7 @@ export function EditorImage({ value, onChange }: EditorImageProps) {
             variant="outline"
             onClick={() => setIsPickerOpen(true)}
           >
-            Dosya Sec
+            Dosya Seç
           </Button>
         </div>
       </div>

@@ -5,63 +5,12 @@ import { useMemo, useRef, useState } from "react";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import Image from "next/image";
 import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
+import { createDirectoryAction, uploadFileAction } from "../actions";
 import { uploadFileInitialState } from "../state";
 import cn from "../../utils/classnames";
-import * as FMApi from "../api";
 const inputClassName = "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm transition placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-indigo-400 dark:focus:ring-indigo-400";
-export function FilesBrowserClient({ files, directories, onSelect, onSelectionChange, onMoveFiles, onFileCreate, onDirectoryCreate, onDirectoryChange, onUploadFile, onCreateDirectory, className, emptyStateMessage = "Henuz yuklenmis dosya yok.", initialDirectoryId = null, activeDirectoryId: controlledDirectoryId, showFiles = true, showDirectories = true, showUpload = true, showDirectoryCreate = true, multiSelect = false, enableDragDrop = false, selectedFileIds, }) {
-    // Provide default implementations that call the package API so the component
-    // works out-of-the-box when props are not supplied.
-    const uploadFileDefault = async (input) => {
-        try {
-            const data = await FMApi.uploadFile(input);
-            if (data && data.result === "success" && data.file) {
-                return {
-                    result: "success",
-                    error: "",
-                    uploadedFile: FMApi.mapDbFileToSerializable(data.file),
-                };
-            }
-            return {
-                result: "error",
-                error: data?.error || "Upload failed",
-                uploadedFile: null,
-            };
-        }
-        catch (err) {
-            return {
-                result: "error",
-                error: err?.message || String(err),
-                uploadedFile: null,
-            };
-        }
-    };
-    const createDirectoryDefault = async (input) => {
-        try {
-            const data = await FMApi.createDirectory(input);
-            // API may wrap the result in different shapes; attempt to extract the directory row
-            const dirRow = data?.directory ??
-                data?.result?.directory ??
-                data?.result?.result?.directory ??
-                null;
-            if (dirRow) {
-                return {
-                    result: "success",
-                    directory: FMApi.mapDbDirToSerializable(dirRow),
-                };
-            }
-            return {
-                result: "error",
-                error: data?.error || "Could not create directory",
-            };
-        }
-        catch (err) {
-            return { result: "error", error: err?.message || String(err) };
-        }
-    };
-    const resolvedOnUploadFile = onUploadFile ?? uploadFileDefault;
-    const resolvedOnCreateDirectory = onCreateDirectory ?? createDirectoryDefault;
-    const [internalDirectoryId, setInternalDirectoryId] = useState(initialDirectoryId ?? null);
+export function FilesBrowserClient({ files, directories, onSelect, onSelectionChange, onMoveFiles, onFileCreate, onDirectoryCreate, onDirectoryChange, className, emptyStateMessage = "Henüz yüklenmiş dosya yok.", initialdirectory_id = null, activedirectory_id: controlleddirectory_id, showFiles = true, showDirectories = true, showUpload = true, showDirectoryCreate = true, multiSelect = false, enableDragDrop = false, selectedFileIds, }) {
+    const [internaldirectory_id, setInternaldirectory_id] = useState(initialdirectory_id ?? null);
     const [internalSelectedIds, setInternalSelectedIds] = useState([]);
     const [lastSelectedIndex, setLastSelectedIndex] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
@@ -69,12 +18,10 @@ export function FilesBrowserClient({ files, directories, onSelect, onSelectionCh
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
     const [dragOverTarget, setDragOverTarget] = useState(null);
-    const activeDirectoryId = controlledDirectoryId !== undefined
-        ? controlledDirectoryId
-        : internalDirectoryId;
+    const activedirectory_id = controlleddirectory_id !== undefined
+        ? controlleddirectory_id
+        : internaldirectory_id;
     const resolvedSelectedIds = selectedFileIds ?? internalSelectedIds;
-    const canCreateDirectory = showDirectoryCreate && Boolean(resolvedOnCreateDirectory);
-    const canUpload = showUpload && Boolean(resolvedOnUploadFile);
     const updateSelectedIds = (next) => {
         if (onSelectionChange) {
             onSelectionChange(next);
@@ -83,12 +30,12 @@ export function FilesBrowserClient({ files, directories, onSelect, onSelectionCh
             setInternalSelectedIds(next);
         }
     };
-    const updateDirectoryId = (next) => {
+    const updatedirectory_id = (next) => {
         if (onDirectoryChange) {
             onDirectoryChange(next);
         }
-        if (controlledDirectoryId === undefined) {
-            setInternalDirectoryId(next);
+        if (controlleddirectory_id === undefined) {
+            setInternaldirectory_id(next);
         }
     };
     const [clientError, setClientError] = useState("");
@@ -107,19 +54,19 @@ export function FilesBrowserClient({ files, directories, onSelect, onSelectionCh
         if (!showDirectories)
             return [];
         return directories
-            .filter((dir) => (dir.parentId ?? null) === activeDirectoryId)
+            .filter((dir) => (dir.parent_id ?? null) === activedirectory_id)
             .sort((a, b) => a.name.localeCompare(b.name, "tr"));
-    }, [activeDirectoryId, directories, showDirectories]);
+    }, [activedirectory_id, directories, showDirectories]);
     const visibleFiles = useMemo(() => {
         if (!showFiles)
             return [];
         return files
             .filter((file) => isVisibleFile(file))
-            .filter((file) => (file.directoryId ?? null) === activeDirectoryId)
+            .filter((file) => (file.directory_id ?? null) === activedirectory_id)
             .sort((a, b) => getDisplayName(a).localeCompare(getDisplayName(b), "tr"));
-    }, [activeDirectoryId, files, showFiles]);
-    const parentDirectoryId = activeDirectoryId && directoryMap.get(activeDirectoryId)
-        ? (directoryMap.get(activeDirectoryId).parentId ?? null)
+    }, [activedirectory_id, files, showFiles]);
+    const parentdirectory_id = activedirectory_id && directoryMap.get(activedirectory_id)
+        ? (directoryMap.get(activedirectory_id).parent_id ?? null)
         : null;
     const handleSelect = (file, index, event) => {
         if (!multiSelect) {
@@ -162,8 +109,8 @@ export function FilesBrowserClient({ files, directories, onSelect, onSelectionCh
         setLastSelectedIndex(index);
         onSelect?.(file);
     };
-    const handleEnterDirectory = (directoryId) => {
-        updateDirectoryId(directoryId);
+    const handleEnterDirectory = (directory_id) => {
+        updatedirectory_id(directory_id);
         updateSelectedIds([]);
         setLastSelectedIndex(null);
     };
@@ -192,7 +139,7 @@ export function FilesBrowserClient({ files, directories, onSelect, onSelectionCh
             return;
         setDragOverTarget(null);
     };
-    const handleDropTarget = (directoryId) => (event) => {
+    const handleDropTarget = (directory_id) => (event) => {
         if (!enableDragDrop || !onMoveFiles)
             return;
         event.preventDefault();
@@ -204,7 +151,7 @@ export function FilesBrowserClient({ files, directories, onSelect, onSelectionCh
                 ? parsed.filter((id) => typeof id === "string")
                 : [];
             if (ids.length > 0) {
-                onMoveFiles(directoryId, ids);
+                onMoveFiles(directory_id, ids);
             }
         }
         catch {
@@ -213,25 +160,21 @@ export function FilesBrowserClient({ files, directories, onSelect, onSelectionCh
     };
     const handleCreateDirectory = async () => {
         if (!directoryName.trim()) {
-            setClientError("Lutfen klasor adi girin.");
-            return;
-        }
-        if (!resolvedOnCreateDirectory) {
-            setClientError("Klasor olusturma yapilandirilmamis.");
+            setClientError("Lütfen klasör adı girin.");
             return;
         }
         setClientError("");
         setIsCreatingDirectory(true);
         try {
-            const response = await resolvedOnCreateDirectory({
+            const response = await createDirectoryAction({
                 name: directoryName,
-                parentId: activeDirectoryId,
+                parentId: activedirectory_id,
             });
             if (response.result === "error") {
-                setClientError(response.error || "Klasor olusturulamadi.");
+                setClientError(response.error || "Klasör oluşturulamadı.");
                 return;
             }
-            if (response.result === "success" && response.directory) {
+            if (response.directory) {
                 onDirectoryCreate?.(response.directory);
             }
             setDirectoryName("");
@@ -243,20 +186,16 @@ export function FilesBrowserClient({ files, directories, onSelect, onSelectionCh
     };
     const handleUpload = async () => {
         if (!selectedFile) {
-            setClientError("Lutfen yuklemek icin bir dosya secin.");
-            return;
-        }
-        if (!resolvedOnUploadFile) {
-            setClientError("Dosya yukleme yapilandirilmamis.");
+            setClientError("Lütfen yüklemek için bir dosya seçin.");
             return;
         }
         setClientError("");
         setIsUploading(true);
         try {
             setUploadState(() => ({ ...uploadFileInitialState }));
-            const result = await resolvedOnUploadFile({
+            const result = await uploadFileAction({
                 file: selectedFile,
-                directoryId: activeDirectoryId,
+                directory_id: activedirectory_id,
             });
             setUploadState(result);
             if (result.result === "success" && result.uploadedFile) {
@@ -271,7 +210,7 @@ export function FilesBrowserClient({ files, directories, onSelect, onSelectionCh
             }
         }
         catch {
-            const fallbackError = "Dosya yuklenirken beklenmedik bir hata olustu. Lutfen tekrar deneyin.";
+            const fallbackError = "Dosya yüklenirken beklenmedik bir hata oluştu. Lütfen tekrar deneyin.";
             setClientError(fallbackError);
             setUploadState({
                 ...uploadFileInitialState,
@@ -284,9 +223,9 @@ export function FilesBrowserClient({ files, directories, onSelect, onSelectionCh
             setIsUploading(false);
         }
     };
-    return (_jsxs("div", { className: cn("space-y-6", className), children: [_jsxs("section", { className: "rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-gray-900", children: [_jsxs("header", { className: "mb-4 flex items-center justify-between", children: [_jsx("div", { children: _jsx("p", { className: "text-sm font-semibold text-gray-900 dark:text-white", children: showFiles ? "Dosyalar" : "Klasorler" }) }), _jsxs("div", { className: "flex flex-wrap items-center gap-2", children: [canCreateDirectory ? (_jsx(Button, { type: "button", variant: "outline", onClick: () => setIsCreateModalOpen(true), children: "Klasor Olustur" })) : null, canUpload ? (_jsx(Button, { type: "button", onClick: () => setIsUploadModalOpen(true), children: "Dosya Yukle" })) : null] })] }), visibleDirectories.length === 0 && visibleFiles.length === 0 ? (_jsx("p", { className: "rounded-md border border-dashed border-gray-300 p-6 text-center text-sm text-gray-500 dark:border-white/10 dark:text-gray-400", children: emptyStateMessage })) : (_jsxs("div", { className: "grid gap-4 md:grid-cols-2", children: [activeDirectoryId ? (_jsxs("button", { className: cn("flex items-center gap-3 rounded-xl border border-dashed border-gray-300 px-4 py-3 text-left text-sm text-gray-600 transition hover:border-indigo-400 dark:border-white/10 dark:text-gray-300 dark:hover:border-indigo-400", dragOverTarget === "__up__"
+    return (_jsxs("div", { className: cn("space-y-6", className), children: [_jsxs("section", { className: "rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-gray-900", children: [_jsxs("header", { className: "mb-4 flex items-center justify-between", children: [_jsx("div", { children: _jsx("p", { className: "text-sm font-semibold text-gray-900 dark:text-white", children: showFiles ? "Dosyalar" : "Klasörler" }) }), _jsxs("div", { className: "flex flex-wrap items-center gap-2", children: [showDirectoryCreate ? (_jsx(Button, { type: "button", variant: "outline", onClick: () => setIsCreateModalOpen(true), children: "Klas\u00F6r Olu\u015Ftur" })) : null, showUpload ? (_jsx(Button, { type: "button", onClick: () => setIsUploadModalOpen(true), children: "Dosya Y\u00FCkle" })) : null] })] }), visibleDirectories.length === 0 && visibleFiles.length === 0 ? (_jsx("p", { className: "rounded-md border border-dashed border-gray-300 p-6 text-center text-sm text-gray-500 dark:border-white/10 dark:text-gray-400", children: emptyStateMessage })) : (_jsxs("div", { className: "grid gap-4 md:grid-cols-2", children: [activedirectory_id ? (_jsxs("button", { className: cn("flex items-center gap-3 rounded-xl border border-dashed border-gray-300 px-4 py-3 text-left text-sm text-gray-600 transition hover:border-indigo-400 dark:border-white/10 dark:text-gray-300 dark:hover:border-indigo-400", dragOverTarget === "__up__"
                                     ? "border-indigo-500 bg-indigo-50 dark:border-indigo-400 dark:bg-indigo-500/10"
-                                    : null), type: "button", onClick: () => handleEnterDirectory(parentDirectoryId), onDragOver: handleDragOverTarget("__up__"), onDragLeave: handleDragLeaveTarget, onDrop: handleDropTarget(parentDirectoryId), children: [_jsx(ArrowUturnLeftIcon, { className: "h-5 w-5" }), "Ust Klasore Cik"] })) : null, showDirectories
+                                    : null), type: "button", onClick: () => handleEnterDirectory(parentdirectory_id), onDragOver: handleDragOverTarget("__up__"), onDragLeave: handleDragLeaveTarget, onDrop: handleDropTarget(parentdirectory_id), children: [_jsx(ArrowUturnLeftIcon, { className: "h-5 w-5" }), "\u00DCst Klas\u00F6re \u00C7\u0131k"] })) : null, showDirectories
                                 ? visibleDirectories.map((directory) => (_jsxs("button", { className: cn("flex items-center gap-3 rounded-xl border border-gray-200 px-4 py-3 text-left text-sm text-gray-700 transition hover:border-indigo-400 dark:border-white/10 dark:text-gray-200 dark:hover:border-indigo-400", dragOverTarget === directory.id
                                         ? "border-indigo-500 bg-indigo-50 dark:border-indigo-400 dark:bg-indigo-500/10"
                                         : null), type: "button", onClick: () => handleEnterDirectory(directory.id), onDragOver: handleDragOverTarget(directory.id), onDragLeave: handleDragLeaveTarget, onDrop: handleDropTarget(directory.id), children: [_jsx(FolderIcon, { className: "h-5 w-5 text-indigo-500" }), directory.name] }, directory.id)))
@@ -294,11 +233,11 @@ export function FilesBrowserClient({ files, directories, onSelect, onSelectionCh
                                 ? visibleFiles.map((file, i) => (_jsx("button", { className: cn("flex flex-col overflow-hidden rounded-xl border text-left transition focus-visible:outline-2 focus-visible:outline-indigo-500", resolvedSelectedIds.includes(file.id)
                                         ? "border-indigo-600 ring-2 ring-indigo-600 dark:border-indigo-400 dark:ring-indigo-400"
                                         : "border-gray-200 hover:border-indigo-400 dark:border-white/10 dark:hover:border-indigo-400"), type: "button", draggable: enableDragDrop, onClick: (event) => handleSelect(file, i, event), onDragStart: handleDragStart(file.id), children: _jsx("div", { className: "relative h-40 w-full bg-gray-50 dark:bg-gray-800", children: _jsx(Image, { fill: true, unoptimized: true, alt: getDisplayName(file), className: "object-cover", sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw", src: file.url }) }) }, file.id + "-filebrowser-thumb-" + i)))
-                                : null] }))] }), _jsxs(Dialog, { className: "relative z-50", open: isCreateModalOpen, onClose: () => setIsCreateModalOpen(false), children: [_jsx("div", { "aria-hidden": "true", className: "fixed inset-0 bg-black/40" }), _jsx("div", { className: "fixed inset-0 overflow-y-auto", children: _jsx("div", { className: "flex min-h-full items-center justify-center p-4", children: _jsxs(DialogPanel, { className: "w-full max-w-xl rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl dark:border-white/10 dark:bg-gray-900", children: [_jsxs("div", { className: "mb-4 flex items-center justify-between", children: [_jsx(DialogTitle, { className: "text-lg font-semibold text-gray-900 dark:text-white", children: "Klasor Olustur" }), _jsxs(Button, { type: "button", variant: "ghost", onClick: () => setIsCreateModalOpen(false), children: [_jsx("span", { className: "sr-only", children: "Kapat" }), _jsx(XMarkIcon, { className: "h-5 w-5" })] })] }), _jsxs("div", { className: "space-y-3", children: [_jsx("label", { className: "text-sm font-medium text-gray-700 dark:text-gray-200", htmlFor: "directory-name", children: "Klasor Adi" }), _jsx("input", { className: inputClassName, id: "directory-name", placeholder: "Orn: duyurular", value: directoryName, onChange: (event) => setDirectoryName(event.target.value) }), clientError ? (_jsx("p", { className: "text-sm text-red-600", children: clientError })) : null, _jsxs("div", { className: "flex items-center justify-end gap-2", children: [_jsx(Button, { type: "button", variant: "outline", onClick: () => setIsCreateModalOpen(false), children: "Vazgec" }), _jsx(Button, { disabled: isCreatingDirectory, type: "button", onClick: handleCreateDirectory, children: isCreatingDirectory ? "Olusturuluyor..." : "Kaydet" })] })] })] }) }) })] }), _jsxs(Dialog, { className: "relative z-50", open: isUploadModalOpen, onClose: () => setIsUploadModalOpen(false), children: [_jsx("div", { "aria-hidden": "true", className: "fixed inset-0 bg-black/40" }), _jsx("div", { className: "fixed inset-0 overflow-y-auto", children: _jsx("div", { className: "flex min-h-full items-center justify-center p-4", children: _jsxs(DialogPanel, { className: "w-full max-w-xl rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl dark:border-white/10 dark:bg-gray-900", children: [_jsxs("div", { className: "mb-4 flex items-center justify-between", children: [_jsx(DialogTitle, { className: "text-lg font-semibold text-gray-900 dark:text-white", children: "Dosya Yukle" }), _jsxs(Button, { type: "button", variant: "ghost", onClick: () => setIsUploadModalOpen(false), children: [_jsx("span", { className: "sr-only", children: "Kapat" }), _jsx(XMarkIcon, { className: "h-5 w-5" })] })] }), _jsxs("div", { className: "space-y-3", children: [_jsx("label", { className: "text-sm font-medium text-gray-700 dark:text-gray-200", htmlFor: "file", children: "Dosya" }), _jsx("input", { ref: fileInputRef, className: inputClassName, disabled: isUploading, id: "file", name: "file", type: "file", onChange: (event) => {
+                                : null] }))] }), _jsxs(Dialog, { className: "relative z-50", open: isCreateModalOpen, onClose: () => setIsCreateModalOpen(false), children: [_jsx("div", { "aria-hidden": "true", className: "fixed inset-0 bg-black/40" }), _jsx("div", { className: "fixed inset-0 overflow-y-auto", children: _jsx("div", { className: "flex min-h-full items-center justify-center p-4", children: _jsxs(DialogPanel, { className: "w-full max-w-xl rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl dark:border-white/10 dark:bg-gray-900", children: [_jsxs("div", { className: "mb-4 flex items-center justify-between", children: [_jsx(DialogTitle, { className: "text-lg font-semibold text-gray-900 dark:text-white", children: "Klas\u00F6r Olu\u015Ftur" }), _jsxs(Button, { type: "button", variant: "ghost", onClick: () => setIsCreateModalOpen(false), children: [_jsx("span", { className: "sr-only", children: "Kapat" }), _jsx(XMarkIcon, { className: "h-5 w-5" })] })] }), _jsxs("div", { className: "space-y-3", children: [_jsx("label", { className: "text-sm font-medium text-gray-700 dark:text-gray-200", htmlFor: "directory-name", children: "Klas\u00F6r Ad\u0131" }), _jsx("input", { className: inputClassName, id: "directory-name", placeholder: "\u00D6rn: duyurular", value: directoryName, onChange: (event) => setDirectoryName(event.target.value) }), clientError ? (_jsx("p", { className: "text-sm text-red-600", children: clientError })) : null, _jsxs("div", { className: "flex items-center justify-end gap-2", children: [_jsx(Button, { type: "button", variant: "outline", onClick: () => setIsCreateModalOpen(false), children: "Vazge\u00E7" }), _jsx(Button, { disabled: isCreatingDirectory, type: "button", onClick: handleCreateDirectory, children: isCreatingDirectory ? "Oluşturuluyor..." : "Kaydet" })] })] })] }) }) })] }), _jsxs(Dialog, { className: "relative z-50", open: isUploadModalOpen, onClose: () => setIsUploadModalOpen(false), children: [_jsx("div", { "aria-hidden": "true", className: "fixed inset-0 bg-black/40" }), _jsx("div", { className: "fixed inset-0 overflow-y-auto", children: _jsx("div", { className: "flex min-h-full items-center justify-center p-4", children: _jsxs(DialogPanel, { className: "w-full max-w-xl rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl dark:border-white/10 dark:bg-gray-900", children: [_jsxs("div", { className: "mb-4 flex items-center justify-between", children: [_jsx(DialogTitle, { className: "text-lg font-semibold text-gray-900 dark:text-white", children: "Dosya Y\u00FCkle" }), _jsxs(Button, { type: "button", variant: "ghost", onClick: () => setIsUploadModalOpen(false), children: [_jsx("span", { className: "sr-only", children: "Kapat" }), _jsx(XMarkIcon, { className: "h-5 w-5" })] })] }), _jsxs("div", { className: "space-y-3", children: [_jsx("label", { className: "text-sm font-medium text-gray-700 dark:text-gray-200", htmlFor: "file", children: "Dosya" }), _jsx("input", { ref: fileInputRef, className: inputClassName, disabled: isUploading, id: "file", name: "file", type: "file", onChange: (event) => {
                                                     setSelectedFile(event.target.files?.[0] ?? null);
                                                     setClientError("");
                                                 } }), _jsxs("div", { className: "space-y-1 text-sm", children: [clientError && _jsx("p", { className: "text-red-600", children: clientError }), uploadState.result === "error" && uploadState.error && (_jsx("p", { className: "text-red-600", children: uploadState.error })), uploadState.result === "success" &&
-                                                        uploadState.uploadedFile ? (_jsxs("p", { className: "text-green-600", children: [getDisplayName(uploadState.uploadedFile), " basariyla eklendi."] })) : null] }), _jsxs("div", { className: "flex items-center justify-end gap-2", children: [_jsx(Button, { type: "button", variant: "outline", onClick: () => setIsUploadModalOpen(false), children: "Vazgec" }), _jsx(Button, { disabled: isUploading, type: "button", onClick: handleUpload, children: isUploading ? "Yukleniyor..." : "Yukle" })] })] })] }) }) })] })] }));
+                                                        uploadState.uploadedFile ? (_jsxs("p", { className: "text-green-600", children: [getDisplayName(uploadState.uploadedFile), " ba\u015Far\u0131yla eklendi."] })) : null] }), _jsxs("div", { className: "flex items-center justify-end gap-2", children: [_jsx(Button, { type: "button", variant: "outline", onClick: () => setIsUploadModalOpen(false), children: "Vazge\u00E7" }), _jsx(Button, { disabled: isUploading, type: "button", onClick: handleUpload, children: isUploading ? "Yükleniyor..." : "Yükle" })] })] })] }) }) })] })] }));
 }
 const deriveFileName = (url) => {
     try {
@@ -310,11 +249,11 @@ const deriveFileName = (url) => {
         return url;
     }
 };
-const getDisplayName = (file) => file.label?.trim() || deriveFileName(file.url);
+const getDisplayName = (file) => file.tag?.trim() || deriveFileName(file.url);
 function isHiddenFile(file) {
-    return file.url?.includes("/uyeler/");
+    return file.url?.includes("/users/");
 }
 function isVisibleFile(file) {
-    return !file.isDeleted && !isHiddenFile(file);
+    return !file.is_deleted && !isHiddenFile(file);
 }
 //# sourceMappingURL=FilesBrowserClient.js.map

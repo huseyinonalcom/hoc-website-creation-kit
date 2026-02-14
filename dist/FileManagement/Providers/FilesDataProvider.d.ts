@@ -1,18 +1,19 @@
 import { ReactNode } from "react";
-import type { FileDirectories, Files } from "../types";
+import { Selectable } from "kysely";
+import { FileDirectories, Files } from "../../server/types/dbtypes";
 export declare function useFilesData(): {
-    files: Files[];
-    directories: FileDirectories[];
-    addFile: (file: Files) => void;
-    updateFile: (file: Files) => void;
+    files: Selectable<Files>[];
+    directories: Selectable<FileDirectories>[];
+    addFile: (file: Selectable<Files>) => void;
+    updateFile: (file: Selectable<Files>) => void;
     removeFile: (fileId: string) => void;
-    addDirectory: (directory: FileDirectories) => void;
-    updateDirectory: (directory: FileDirectories) => void;
+    addDirectory: (directory: Selectable<FileDirectories>) => void;
+    updateDirectory: (directory: Selectable<FileDirectories>) => void;
     removeDirectory: (directory_id: string) => void;
 };
 export default function FilesDataProvider({ initialFiles, initialDirectories, children, }: {
-    initialFiles: Files[];
-    initialDirectories: FileDirectories[];
+    initialFiles: Selectable<Files>[];
+    initialDirectories: Selectable<FileDirectories>[];
     children: ReactNode;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=FilesDataProvider.d.ts.map

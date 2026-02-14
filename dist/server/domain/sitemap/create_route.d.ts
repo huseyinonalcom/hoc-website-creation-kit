@@ -5,9 +5,9 @@ export declare const createRoute: ({ url }: {
     result: {
         id: string;
         url: string;
+        updated_by_user_id: string | null;
         created_at: Date;
         updated_at: Date;
-        updated_by_user_id: string | null;
         active_page_id: string | null;
         is_active: boolean;
     };

@@ -6,9 +6,9 @@ export declare const getSitemap: ({ getAll }: {
     result: {
         id: string;
         url: string;
+        updated_by_user_id: string | null;
         created_at: Date;
         updated_at: Date;
-        updated_by_user_id: string | null;
         active_page_id: string | null;
         is_active: boolean;
     }[];
@@ -20,9 +20,9 @@ export declare const getRouteByUrl: ({ url }: {
     result: {
         id: string;
         url: string;
+        updated_by_user_id: string | null;
         created_at: Date;
         updated_at: Date;
-        updated_by_user_id: string | null;
         active_page_id: string | null;
         is_active: boolean;
     };
@@ -47,9 +47,9 @@ export declare const getPageByRouteUrl: ({ url, ignoreStatus, returnPlaceholder,
         id: string;
         content: import("../../types/dbtypes").JsonValue;
         status: string;
+        updated_by_user_id: string | null;
         created_at: Date;
         updated_at: Date;
-        updated_by_user_id: string | null;
         created_by_user_id: string | null;
         site_map_id: string | null;
     };

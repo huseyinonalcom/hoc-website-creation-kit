@@ -256,7 +256,9 @@ export function FilesBrowserClient({
       }
 
       if (response.directory) {
-        onDirectoryCreate?.(response.directory);
+        onDirectoryCreate?.(
+          response.directory as unknown as Selectable<FileDirectories>,
+        );
       }
 
       setDirectoryName("");
@@ -286,8 +288,8 @@ export function FilesBrowserClient({
       setUploadState(result);
       if (result.result === "success" && result.uploadedFile) {
         updateSelectedIds([result.uploadedFile.id]);
-        onSelect?.(result.uploadedFile);
-        onFileCreate?.(result.uploadedFile);
+        onSelect?.(result.uploadedFile as unknown as Selectable<Files>);
+        onFileCreate?.(result.uploadedFile as unknown as Selectable<Files>);
         setIsUploadModalOpen(false);
       }
       setSelectedFile(null);

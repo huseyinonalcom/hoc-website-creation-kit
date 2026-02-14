@@ -15,9 +15,9 @@ export declare const createPage: ({ pageData, }: {
         id: string;
         content: import("../../types/dbtypes").JsonValue;
         status: string;
+        updated_by_user_id: string | null;
         created_at: Date;
         updated_at: Date;
-        updated_by_user_id: string | null;
         created_by_user_id: string | null;
         site_map_id: string | null;
     };

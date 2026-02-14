@@ -1,7 +1,8 @@
-import { FileDirectories } from "../types";
+import { Selectable } from "kysely";
+import { FileDirectories } from "../../server/types/dbtypes";
 export type FilesMoveModalProps = {
     open: boolean;
-    directories: FileDirectories[];
+    directories: Selectable<FileDirectories>[];
     onClose: () => void;
     onConfirm: (directory_id: string | null) => void;
     initialdirectory_id?: string | null;

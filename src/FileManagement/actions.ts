@@ -66,6 +66,20 @@ type UpdateDirectoryActionOutput = {
   directory: Selectable<FileDirectories>;
 };
 
+// exported aliases for public API
+export type UploadFileInput = UploadFileActionInput;
+export type UpdateFileInput = UpdateFileActionInput;
+export type UpdateFileResponse = UpdateFileActionOutput;
+export type CreateDirectoryInput = CreateDirectoryActionInput;
+export type CreateDirectoryResponse = CreateDirectoryActionOutput;
+export type DeleteDirectoryInput = DeleteDirectoryActionInput;
+export type DeleteDirectoryResponse = DeleteDirectoryActionOutput;
+export type UpdateDirectoryInput = UpdateDirectoryActionInput;
+export type UpdateDirectoryResponse = UpdateDirectoryActionOutput;
+export type DeleteFileInput = SoftDeleteFileActionInput;
+export type DeleteFileResponse = SoftDeleteFileActionOutput;
+export type ActionUpdateFileOutput = UpdateFileActionOutput;
+
 export const uploadFileAction = createServerAction<
   UploadFileActionInput,
   UploadFileState
