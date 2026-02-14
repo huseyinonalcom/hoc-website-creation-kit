@@ -6,7 +6,7 @@ This guide shows how to wire the file-management UI to your own backend and stor
 
 - UI: file browser, picker, move modal, manager panel.
 - State: `FilesDataProvider` + `useFilesData`.
-- Types: `SerializableFileRecord`, `SerializableDirectoryRecord`, input/response types.
+- Types: `Files`, `FileDirectories`, input/response types.
 - Optional helper: `createFile` for uploading to R2 (S3 compatible).
 
 All data mutations are handled by callbacks you provide. No DB logic is embedded in the kit.
@@ -23,8 +23,8 @@ All data mutations are handled by callbacks you provide. No DB logic is embedded
 import {
   FilesDataProvider,
   FilesManagerClient,
-  type SerializableDirectoryRecord,
-  type SerializableFileRecord,
+  type FileDirectories,
+  type Files,
   type UploadFileState,
 } from "hoc-website-creation-kit";
 
@@ -32,8 +32,8 @@ export default function FilesPage({
   initialFiles,
   initialDirectories,
 }: {
-  initialFiles: SerializableFileRecord[];
-  initialDirectories: SerializableDirectoryRecord[];
+  initialFiles: Files[];
+  initialDirectories: FileDirectories[];
 }) {
   return (
     <FilesDataProvider initialFiles={initialFiles} initialDirectories={initialDirectories}>
@@ -104,7 +104,7 @@ export async function uploadToStorage(formData: FormData) {
   const result = await createFile({
     fileData: {
       file: formData.get("file"),
-      directoryId: formData.get("directoryId"),
+      directory_id: formData.get("directory_id"),
       storageFolder: formData.get("storageFolder"),
       uploaderId: formData.get("uploaderId"),
     },
@@ -128,9 +128,9 @@ R2_PUBLIC_URL
 
 ## Suggested data shape
 
-The UI expects the following fields in `SerializableFileRecord` and `SerializableDirectoryRecord`:
+The UI expects the following fields in `Files` and `FileDirectories`:
 
-- File: `id`, `url`, `label?`, `directoryId?`, `isDeleted?`
+- File: `id`, `url`, `label?`, `directory_id?`, `isDeleted?`
 - Directory: `id`, `name`, `parentId?`
 
 Additional fields are allowed.

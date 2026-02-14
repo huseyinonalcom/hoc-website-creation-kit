@@ -1,13 +1,13 @@
-import { CreateDirectoryInput, CreateDirectoryResponse, SerializableDirectoryRecord, SerializableFileRecord, UploadFileInput } from "../types";
+import { CreateDirectoryInput, CreateDirectoryResponse, FileDirectories, Files, UploadFileInput } from "../types";
 import { UploadFileState } from "../state";
 export type FilesPickerModalProps = {
     open: boolean;
     onClose: () => void;
-    files: SerializableFileRecord[];
-    directories: SerializableDirectoryRecord[];
-    onSelect: (file: SerializableFileRecord) => void;
-    onFileCreate?: (file: SerializableFileRecord) => void;
-    onDirectoryCreate?: (directory: SerializableDirectoryRecord) => void;
+    files: Files[];
+    directories: FileDirectories[];
+    onSelect: (file: Files) => void;
+    onFileCreate?: (file: Files) => void;
+    onDirectoryCreate?: (directory: FileDirectories) => void;
     onUploadFile?: (input: UploadFileInput) => Promise<UploadFileState>;
     onCreateDirectory?: (input: CreateDirectoryInput) => Promise<CreateDirectoryResponse>;
     title?: string;

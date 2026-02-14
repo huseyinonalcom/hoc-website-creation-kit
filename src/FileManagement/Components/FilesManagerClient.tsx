@@ -4,103 +4,24 @@ import { useMemo, useState, useTransition } from "react";
 import Image from "next/image";
 
 import {
-  UploadFileInput,
-  CreateDirectoryInput,
-  CreateDirectoryResponse,
-  UpdateFileInput,
-  UpdateFileResponse,
-  DeleteFileInput,
-  DeleteFileResponse,
-  UpdateDirectoryInput,
-  UpdateDirectoryResponse,
-  DeleteDirectoryInput,
-  DeleteDirectoryResponse,
-  SerializableFileRecord,
-  SerializableDirectoryRecord,
-} from "../types";
+  deleteDirectoryAction,
+  softDeleteFileAction,
+  updateDirectoryAction,
+  updateFileAction,
+} from "../actions";
 import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
+import { FileDirectories, Files } from "../../server/types/dbtypes";
 import { useFilesData } from "../Providers/FilesDataProvider";
 import { FilesBrowserClient } from "./FilesBrowserClient";
 import { FilesMoveModal } from "./FilesMoveModal";
-import { UploadFileState } from "../state";
 import cn from "../../utils/classnames";
-import * as FMApi from "../api";
 
 const inputClassName =
   "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm transition placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-indigo-400 dark:focus:ring-indigo-400";
 
 type StatusState = { type: "success" | "error"; message: string } | null;
 
-export type FilesManagerClientProps = {
-  onUploadFile?: (input: UploadFileInput) => Promise<UploadFileState>;
-  onCreateDirectory?: (
-    input: CreateDirectoryInput,
-  ) => Promise<CreateDirectoryResponse>;
-  onUpdateFile?: (input: UpdateFileInput) => Promise<UpdateFileResponse>;
-  onDeleteFile?: (input: DeleteFileInput) => Promise<DeleteFileResponse>;
-  onUpdateDirectory?: (
-    input: UpdateDirectoryInput,
-  ) => Promise<UpdateDirectoryResponse>;
-  onDeleteDirectory?: (
-    input: DeleteDirectoryInput,
-  ) => Promise<DeleteDirectoryResponse>;
-};
-
 export function FilesManagerClient() {
-  const uploadFileDefault = async (input: UploadFileInput) => {
-    try {
-      const actions = await import("../actions/fileActions");
-      const data = await actions.uploadFileAction(input.file as File, {
-        storageFolder: input.storageFolder ?? undefined,
-        directoryId: input.directoryId ?? undefined,
-      });
-      if (data && data.result === "success" && data.file) {
-        return {
-          result: "success",
-          error: "",
-          uploadedFile: FMApi.mapDbFileToSerializable(data.result ?? data.file ?? data),
-        } as UploadFileState;
-      }
-      return {
-        result: "error",
-        error: data?.error || "Upload failed",
-        uploadedFile: null,
-      } as UploadFileState;
-    } catch (err: unknown) {
-      return {
-        result: "error",
-        error: (err as Error)?.message || String(err),
-        uploadedFile: null,
-      } as UploadFileState;
-    }
-  };
-
-  const resolvedOnUploadFile =  uploadFileDefault;
-  const resolvedOnCreateDirectory =
-    (async (input: CreateDirectoryInput) => {
-      const actions = await import("../actions/fileActions");
-      return actions.createDirectoryAction(input);
-    });
-  const resolvedOnUpdateFile =
-    (async (input: UpdateFileInput) => {
-      const actions = await import("../actions/fileActions");
-      return actions.updateFileAction(input as any);
-    });
-  const resolvedOnDeleteFile =
-    (async (input: DeleteFileInput) => {
-      const actions = await import("../actions/fileActions");
-      return actions.deleteFileAction({ id: input.id });
-    });
-  const resolvedOnUpdateDirectory =
-    (async (input: UpdateDirectoryInput) => {
-      const actions = await import("../actions/fileActions");
-      return actions.updateDirectoryAction(input as any);
-    });
-  const resolvedOnDeleteDirectory =
-    (async (input: DeleteDirectoryInput) => {
-      const actions = await import("../actions/fileActions");
-      return actions.deleteDirectoryAction({ id: input.id });
-    });
   const {
     files,
     directories,
@@ -111,10 +32,9 @@ export function FilesManagerClient() {
     removeFile,
     removeDirectory,
   } = useFilesData();
-  const [selectedFile, setSelectedFile] =
-    useState<SerializableFileRecord | null>(null);
+  const [selectedFile, setSelectedFile] = useState<Files | null>(null);
   const [selectedFileIds, setSelectedFileIds] = useState<string[]>([]);
-  const [activeDirectoryId, setActiveDirectoryId] = useState<string | null>(
+  const [activedirectory_id, setActivedirectory_id] = useState<string | null>(
     null,
   );
   const [directoryLabel, setDirectoryLabel] = useState("");
@@ -129,9 +49,9 @@ export function FilesManagerClient() {
     [selectedFile],
   );
 
-  const handleSelectFile = (file: SerializableFileRecord) => {
+  const handleSelectFile = (file: Files) => {
     setSelectedFile(file);
-    setLabel(file.label ?? "");
+    setLabel(file.tag ?? "");
   };
 
   const handleSelectionChange = (ids: string[]) => {
@@ -139,7 +59,7 @@ export function FilesManagerClient() {
     if (ids.length === 1) {
       const found = files.find((item) => item.id === ids[0]) ?? null;
       setSelectedFile(found);
-      setLabel(found?.label ?? "");
+      setLabel(found?.tag ?? "");
       return;
     }
 
@@ -147,14 +67,14 @@ export function FilesManagerClient() {
     setLabel("");
   };
 
-  const handleDirectoryChange = (directoryId: string | null) => {
-    setActiveDirectoryId(directoryId);
-    if (!directoryId) {
+  const handleDirectoryChange = (directory_id: string | null) => {
+    setActivedirectory_id(directory_id);
+    if (!directory_id) {
       setDirectoryLabel("");
       return;
     }
 
-    const current = directories.find((dir) => dir.id === directoryId);
+    const current = directories.find((dir) => dir.id === directory_id);
     setDirectoryLabel(current?.name ?? "");
   };
 
@@ -166,10 +86,10 @@ export function FilesManagerClient() {
     setStatus(null);
 
     startTransition(async () => {
-      const response = await resolvedOnUpdateFile({
+      const response = await updateFileAction({
         id: selectedFile.id,
         label,
-        directoryId: selectedFile.directoryId ?? null,
+        directory_id: selectedFile.directory_id ?? null,
       });
 
       if (response.result === "error") {
@@ -198,7 +118,7 @@ export function FilesManagerClient() {
     }
 
     startTransition(async () => {
-      const response = await resolvedOnDeleteFile({ id: selectedFile.id });
+      const response = await softDeleteFileAction({ id: selectedFile.id });
 
       if (response.result === "error") {
         setStatus({
@@ -228,23 +148,23 @@ export function FilesManagerClient() {
     }
   };
 
-  const handleMove = (directoryId: string | null) => {
+  const handleMove = (directory_id: string | null) => {
     if (selectedFileIds.length === 0) {
       return;
     }
-    performMove(directoryId, selectedFileIds, true);
+    performMove(directory_id, selectedFileIds, true);
   };
 
-  const handleMoveFiles = (directoryId: string | null, fileIds: string[]) => {
+  const handleMoveFiles = (directory_id: string | null, fileIds: string[]) => {
     if (fileIds.length === 0) {
       return;
     }
 
-    performMove(directoryId, fileIds, false);
+    performMove(directory_id, fileIds, false);
   };
 
   const performMove = (
-    directoryId: string | null,
+    directory_id: string | null,
     fileIds: string[],
     closeModal: boolean,
   ) => {
@@ -253,7 +173,7 @@ export function FilesManagerClient() {
     startTransition(async () => {
       const results = await Promise.all(
         fileIds.map((id) =>
-          resolvedOnUpdateFile({ id, directoryId, label: undefined }),
+          updateFileAction({ id, directory_id, label: undefined }),
         ),
       );
 
@@ -261,7 +181,7 @@ export function FilesManagerClient() {
       if (hasError && hasError.result === "error") {
         setStatus({
           type: "error",
-          message: hasError.error || "Dosyalar tasinamadi.",
+          message: hasError.error || "Dosyalar taşınamadı.",
         });
         return;
       }
@@ -278,12 +198,12 @@ export function FilesManagerClient() {
       if (closeModal) {
         setIsMoveOpen(false);
       }
-      setStatus({ type: "success", message: "Dosyalar tasindi." });
+      setStatus({ type: "success", message: "Dosyalar taşındı." });
     });
   };
 
   const handleDeleteDirectory = () => {
-    if (!activeDirectoryId) {
+    if (!activedirectory_id) {
       return;
     }
 
@@ -294,9 +214,7 @@ export function FilesManagerClient() {
     }
 
     startTransition(async () => {
-      const response = await resolvedOnDeleteDirectory({
-        id: activeDirectoryId,
-      });
+      const response = await deleteDirectoryAction({ id: activedirectory_id });
 
       if (response.result === "error") {
         setStatus({
@@ -306,24 +224,24 @@ export function FilesManagerClient() {
         return;
       }
 
-      const parentId = getParentDirectoryId(directories, activeDirectoryId);
-      response.deletedIds.forEach((id: string) => removeDirectory(id));
-      setActiveDirectoryId(parentId);
+      const parentId = getParentdirectory_id(directories, activedirectory_id);
+      response.deletedIds.forEach((id) => removeDirectory(id));
+      setActivedirectory_id(parentId);
       setDirectoryLabel("");
       setStatus({ type: "success", message: "Klasör silindi." });
     });
   };
 
   const handleDirectorySave = () => {
-    if (!activeDirectoryId) {
+    if (!activedirectory_id) {
       return;
     }
 
     setStatus(null);
 
     startTransition(async () => {
-      const response = await resolvedOnUpdateDirectory({
-        id: activeDirectoryId,
+      const response = await updateDirectoryAction({
+        id: activedirectory_id,
         name: directoryLabel,
       });
 
@@ -341,17 +259,17 @@ export function FilesManagerClient() {
     });
   };
 
-  const handleDirectoryMove = (directoryId: string | null) => {
-    if (!activeDirectoryId) {
+  const handleDirectoryMove = (directory_id: string | null) => {
+    if (!activedirectory_id) {
       return;
     }
 
     setStatus(null);
 
     startTransition(async () => {
-      const response = await resolvedOnUpdateDirectory({
-        id: activeDirectoryId,
-        parentId: directoryId,
+      const response = await updateDirectoryAction({
+        id: activedirectory_id,
+        parentId: directory_id,
       });
 
       if (response.result === "error") {
@@ -363,7 +281,7 @@ export function FilesManagerClient() {
       }
 
       updateDirectory(response.directory);
-      setActiveDirectoryId(response.directory.parentId ?? null);
+      setActivedirectory_id(response.directory.parent_id ?? null);
       setDirectoryLabel("");
       setIsDirectoryMoveOpen(false);
       setStatus({ type: "success", message: "Klasör taşındı." });
@@ -371,18 +289,18 @@ export function FilesManagerClient() {
   };
 
   const activeDirectoryLabel = selectedFile
-    ? getDirectoryLabel(directories, selectedFile.directoryId)
-    : getDirectoryLabel(directories, activeDirectoryId);
+    ? getDirectoryLabel(directories, selectedFile.directory_id)
+    : getDirectoryLabel(directories, activedirectory_id);
   const multiSelection = selectedFileIds.length > 1;
-  const activeDirectoryFileCount = activeDirectoryId
-    ? countFilesInDirectory(files, directories, activeDirectoryId)
+  const activeDirectoryFileCount = activedirectory_id
+    ? countFilesInDirectory(files, directories, activedirectory_id)
     : 0;
   const canDeleteDirectory =
-    Boolean(activeDirectoryId) && activeDirectoryFileCount === 0;
-  const allowedMoveDirectories = activeDirectoryId
+    Boolean(activedirectory_id) && activeDirectoryFileCount === 0;
+  const allowedMoveDirectories = activedirectory_id
     ? directories.filter(
         (dir) =>
-          !getDescendantIds(directories, activeDirectoryId).includes(dir.id),
+          !getDescendantIds(directories, activedirectory_id).includes(dir.id),
       )
     : directories;
 
@@ -391,16 +309,20 @@ export function FilesManagerClient() {
       <FilesBrowserClient
         enableDragDrop
         multiSelect
-        activeDirectoryId={activeDirectoryId}
+        activedirectory_id={activedirectory_id}
         directories={directories}
         files={files}
         selectedFileIds={selectedFileIds}
-        showDirectoryCreate={Boolean(resolvedOnCreateDirectory)}
-        showUpload={Boolean(resolvedOnUploadFile)}
+        onDirectoryChange={handleDirectoryChange}
+        onDirectoryCreate={addDirectory}
+        onFileCreate={addFile}
+        onMoveFiles={handleMoveFiles}
+        onSelect={handleSelectFile}
+        onSelectionChange={handleSelectionChange}
       />
 
       <section className="space-y-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-gray-900">
-        {activeDirectoryId ? (
+        {activedirectory_id ? (
           <div className="space-y-4 rounded-2xl border border-gray-200 bg-gray-50 p-4 dark:border-white/10 dark:bg-gray-800">
             <div>
               <p className="text-sm font-semibold text-gray-900 dark:text-white">
@@ -605,43 +527,43 @@ const deriveFileName = (url: string) => {
   }
 };
 
-const getDisplayName = (file: SerializableFileRecord) =>
-  file.label?.trim() || deriveFileName(file.url);
+const getDisplayName = (file: Files) =>
+  file.tag?.trim() || deriveFileName(file.url);
 
 const getDirectoryLabel = (
-  directories: SerializableDirectoryRecord[],
-  directoryId?: string | null,
+  directories: FileDirectories[],
+  directory_id?: string | null,
 ) => {
-  if (!directoryId) {
+  if (!directory_id) {
     return "Kök";
   }
 
-  const found = directories.find((dir) => dir.id === directoryId);
+  const found = directories.find((dir) => dir.id === directory_id);
   return found?.name ?? "Kök";
 };
 
-const getParentDirectoryId = (
-  directories: SerializableDirectoryRecord[],
-  directoryId: string,
+const getParentdirectory_id = (
+  directories: FileDirectories[],
+  directory_id: string,
 ) => {
-  const found = directories.find((dir) => dir.id === directoryId);
-  return found?.parentId ?? null;
+  const found = directories.find((dir) => dir.id === directory_id);
+  return found?.parent_id ?? null;
 };
 
 const getDescendantIds = (
-  directories: SerializableDirectoryRecord[],
-  directoryId: string,
+  directories: FileDirectories[],
+  directory_id: string,
 ) => {
-  const byParent = new Map<string | null, SerializableDirectoryRecord[]>();
+  const byParent = new Map<string | null, FileDirectories[]>();
   directories.forEach((dir) => {
-    const parentId = dir.parentId ?? null;
+    const parentId = dir.parent_id ?? null;
     const list = byParent.get(parentId) ?? [];
     list.push(dir);
     byParent.set(parentId, list);
   });
 
   const result: string[] = [];
-  const stack = [directoryId];
+  const stack = [directory_id];
 
   while (stack.length > 0) {
     const current = stack.pop();
@@ -658,12 +580,12 @@ const getDescendantIds = (
 };
 
 const countFilesInDirectory = (
-  files: SerializableFileRecord[],
-  directories: SerializableDirectoryRecord[],
-  directoryId: string,
+  files: Files[],
+  directories: FileDirectories[],
+  directory_id: string,
 ) => {
-  const targetIds = getDescendantIds(directories, directoryId);
+  const targetIds = getDescendantIds(directories, directory_id);
   return files.filter(
-    (file) => !file.isDeleted && targetIds.includes(file.directoryId ?? ""),
+    (file) => !file.is_deleted && targetIds.includes(file.directory_id ?? ""),
   ).length;
 };

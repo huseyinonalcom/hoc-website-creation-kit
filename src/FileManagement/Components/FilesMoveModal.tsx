@@ -4,16 +4,17 @@ import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
-import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
-import { FilesBrowserClient } from "./FilesBrowserClient";
-import { SerializableDirectoryRecord } from "../types";
+import type { FileDirectories } from "@/components/Files/types";
+
+import { FilesBrowserClient } from "@/components/Files/FilesBrowserClient";
+import { Button } from "@/components/Simple/Button";
 
 export type FilesMoveModalProps = {
   open: boolean;
-  directories: SerializableDirectoryRecord[];
+  directories: FileDirectories[];
   onClose: () => void;
-  onConfirm: (directoryId: string | null) => void;
-  initialDirectoryId?: string | null;
+  onConfirm: (directory_id: string | null) => void;
+  initialdirectory_id?: string | null;
   title?: string;
 };
 
@@ -22,11 +23,11 @@ export function FilesMoveModal({
   directories,
   onClose,
   onConfirm,
-  initialDirectoryId = null,
-  title = "Klasor Sec",
+  initialdirectory_id = null,
+  title = "Klasör Seç",
 }: FilesMoveModalProps) {
-  const [activeDirectoryId, setActiveDirectoryId] = useState<string | null>(
-    initialDirectoryId,
+  const [activedirectory_id, setActivedirectory_id] = useState<string | null>(
+    initialdirectory_id,
   );
 
   return (
@@ -46,26 +47,26 @@ export function FilesMoveModal({
             </div>
 
             <FilesBrowserClient
-              activeDirectoryId={activeDirectoryId}
+              activedirectory_id={activedirectory_id}
               directories={directories}
               files={[]}
               showDirectoryCreate={false}
               showFiles={false}
               showUpload={false}
-              onDirectoryChange={setActiveDirectoryId}
+              onDirectoryChange={setActivedirectory_id}
             />
 
             <div className="mt-6 flex items-center justify-end gap-3">
               <Button type="button" variant="outline" onClick={onClose}>
-                Vazgec
+                Vazgeç
               </Button>
               <Button
                 type="button"
                 onClick={() => {
-                  onConfirm(activeDirectoryId ?? null);
+                  onConfirm(activedirectory_id ?? null);
                 }}
               >
-                Buraya Tasi
+                Buraya Taşı
               </Button>
             </div>
           </DialogPanel>

@@ -12,7 +12,7 @@ const publicBaseUrl = getRequiredEnv("R2_PUBLIC_URL").replace(/\/+$/, "");
 
 type CreateFileInput = {
   file?: FormDataEntryValue | null;
-  directoryId?: FormDataEntryValue | null;
+  directory_id?: FormDataEntryValue | null;
   storageFolder?: FormDataEntryValue | null;
   uploaderId?: FormDataEntryValue | null;
 };
@@ -21,7 +21,7 @@ type FileLike = Blob & { name?: string };
 
 type NormalizedFilePayload = {
   file: FileLike;
-  directoryId: string | null;
+  directory_id: string | null;
   storageFolder: string;
   uploaderId: string | null;
   originalName: string;
@@ -39,7 +39,7 @@ export const createFile = async ({
 
   const fileToSave = {
     url: uploadedFileUrl,
-    directory_id: parsedFileData.directoryId,
+    directory_id: parsedFileData.directory_id,
     tag: parsedFileData.originalName,
     uploaded_by_user_id: parsedFileData.uploaderId,
   };
@@ -74,8 +74,10 @@ const normalizePayload = (fileData: CreateFileInput): NormalizedFilePayload => {
     throw new Error("Yüklenecek geçerli bir dosya bulunamadı");
   }
 
-  const directoryIdValue =
-    typeof fileData.directoryId === "string" ? fileData.directoryId.trim() : "";
+  const directory_idValue =
+    typeof fileData.directory_id === "string"
+      ? fileData.directory_id.trim()
+      : "";
   const storageFolderValue =
     typeof fileData.storageFolder === "string"
       ? fileData.storageFolder
@@ -85,7 +87,7 @@ const normalizePayload = (fileData: CreateFileInput): NormalizedFilePayload => {
 
   return {
     file: maybeFile,
-    directoryId: directoryIdValue.length > 0 ? directoryIdValue : null,
+    directory_id: directory_idValue.length > 0 ? directory_idValue : null,
     storageFolder: sanitizeFolder(storageFolderValue),
     uploaderId: uploaderIdValue.length > 0 ? uploaderIdValue : null,
     originalName: getOriginalFileName(maybeFile),

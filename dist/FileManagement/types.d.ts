@@ -1,13 +1,13 @@
-export type SerializableFileRecord = {
+export type Files = {
     id: string;
     url: string;
     label?: string | null;
-    directoryId?: string | null;
+    directory_id?: string | null;
     isDeleted?: boolean;
     uploadedAt?: string;
     deletedAt?: string | null;
 };
-export type SerializableDirectoryRecord = {
+export type FileDirectories = {
     id: string;
     name: string;
     parentId?: string | null;
@@ -16,7 +16,7 @@ export type SerializableDirectoryRecord = {
 };
 export type UploadFileInput = {
     file: File;
-    directoryId?: string | null;
+    directory_id?: string | null;
     storageFolder?: string | null;
 };
 export type CreateDirectoryInput = {
@@ -26,7 +26,7 @@ export type CreateDirectoryInput = {
 export type UpdateFileInput = {
     id: string;
     label?: string | null;
-    directoryId?: string | null;
+    directory_id?: string | null;
 };
 export type UpdateDirectoryInput = {
     id: string;
@@ -41,21 +41,21 @@ export type DeleteDirectoryInput = {
 };
 export type CreateDirectoryResponse = {
     result: "success";
-    directory: SerializableDirectoryRecord;
+    directory: FileDirectories;
 } | {
     result: "error";
     error?: string;
 };
 export type UpdateDirectoryResponse = {
     result: "success";
-    directory: SerializableDirectoryRecord;
+    directory: FileDirectories;
 } | {
     result: "error";
     error?: string;
 };
 export type UpdateFileResponse = {
     result: "success";
-    file: SerializableFileRecord;
+    file: Files;
 } | {
     result: "error";
     error?: string;

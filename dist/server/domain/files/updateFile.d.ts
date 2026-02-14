@@ -1,8 +1,8 @@
 import "server-only";
-export declare const updateFile: ({ id, label, directoryId }: {
+export declare const updateFile: ({ id, label, directory_id }: {
     id: string;
     label?: string | null;
-    directoryId?: string | null;
+    directory_id?: string | null;
 }) => Promise<{
     file: {
         id: string;

@@ -3,29 +3,18 @@
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-import {
-  CreateDirectoryInput,
-  CreateDirectoryResponse,
-  SerializableDirectoryRecord,
-  SerializableFileRecord,
-  UploadFileInput,
-} from "../types";
 import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
+import { FileDirectories, Files } from "../../server/types/dbtypes";
 import { FilesBrowserClient } from "./FilesBrowserClient";
-import { UploadFileState } from "../state";
 
 export type FilesPickerModalProps = {
   open: boolean;
   onClose: () => void;
-  files: SerializableFileRecord[];
-  directories: SerializableDirectoryRecord[];
-  onSelect: (file: SerializableFileRecord) => void;
-  onFileCreate?: (file: SerializableFileRecord) => void;
-  onDirectoryCreate?: (directory: SerializableDirectoryRecord) => void;
-  onUploadFile?: (input: UploadFileInput) => Promise<UploadFileState>;
-  onCreateDirectory?: (
-    input: CreateDirectoryInput,
-  ) => Promise<CreateDirectoryResponse>;
+  files: Files[];
+  directories: FileDirectories[];
+  onSelect: (file: Files) => void;
+  onFileCreate?: (file: Files) => void;
+  onDirectoryCreate?: (directory: FileDirectories) => void;
   title?: string;
   closeOnSelect?: boolean;
 };
@@ -38,12 +27,10 @@ export function FilesPickerModal({
   onSelect,
   onFileCreate,
   onDirectoryCreate,
-  onUploadFile,
-  onCreateDirectory,
-  title = "Dosya Sec",
+  title = "Dosya Seç",
   closeOnSelect = true,
 }: FilesPickerModalProps) {
-  const handleSelect = (file: SerializableFileRecord) => {
+  const handleSelect = (file: Files) => {
     onSelect(file);
     if (closeOnSelect) {
       onClose();
@@ -68,11 +55,9 @@ export function FilesPickerModal({
             <FilesBrowserClient
               directories={directories}
               files={files}
-              onCreateDirectory={onCreateDirectory}
               onDirectoryCreate={onDirectoryCreate}
               onFileCreate={onFileCreate}
               onSelect={handleSelect}
-              onUploadFile={onUploadFile}
             />
           </DialogPanel>
         </div>

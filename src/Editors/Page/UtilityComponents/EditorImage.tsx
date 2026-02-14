@@ -3,37 +3,21 @@
 import { useState } from "react";
 import Image from "next/image";
 
-import type {
-  CreateDirectoryInput,
-  CreateDirectoryResponse,
-  SerializableFileRecord,
-  UploadFileInput,
-} from "../../../FileManagement/types";
-import type { UploadFileState } from "../../../FileManagement/state";
-
 import { FilesPickerModal } from "../../../FileManagement/Components/FilesPickerModal";
 import { useFilesData } from "../../../FileManagement/Providers/FilesDataProvider";
 import { Button } from "../Components/Actions/ButtonLink/Button";
+import { Files } from "../../../server/types/dbtypes";
 
 export type EditorImageProps = {
   value?: string;
   onChange: (next: string) => void;
-  onUploadFile?: (input: UploadFileInput) => Promise<UploadFileState>;
-  onCreateDirectory?: (
-    input: CreateDirectoryInput,
-  ) => Promise<CreateDirectoryResponse>;
 };
 
-export function EditorImage({
-  value,
-  onChange,
-  onUploadFile,
-  onCreateDirectory,
-}: EditorImageProps) {
+export function EditorImage({ value, onChange }: EditorImageProps) {
   const { files, directories, addFile, addDirectory } = useFilesData();
   const [isPickerOpen, setIsPickerOpen] = useState(false);
 
-  const handleSelect = (file: SerializableFileRecord) => {
+  const handleSelect = (file: Files) => {
     onChange(file.url);
     setIsPickerOpen(false);
   };
@@ -81,11 +65,9 @@ export function EditorImage({
         files={files}
         open={isPickerOpen}
         onClose={() => setIsPickerOpen(false)}
-        onCreateDirectory={onCreateDirectory}
         onDirectoryCreate={addDirectory}
         onFileCreate={addFile}
         onSelect={handleSelect}
-        onUploadFile={onUploadFile}
       />
     </div>
   );

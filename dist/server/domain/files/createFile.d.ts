@@ -1,9 +1,9 @@
 import "server-only";
-export declare const createFile: ({ buffer, originalName, storageFolder, directoryId, uploaderId, contentType, }: {
+export declare const createFile: ({ buffer, originalName, storageFolder, directory_id, uploaderId, contentType, }: {
     buffer: Buffer | Uint8Array;
     originalName: string;
     storageFolder?: string | null;
-    directoryId?: string | null;
+    directory_id?: string | null;
     uploaderId?: string | null;
     contentType?: string | undefined;
 }) => Promise<{

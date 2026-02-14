@@ -1,18 +1,18 @@
 import { ReactNode } from "react";
-import type { SerializableDirectoryRecord, SerializableFileRecord } from "../types";
+import type { FileDirectories, Files } from "../types";
 export declare function useFilesData(): {
-    files: SerializableFileRecord[];
-    directories: SerializableDirectoryRecord[];
-    addFile: (file: SerializableFileRecord) => void;
-    updateFile: (file: SerializableFileRecord) => void;
+    files: Files[];
+    directories: FileDirectories[];
+    addFile: (file: Files) => void;
+    updateFile: (file: Files) => void;
     removeFile: (fileId: string) => void;
-    addDirectory: (directory: SerializableDirectoryRecord) => void;
-    updateDirectory: (directory: SerializableDirectoryRecord) => void;
-    removeDirectory: (directoryId: string) => void;
+    addDirectory: (directory: FileDirectories) => void;
+    updateDirectory: (directory: FileDirectories) => void;
+    removeDirectory: (directory_id: string) => void;
 };
 export default function FilesDataProvider({ initialFiles, initialDirectories, children, }: {
-    initialFiles: SerializableFileRecord[];
-    initialDirectories: SerializableDirectoryRecord[];
+    initialFiles: Files[];
+    initialDirectories: FileDirectories[];
     children: ReactNode;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=FilesDataProvider.d.ts.map

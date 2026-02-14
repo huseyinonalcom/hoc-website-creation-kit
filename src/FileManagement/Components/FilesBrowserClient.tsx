@@ -9,28 +9,28 @@ import { DragEvent, MouseEvent, useMemo, useRef, useState } from "react";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import Image from "next/image";
 
-import type {
-  CreateDirectoryInput,
-  SerializableDirectoryRecord,
-  SerializableFileRecord,
-  UploadFileInput,
-} from "../types";
-
 import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
-import { uploadFileInitialState, type UploadFileState } from "../state";
+import { createDirectoryAction, uploadFileAction } from "../actions";
+import { FileDirectories, Files } from "../../server/types/dbtypes";
+import { uploadFileInitialState } from "../state";
 import cn from "../../utils/classnames";
-import * as FMApi from "../api";
 
 const inputClassName =
   "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm transition placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-indigo-400 dark:focus:ring-indigo-400";
 
 export type FilesBrowserClientProps = {
-  files: SerializableFileRecord[];
-  directories: SerializableDirectoryRecord[];
+  files: Files[];
+  directories: FileDirectories[];
+  onSelect?: (file: Files) => void;
+  onSelectionChange?: (ids: string[]) => void;
+  onMoveFiles?: (directory_id: string | null, fileIds: string[]) => void;
+  onFileCreate?: (file: Files) => void;
+  onDirectoryCreate?: (directory: FileDirectories) => void;
+  onDirectoryChange?: (directory_id: string | null) => void;
   className?: string;
   emptyStateMessage?: string;
-  initialDirectoryId?: string | null;
-  activeDirectoryId?: string | null;
+  initialdirectory_id?: string | null;
+  activedirectory_id?: string | null;
   showFiles?: boolean;
   showDirectories?: boolean;
   showUpload?: boolean;
@@ -41,10 +41,18 @@ export type FilesBrowserClientProps = {
 };
 
 export function FilesBrowserClient({
+  files,
+  directories,
+  onSelect,
+  onSelectionChange,
+  onMoveFiles,
+  onFileCreate,
+  onDirectoryCreate,
+  onDirectoryChange,
   className,
   emptyStateMessage = "Henüz yüklenmiş dosya yok.",
-  initialDirectoryId = null,
-  activeDirectoryId: controlledDirectoryId,
+  initialdirectory_id = null,
+  activedirectory_id: controlleddirectory_id,
   showFiles = true,
   showDirectories = true,
   showUpload = true,
@@ -53,61 +61,9 @@ export function FilesBrowserClient({
   enableDragDrop = false,
   selectedFileIds,
 }: FilesBrowserClientProps) {
-  // Provide default implementations that call the package API so the component
-  // works out-of-the-box when props are not supplied.
-  const uploadFileDefault = async (input: UploadFileInput) => {
-    try {
-      const actions = await import("../actions/fileActions");
-      const data = await actions.uploadFileAction(input.file as File, {
-        storageFolder: input.storageFolder ?? undefined,
-        directoryId: input.directoryId ?? undefined,
-      });
-      // domain createFile returns an object with `result` being the inserted row
-      // or returns the DB row directly depending on implementation; normalize below
-      const maybeRow = data?.result ?? data?.file ?? data;
-      if (data && data.result === "success" && data.file) {
-        return {
-          result: "success",
-          error: "",
-          uploadedFile: FMApi.mapDbFileToSerializable(maybeRow),
-        } as UploadFileState;
-      }
-
-      if (maybeRow && maybeRow.id) {
-        return { result: "success", error: "", uploadedFile: FMApi.mapDbFileToSerializable(maybeRow) } as UploadFileState;
-      }
-
-      return { result: "error", error: data?.error || "Upload failed", uploadedFile: null } as UploadFileState;
-    } catch (err: any) {
-      return {
-        result: "error",
-        error: err?.message || String(err),
-        uploadedFile: null,
-      } as UploadFileState;
-    }
-  };
-
-  const createDirectoryDefault = async (input: CreateDirectoryInput) => {
-    try {
-      const actions = await import("../actions/fileActions");
-      const data = await actions.createDirectoryAction(input);
-      // API may wrap the result in different shapes; attempt to extract the directory row
-      const dirRow = data?.result ?? data;
-      if (dirRow && dirRow.id) {
-        return { result: "success", directory: FMApi.mapDbDirToSerializable(dirRow) };
-      }
-
-      return { result: "error", error: data?.error || "Could not create directory" };
-    } catch (err: any) {
-      return { result: "error", error: err?.message || String(err) };
-    }
-  };
-
-  const resolvedOnUploadFile = onUploadFile ?? uploadFileDefault;
-  const resolvedOnCreateDirectory = onCreateDirectory ?? createDirectoryDefault;
-  const [internalDirectoryId, setInternalDirectoryId] = useState<string | null>(
-    initialDirectoryId ?? null,
-  );
+  const [internaldirectory_id, setInternaldirectory_id] = useState<
+    string | null
+  >(initialdirectory_id ?? null);
   const [internalSelectedIds, setInternalSelectedIds] = useState<string[]>([]);
   const [lastSelectedIndex, setLastSelectedIndex] = useState<number | null>(
     null,
@@ -117,14 +73,11 @@ export function FilesBrowserClient({
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [dragOverTarget, setDragOverTarget] = useState<string | null>(null);
-  const activeDirectoryId =
-    controlledDirectoryId !== undefined
-      ? controlledDirectoryId
-      : internalDirectoryId;
+  const activedirectory_id =
+    controlleddirectory_id !== undefined
+      ? controlleddirectory_id
+      : internaldirectory_id;
   const resolvedSelectedIds = selectedFileIds ?? internalSelectedIds;
-  const canCreateDirectory =
-    showDirectoryCreate && Boolean(resolvedOnCreateDirectory);
-  const canUpload = showUpload && Boolean(resolvedOnUploadFile);
 
   const updateSelectedIds = (next: string[]) => {
     if (onSelectionChange) {
@@ -134,13 +87,13 @@ export function FilesBrowserClient({
     }
   };
 
-  const updateDirectoryId = (next: string | null) => {
+  const updatedirectory_id = (next: string | null) => {
     if (onDirectoryChange) {
       onDirectoryChange(next);
     }
 
-    if (controlledDirectoryId === undefined) {
-      setInternalDirectoryId(next);
+    if (controlleddirectory_id === undefined) {
+      setInternaldirectory_id(next);
     }
   };
   const [clientError, setClientError] = useState("");
@@ -152,7 +105,7 @@ export function FilesBrowserClient({
   }));
 
   const directoryMap = useMemo(() => {
-    const map = new Map<string, SerializableDirectoryRecord>();
+    const map = new Map<string, FileDirectories>();
     directories.forEach((dir) => map.set(dir.id, dir));
     return map;
   }, [directories]);
@@ -160,28 +113,24 @@ export function FilesBrowserClient({
   const visibleDirectories = useMemo(() => {
     if (!showDirectories) return [];
     return directories
-      .filter((dir) => (dir.parentId ?? null) === activeDirectoryId)
+      .filter((dir) => (dir.parent_id ?? null) === activedirectory_id)
       .sort((a, b) => a.name.localeCompare(b.name, "tr"));
-  }, [activeDirectoryId, directories, showDirectories]);
+  }, [activedirectory_id, directories, showDirectories]);
 
   const visibleFiles = useMemo(() => {
     if (!showFiles) return [];
     return files
       .filter((file) => isVisibleFile(file))
-      .filter((file) => (file.directoryId ?? null) === activeDirectoryId)
+      .filter((file) => (file.directory_id ?? null) === activedirectory_id)
       .sort((a, b) => getDisplayName(a).localeCompare(getDisplayName(b), "tr"));
-  }, [activeDirectoryId, files, showFiles]);
+  }, [activedirectory_id, files, showFiles]);
 
-  const parentDirectoryId =
-    activeDirectoryId && directoryMap.get(activeDirectoryId)
-      ? (directoryMap.get(activeDirectoryId)!.parentId ?? null)
+  const parentdirectory_id =
+    activedirectory_id && directoryMap.get(activedirectory_id)
+      ? (directoryMap.get(activedirectory_id)!.parent_id ?? null)
       : null;
 
-  const handleSelect = (
-    file: SerializableFileRecord,
-    index: number,
-    event: MouseEvent,
-  ) => {
+  const handleSelect = (file: Files, index: number, event: MouseEvent) => {
     if (!multiSelect) {
       updateSelectedIds([file.id]);
       setLastSelectedIndex(index);
@@ -227,8 +176,8 @@ export function FilesBrowserClient({
     onSelect?.(file);
   };
 
-  const handleEnterDirectory = (directoryId: string | null) => {
-    updateDirectoryId(directoryId);
+  const handleEnterDirectory = (directory_id: string | null) => {
+    updatedirectory_id(directory_id);
     updateSelectedIds([]);
     setLastSelectedIndex(null);
   };
@@ -262,7 +211,7 @@ export function FilesBrowserClient({
   };
 
   const handleDropTarget =
-    (directoryId: string | null) => (event: DragEvent) => {
+    (directory_id: string | null) => (event: DragEvent) => {
       if (!enableDragDrop || !onMoveFiles) return;
       event.preventDefault();
       setDragOverTarget(null);
@@ -274,7 +223,7 @@ export function FilesBrowserClient({
           ? parsed.filter((id) => typeof id === "string")
           : [];
         if (ids.length > 0) {
-          onMoveFiles(directoryId, ids);
+          onMoveFiles(directory_id, ids);
         }
       } catch {
         // Ignore invalid drag payloads.
@@ -283,12 +232,7 @@ export function FilesBrowserClient({
 
   const handleCreateDirectory = async () => {
     if (!directoryName.trim()) {
-      setClientError("Lutfen klasor adi girin.");
-      return;
-    }
-
-    if (!resolvedOnCreateDirectory) {
-      setClientError("Klasor olusturma yapilandirilmamis.");
+      setClientError("Lütfen klasör adı girin.");
       return;
     }
 
@@ -296,17 +240,17 @@ export function FilesBrowserClient({
     setIsCreatingDirectory(true);
 
     try {
-      const response = await resolvedOnCreateDirectory({
+      const response = await createDirectoryAction({
         name: directoryName,
-        parentId: activeDirectoryId,
+        parentId: activedirectory_id,
       });
 
       if (response.result === "error") {
-        setClientError(response.error || "Klasor olusturulamadi.");
+        setClientError(response.error || "Klasör oluşturulamadı.");
         return;
       }
 
-      if (response.result === "success" && response.directory) {
+      if (response.directory) {
         onDirectoryCreate?.(response.directory);
       }
 
@@ -319,12 +263,7 @@ export function FilesBrowserClient({
 
   const handleUpload = async () => {
     if (!selectedFile) {
-      setClientError("Lutfen yuklemek icin bir dosya secin.");
-      return;
-    }
-
-    if (!resolvedOnUploadFile) {
-      setClientError("Dosya yukleme yapilandirilmamis.");
+      setClientError("Lütfen yüklemek için bir dosya seçin.");
       return;
     }
 
@@ -334,9 +273,9 @@ export function FilesBrowserClient({
     try {
       setUploadState(() => ({ ...uploadFileInitialState }));
 
-      const result = await resolvedOnUploadFile({
+      const result = await uploadFileAction({
         file: selectedFile,
-        directoryId: activeDirectoryId,
+        directory_id: activedirectory_id,
       });
 
       setUploadState(result);
@@ -352,7 +291,7 @@ export function FilesBrowserClient({
       }
     } catch {
       const fallbackError =
-        "Dosya yuklenirken beklenmedik bir hata olustu. Lutfen tekrar deneyin.";
+        "Dosya yüklenirken beklenmedik bir hata oluştu. Lütfen tekrar deneyin.";
       setClientError(fallbackError);
       setUploadState({
         ...uploadFileInitialState,
@@ -371,22 +310,22 @@ export function FilesBrowserClient({
         <header className="mb-4 flex items-center justify-between">
           <div>
             <p className="text-sm font-semibold text-gray-900 dark:text-white">
-              {showFiles ? "Dosyalar" : "Klasorler"}
+              {showFiles ? "Dosyalar" : "Klasörler"}
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            {canCreateDirectory ? (
+            {showDirectoryCreate ? (
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => setIsCreateModalOpen(true)}
               >
-                Klasor Olustur
+                Klasör Oluştur
               </Button>
             ) : null}
-            {canUpload ? (
+            {showUpload ? (
               <Button type="button" onClick={() => setIsUploadModalOpen(true)}>
-                Dosya Yukle
+                Dosya Yükle
               </Button>
             ) : null}
           </div>
@@ -397,7 +336,7 @@ export function FilesBrowserClient({
           </p>
         ) : (
           <div className="grid gap-4 md:grid-cols-2">
-            {activeDirectoryId ? (
+            {activedirectory_id ? (
               <button
                 className={cn(
                   "flex items-center gap-3 rounded-xl border border-dashed border-gray-300 px-4 py-3 text-left text-sm text-gray-600 transition hover:border-indigo-400 dark:border-white/10 dark:text-gray-300 dark:hover:border-indigo-400",
@@ -406,13 +345,13 @@ export function FilesBrowserClient({
                     : null,
                 )}
                 type="button"
-                onClick={() => handleEnterDirectory(parentDirectoryId)}
+                onClick={() => handleEnterDirectory(parentdirectory_id)}
                 onDragOver={handleDragOverTarget("__up__")}
                 onDragLeave={handleDragLeaveTarget}
-                onDrop={handleDropTarget(parentDirectoryId)}
+                onDrop={handleDropTarget(parentdirectory_id)}
               >
                 <ArrowUturnLeftIcon className="h-5 w-5" />
-                Ust Klasore Cik
+                Üst Klasöre Çık
               </button>
             ) : null}
 
@@ -481,7 +420,7 @@ export function FilesBrowserClient({
             <DialogPanel className="w-full max-w-xl rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl dark:border-white/10 dark:bg-gray-900">
               <div className="mb-4 flex items-center justify-between">
                 <DialogTitle className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Klasor Olustur
+                  Klasör Oluştur
                 </DialogTitle>
                 <Button
                   type="button"
@@ -497,12 +436,12 @@ export function FilesBrowserClient({
                   className="text-sm font-medium text-gray-700 dark:text-gray-200"
                   htmlFor="directory-name"
                 >
-                  Klasor Adi
+                  Klasör Adı
                 </label>
                 <input
                   className={inputClassName}
                   id="directory-name"
-                  placeholder="Orn: duyurular"
+                  placeholder="Örn: duyurular"
                   value={directoryName}
                   onChange={(event) => setDirectoryName(event.target.value)}
                 />
@@ -515,14 +454,14 @@ export function FilesBrowserClient({
                     variant="outline"
                     onClick={() => setIsCreateModalOpen(false)}
                   >
-                    Vazgec
+                    Vazgeç
                   </Button>
                   <Button
                     disabled={isCreatingDirectory}
                     type="button"
                     onClick={handleCreateDirectory}
                   >
-                    {isCreatingDirectory ? "Olusturuluyor..." : "Kaydet"}
+                    {isCreatingDirectory ? "Oluşturuluyor..." : "Kaydet"}
                   </Button>
                 </div>
               </div>
@@ -542,7 +481,7 @@ export function FilesBrowserClient({
             <DialogPanel className="w-full max-w-xl rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl dark:border-white/10 dark:bg-gray-900">
               <div className="mb-4 flex items-center justify-between">
                 <DialogTitle className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Dosya Yukle
+                  Dosya Yükle
                 </DialogTitle>
                 <Button
                   type="button"
@@ -580,7 +519,7 @@ export function FilesBrowserClient({
                   {uploadState.result === "success" &&
                   uploadState.uploadedFile ? (
                     <p className="text-green-600">
-                      {getDisplayName(uploadState.uploadedFile)} basariyla
+                      {getDisplayName(uploadState.uploadedFile)} başarıyla
                       eklendi.
                     </p>
                   ) : null}
@@ -591,14 +530,14 @@ export function FilesBrowserClient({
                     variant="outline"
                     onClick={() => setIsUploadModalOpen(false)}
                   >
-                    Vazgec
+                    Vazgeç
                   </Button>
                   <Button
                     disabled={isUploading}
                     type="button"
                     onClick={handleUpload}
                   >
-                    {isUploading ? "Yukleniyor..." : "Yukle"}
+                    {isUploading ? "Yükleniyor..." : "Yükle"}
                   </Button>
                 </div>
               </div>
@@ -620,13 +559,13 @@ const deriveFileName = (url: string) => {
   }
 };
 
-const getDisplayName = (file: SerializableFileRecord) =>
-  file.label?.trim() || deriveFileName(file.url);
+const getDisplayName = (file: Files) =>
+  file.tag?.trim() || deriveFileName(file.url);
 
-function isHiddenFile(file: SerializableFileRecord) {
-  return file.url?.includes("/uyeler/");
+function isHiddenFile(file: Files) {
+  return file.url?.includes("/users/");
 }
 
-function isVisibleFile(file: SerializableFileRecord) {
-  return !file.isDeleted && !isHiddenFile(file);
+function isVisibleFile(file: Files) {
+  return !file.is_deleted && !isHiddenFile(file);
 }

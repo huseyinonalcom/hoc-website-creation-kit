@@ -33,7 +33,7 @@ export type { LinkListItem } from "./Editors/Page/Components/Actions/LinkBar/typ
 export { LinkListField } from "./Editors/Page/Components/Actions/LinkBar/LinkListField";
 export { SlidesField } from "./Editors/Page/UtilityComponents/SlidesField";
 export { FilesDataProvider, useFilesData } from "./FileManagement";
-export type { ActionResultState, CreateDirectoryInput, CreateDirectoryResponse, DeleteDirectoryInput, DeleteDirectoryResponse, DeleteFileInput, DeleteFileResponse, SerializableDirectoryRecord, SerializableFileRecord, UpdateDirectoryInput, UpdateDirectoryResponse, UpdateFileInput, UpdateFileResponse, UploadFileInput, UploadFileState, } from "./FileManagement";
+export type { ActionResultState, CreateDirectoryInput, CreateDirectoryResponse, DeleteDirectoryInput, DeleteDirectoryResponse, DeleteFileInput, DeleteFileResponse, FileDirectories, Files, UpdateDirectoryInput, UpdateDirectoryResponse, UpdateFileInput, UpdateFileResponse, UploadFileInput, UploadFileState, } from "./FileManagement";
 export { baseEditorConfig, type BaseEditorProps, type BaseRootProps, } from "./Editors/Page/config/baseEditorConfig";
 export type { BaseComponentProps, FormInputFieldComponent, FormInputFieldProps, } from "./Editors/Page/config/types";
 export { baseRendererConfig } from "./Editors/Page/config/baseRendererConfig";
