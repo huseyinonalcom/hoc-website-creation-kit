@@ -11,9 +11,7 @@ export declare function useFilesData(): {
     updateDirectory: (directory: Selectable<FileDirectories>) => void;
     removeDirectory: (directory_id: string) => void;
 };
-export default function FilesDataProvider({ initialFiles, initialDirectories, children, }: {
-    initialFiles: Selectable<Files>[];
-    initialDirectories: Selectable<FileDirectories>[];
+export default function FilesDataProvider({ children, }: {
     children: ReactNode;
 }): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=FilesDataProvider.d.ts.map

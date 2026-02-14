@@ -6,6 +6,7 @@ import "server-only";
 import {
   createDirectory,
   deleteDirectory,
+  getDirectories,
   updateDirectory,
 } from "../server/domain/files/directories";
 import createServerAction from "../utils/serverActions/createServerAction";
@@ -13,6 +14,7 @@ import { uploadFileInitialState, UploadFileState } from "./state";
 import { FileDirectories, Files } from "../server/types/dbtypes";
 import { throwCustomError } from "../utils/errors/customerrors";
 import { createFile } from "../server/domain/files/create_file";
+import { getFiles } from "../server/domain/files/get";
 import { update } from "../server/db/query";
 
 type UploadFileActionInput = {
@@ -252,5 +254,28 @@ export const updateDirectoryAction = createServerAction<
     });
 
     return { directory: updated.result };
+  },
+});
+
+export const getFilesAction = createServerAction<
+  { includeDeleted?: boolean },
+  { result: Selectable<Files>[] }
+>({
+  allowedRoles: ["admin"],
+  actionFn: async ({ data }) => {
+    const includeDeleted = data?.includeDeleted ?? true;
+    const { result } = await getFiles({ includeDeleted });
+    return { result };
+  },
+});
+
+export const getDirectoriesAction = createServerAction<
+  { name?: string },
+  { result: Selectable<FileDirectories>[] }
+>({
+  allowedRoles: ["admin"],
+  actionFn: async () => {
+    const { result } = await getDirectories();
+    return { result };
   },
 });

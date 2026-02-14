@@ -60,5 +60,15 @@ export declare const softDeleteFileAction: (data: SoftDeleteFileActionInput) => 
 export declare const createDirectoryAction: (data: CreateDirectoryActionInput) => Promise<import("../utils/serverActions/helpers").ActionState<CreateDirectoryActionOutput>>;
 export declare const deleteDirectoryAction: (data: DeleteDirectoryActionInput) => Promise<import("../utils/serverActions/helpers").ActionState<DeleteDirectoryActionOutput>>;
 export declare const updateDirectoryAction: (data: UpdateDirectoryActionInput) => Promise<import("../utils/serverActions/helpers").ActionState<UpdateDirectoryActionOutput>>;
+export declare const getFilesAction: (data: {
+    includeDeleted?: boolean;
+}) => Promise<import("../utils/serverActions/helpers").ActionState<{
+    result: Selectable<Files>[];
+}>>;
+export declare const getDirectoriesAction: (data: {
+    name?: string;
+}) => Promise<import("../utils/serverActions/helpers").ActionState<{
+    result: Selectable<FileDirectories>[];
+}>>;
 export {};
 //# sourceMappingURL=actions.d.ts.map

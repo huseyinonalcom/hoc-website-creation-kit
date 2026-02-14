@@ -60,7 +60,8 @@ export function FilesManagerClient() {
   const handleSelectionChange = (ids: string[]) => {
     setSelectedFileIds(ids);
     if (ids.length === 1) {
-      const found = files.find((item) => item.id === ids[0]) ?? null;
+      const found =
+        files.find((item: Selectable<Files>) => item.id === ids[0]) ?? null;
       setSelectedFile(found);
       setLabel(found?.tag ?? "");
       return;
@@ -77,7 +78,9 @@ export function FilesManagerClient() {
       return;
     }
 
-    const current = directories.find((dir) => dir.id === directory_id);
+    const current = directories.find(
+      (dir: Selectable<FileDirectories>) => dir.id === directory_id,
+    );
     setDirectoryLabel(current?.name ?? "");
   };
 

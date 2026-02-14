@@ -1,6 +1,7 @@
 "use client";
 import { jsx as _jsx } from "react/jsx-runtime";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState, } from "react";
+import { getDirectoriesAction, getFilesAction } from "../actions";
 const FilesContext = createContext(null);
 export function useFilesData() {
     const ctx = useContext(FilesContext);
@@ -8,9 +9,18 @@ export function useFilesData() {
         throw new Error("FilesDataProvider missing");
     return ctx;
 }
-export default function FilesDataProvider({ initialFiles, initialDirectories, children, }) {
-    const [files, setFiles] = useState(initialFiles);
-    const [directories, setDirectories] = useState(initialDirectories);
+export default function FilesDataProvider({ children, }) {
+    const [files, setFiles] = useState([]);
+    const [directories, setDirectories] = useState([]);
+    useEffect(() => {
+        async function fetchData() {
+            const filesReq = await getFilesAction({ includeDeleted: false });
+            setFiles(filesReq.result);
+            const directoriesResponse = await getDirectoriesAction({});
+            setDirectories(directoriesResponse.result);
+        }
+        fetchData();
+    }, []);
     const addFile = (file) => setFiles((prev) => prev.some((f) => f.id === file.id) ? prev : [file, ...prev]);
     const updateFile = (file) => setFiles((prev) => prev.map((item) => (item.id === file.id ? file : item)));
     const removeFile = (fileId) => setFiles((prev) => prev.filter((item) => item.id !== fileId));

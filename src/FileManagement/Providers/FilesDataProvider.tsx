@@ -1,9 +1,16 @@
 "use client";
 
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { Selectable } from "kysely";
 
 import { FileDirectories, Files } from "../../server/types/dbtypes";
+import { getDirectoriesAction, getFilesAction } from "../actions";
 
 const FilesContext = createContext<{
   files: Selectable<Files>[];
@@ -23,16 +30,24 @@ export function useFilesData() {
 }
 
 export default function FilesDataProvider({
-  initialFiles,
-  initialDirectories,
   children,
 }: {
-  initialFiles: Selectable<Files>[];
-  initialDirectories: Selectable<FileDirectories>[];
   children: ReactNode;
 }) {
-  const [files, setFiles] = useState(initialFiles);
-  const [directories, setDirectories] = useState(initialDirectories);
+  const [files, setFiles] = useState<Selectable<Files>[]>([]);
+  const [directories, setDirectories] = useState<Selectable<FileDirectories>[]>(
+    [],
+  );
+
+  useEffect(() => {
+    async function fetchData() {
+      const filesReq = await getFilesAction({ includeDeleted: false });
+      setFiles(filesReq.result);
+      const directoriesResponse = await getDirectoriesAction({});
+      setDirectories(directoriesResponse.result);
+    }
+    fetchData();
+  }, []);
 
   const addFile = (file: Selectable<Files>) =>
     setFiles((prev) =>

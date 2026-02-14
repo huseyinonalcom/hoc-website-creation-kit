@@ -1,10 +1,11 @@
 "use server";
 import "server-only";
-import { createDirectory, deleteDirectory, updateDirectory, } from "../server/domain/files/directories";
+import { createDirectory, deleteDirectory, getDirectories, updateDirectory, } from "../server/domain/files/directories";
 import createServerAction from "../utils/serverActions/createServerAction";
 import { uploadFileInitialState } from "./state";
 import { throwCustomError } from "../utils/errors/customerrors";
 import { createFile } from "../server/domain/files/create_file";
+import { getFiles } from "../server/domain/files/get";
 import { update } from "../server/db/query";
 export const uploadFileAction = createServerAction({
     allowedRoles: ["admin"],
@@ -122,6 +123,21 @@ export const updateDirectoryAction = createServerAction({
             parentId: parentValue,
         });
         return { directory: updated.result };
+    },
+});
+export const getFilesAction = createServerAction({
+    allowedRoles: ["admin"],
+    actionFn: async ({ data }) => {
+        const includeDeleted = data?.includeDeleted ?? true;
+        const { result } = await getFiles({ includeDeleted });
+        return { result };
+    },
+});
+export const getDirectoriesAction = createServerAction({
+    allowedRoles: ["admin"],
+    actionFn: async () => {
+        const { result } = await getDirectories();
+        return { result };
     },
 });
 //# sourceMappingURL=actions.js.map
