@@ -3,9 +3,9 @@ import React from "react";
 
 import listDirectories from "../../server/domain/directories/listDirectories";
 import FilesDataProvider from "../Providers/FilesDataProvider";
-import listFiles from "../../server/domain/files/listFiles";
+import { getFiles } from "../../server/domain/files/get";
 
-const mapDbFileToSerializable = (row: any) => ({
+const mapDbFileToSerializable = (row) => ({
   id: row.id,
   url: row.url,
   label: row.label ?? null,
@@ -15,7 +15,7 @@ const mapDbFileToSerializable = (row: any) => ({
   deletedAt: row.deleted_at?.toString?.() ?? null,
 });
 
-const mapDbDirToSerializable = (row: any) => ({
+const mapDbDirToSerializable = (row) => ({
   id: row.id,
   name: row.name,
   parentId: row.parent_id ?? null,
@@ -25,10 +25,10 @@ const mapDbDirToSerializable = (row: any) => ({
 
 export default async function ServerFilesProvider({
   children,
-}: {
+}: {ƒ
   children: React.ReactNode;
 }) {
-  const filesRes = await listFiles({ includeDeleted: true });
+  const filesRes = await getFiles({ includeDeleted: true });
   const dirsRes = await listDirectories();
 
   const files = (filesRes.result ?? []).map(mapDbFileToSerializable);

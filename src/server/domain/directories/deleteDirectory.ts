@@ -14,9 +14,9 @@ export const deleteDirectory = async ({ id }: { id: string }) => {
     string | null,
     { id: string; parent_id: string | null }[]
   >();
-  directories.forEach((d: any) => {
+  directories.forEach((d) => {
     const list = byParent.get(d.parent_id ?? null) ?? [];
-    list.push(d as any);
+    list.push(d);
     byParent.set(d.parent_id ?? null, list);
   });
 
