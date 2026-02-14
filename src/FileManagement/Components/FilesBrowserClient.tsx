@@ -11,7 +11,6 @@ import Image from "next/image";
 
 import type {
   CreateDirectoryInput,
-  CreateDirectoryResponse,
   SerializableDirectoryRecord,
   SerializableFileRecord,
   UploadFileInput,
@@ -28,16 +27,6 @@ const inputClassName =
 export type FilesBrowserClientProps = {
   files: SerializableFileRecord[];
   directories: SerializableDirectoryRecord[];
-  onSelect?: (file: SerializableFileRecord) => void;
-  onSelectionChange?: (ids: string[]) => void;
-  onMoveFiles?: (directoryId: string | null, fileIds: string[]) => void;
-  onFileCreate?: (file: SerializableFileRecord) => void;
-  onDirectoryCreate?: (directory: SerializableDirectoryRecord) => void;
-  onDirectoryChange?: (directoryId: string | null) => void;
-  onUploadFile?: (input: UploadFileInput) => Promise<UploadFileState>;
-  onCreateDirectory?: (
-    input: CreateDirectoryInput,
-  ) => Promise<CreateDirectoryResponse>;
   className?: string;
   emptyStateMessage?: string;
   initialDirectoryId?: string | null;
