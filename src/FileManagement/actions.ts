@@ -1,24 +1,22 @@
 "use server";
 
+import { Selectable } from "kysely";
 import "server-only";
 
 import {
   createDirectory,
   deleteDirectory,
   updateDirectory,
-} from "@/server/domain/files/directories";
-import createServerAction from "@/utils/serverActions/createServerAction";
-import { createFile } from "@/server/domain/files/create_file";
-import { throwCustomError } from "@/utils/errors/customerrors";
-import { update } from "@/server/db/query";
+} from "../server/domain/files/directories";
+import createServerAction from "../utils/serverActions/createServerAction";
+import { uploadFileInitialState, UploadFileState } from "./state";
+import { FileDirectories, Files } from "../server/types/dbtypes";
+import { throwCustomError } from "../utils/errors/customerrors";
+import { createFile } from "../server/domain/files/create_file";
+import { update } from "../server/db/query";
 
-import type {
-  FileDirectories,
-  Files,
-} from "./types";
-
-import { toSerializableDirectory, toSerializableFile } from "./serializers";
-import {uploadInalStatttypeyUploadpe eStatU   file: Fistal|null;
+type UploadFileActionInput = {
+  file: File | null;
   directory_id?: string | null;
   storageFolder?: string | null;
 };
@@ -30,7 +28,7 @@ type UpdateFileActionInput = {
 };
 
 type UpdateFileActionOutput = {
-  file: Files;
+  file: Selectable<Files>;
 };
 
 type SoftDeleteFileActionInput = {
@@ -47,7 +45,7 @@ type CreateDirectoryActionInput = {
 };
 
 type CreateDirectoryActionOutput = {
-  directory: FileDirectories;
+  directory: Selectable<FileDirectories>;
 };
 
 type DeleteDirectoryActionInput = {
@@ -65,7 +63,7 @@ type UpdateDirectoryActionInput = {
 };
 
 type UpdateDirectoryActionOutput = {
-  directory: FileDirectories;
+  directory: Selectable<FileDirectories>;
 };
 
 export const uploadFileAction = createServerAction<
@@ -108,7 +106,7 @@ export const uploadFileAction = createServerAction<
       },
     });
 
-    const uploadedFile = toSerializableFile(created.result);
+    const uploadedFile = created.result;
 
     const nextState: UploadFileState = {
       ...uploadFileInitialState,
@@ -138,7 +136,8 @@ export const updateFileAction = createServerAction<
         : undefined;
 
     const directory_idValue =
-      typeof data.directory_id === "string" && data.directory_id.trim().length > 0
+      typeof data.directory_id === "string" &&
+      data.directory_id.trim().length > 0
         ? data.directory_id.trim()
         : null;
 
@@ -160,7 +159,7 @@ export const updateFileAction = createServerAction<
       .returningAll()
       .executeTakeFirstOrThrow();
 
-    return { file: toSerializableFile(updated) };
+    return { file: updated };
   },
 });
 
@@ -195,7 +194,7 @@ export const createDirectoryAction = createServerAction<
         : null;
 
     const created = await createDirectory({ name, parentId });
-    return { directory: toSerializableDirectory(created.result) };
+    return { directory: created.result };
   },
 });
 
@@ -238,6 +237,6 @@ export const updateDirectoryAction = createServerAction<
       parentId: parentValue,
     });
 
-    return { directory: toSerializableDirectory(updated.result) };
+    return { directory: updated.result };
   },
 });

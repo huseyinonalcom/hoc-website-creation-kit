@@ -1,5 +1,6 @@
 "use client";
 
+import { Selectable } from "kysely";
 import { useState } from "react";
 import Image from "next/image";
 
@@ -17,7 +18,7 @@ export function EditorImage({ value, onChange }: EditorImageProps) {
   const { files, directories, addFile, addDirectory } = useFilesData();
   const [isPickerOpen, setIsPickerOpen] = useState(false);
 
-  const handleSelect = (file: Files) => {
+  const handleSelect = (file: Selectable<Files>) => {
     onChange(file.url);
     setIsPickerOpen(false);
   };

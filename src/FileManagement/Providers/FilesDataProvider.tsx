@@ -1,17 +1,18 @@
 "use client";
 
 import { createContext, ReactNode, useContext, useState } from "react";
+import { Selectable } from "kysely";
 
-import type { FileDirectories, Files } from "@/components/Files/types";
+import { FileDirectories, Files } from "../../server/types/dbtypes";
 
 const FilesContext = createContext<{
-  files: Files[];
-  directories: FileDirectories[];
-  addFile: (file: Files) => void;
-  updateFile: (file: Files) => void;
+  files: Selectable<Files>[];
+  directories: Selectable<FileDirectories>[];
+  addFile: (file: Selectable<Files>) => void;
+  updateFile: (file: Selectable<Files>) => void;
   removeFile: (fileId: string) => void;
-  addDirectory: (directory: FileDirectories) => void;
-  updateDirectory: (directory: FileDirectories) => void;
+  addDirectory: (directory: Selectable<FileDirectories>) => void;
+  updateDirectory: (directory: Selectable<FileDirectories>) => void;
   removeDirectory: (directory_id: string) => void;
 } | null>(null);
 
@@ -26,32 +27,32 @@ export default function FilesDataProvider({
   initialDirectories,
   children,
 }: {
-  initialFiles: Files[];
-  initialDirectories: FileDirectories[];
+  initialFiles: Selectable<Files>[];
+  initialDirectories: Selectable<FileDirectories>[];
   children: ReactNode;
 }) {
   const [files, setFiles] = useState(initialFiles);
   const [directories, setDirectories] = useState(initialDirectories);
 
-  const addFile = (file: Files) =>
+  const addFile = (file: Selectable<Files>) =>
     setFiles((prev) =>
       prev.some((f) => f.id === file.id) ? prev : [file, ...prev],
     );
 
-  const updateFile = (file: Files) =>
+  const updateFile = (file: Selectable<Files>) =>
     setFiles((prev) => prev.map((item) => (item.id === file.id ? file : item)));
 
   const removeFile = (fileId: string) =>
     setFiles((prev) => prev.filter((item) => item.id !== fileId));
 
-  const addDirectory = (directory: FileDirectories) =>
+  const addDirectory = (directory: Selectable<FileDirectories>) =>
     setDirectories((prev) =>
       prev.some((item) => item.id === directory.id)
         ? prev
         : [directory, ...prev],
     );
 
-  const updateDirectory = (directory: FileDirectories) =>
+  const updateDirectory = (directory: Selectable<FileDirectories>) =>
     setDirectories((prev) =>
       prev.map((item) => (item.id === directory.id ? directory : item)),
     );

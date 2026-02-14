@@ -2,6 +2,7 @@
 
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { Selectable } from "kysely";
 
 import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
 import { FileDirectories, Files } from "../../server/types/dbtypes";
@@ -10,11 +11,11 @@ import { FilesBrowserClient } from "./FilesBrowserClient";
 export type FilesPickerModalProps = {
   open: boolean;
   onClose: () => void;
-  files: Files[];
-  directories: FileDirectories[];
-  onSelect: (file: Files) => void;
-  onFileCreate?: (file: Files) => void;
-  onDirectoryCreate?: (directory: FileDirectories) => void;
+  files: Selectable<Files>[];
+  directories: Selectable<FileDirectories>[];
+  onSelect: (file: Selectable<Files>) => void;
+  onFileCreate?: (file: Selectable<Files>) => void;
+  onDirectoryCreate?: (directory: Selectable<FileDirectories>) => void;
   title?: string;
   closeOnSelect?: boolean;
 };
@@ -30,7 +31,7 @@ export function FilesPickerModal({
   title = "Dosya Seç",
   closeOnSelect = true,
 }: FilesPickerModalProps) {
-  const handleSelect = (file: Files) => {
+  const handleSelect = (file: Selectable<Files>) => {
     onSelect(file);
     if (closeOnSelect) {
       onClose();

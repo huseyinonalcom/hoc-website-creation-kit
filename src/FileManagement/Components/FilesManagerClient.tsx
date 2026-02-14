@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, useTransition } from "react";
+import { Selectable } from "kysely";
 import Image from "next/image";
 
 import {
@@ -32,7 +33,9 @@ export function FilesManagerClient() {
     removeFile,
     removeDirectory,
   } = useFilesData();
-  const [selectedFile, setSelectedFile] = useState<Files | null>(null);
+  const [selectedFile, setSelectedFile] = useState<Selectable<Files> | null>(
+    null,
+  );
   const [selectedFileIds, setSelectedFileIds] = useState<string[]>([]);
   const [activedirectory_id, setActivedirectory_id] = useState<string | null>(
     null,
@@ -49,7 +52,7 @@ export function FilesManagerClient() {
     [selectedFile],
   );
 
-  const handleSelectFile = (file: Files) => {
+  const handleSelectFile = (file: Selectable<Files>) => {
     setSelectedFile(file);
     setLabel(file.tag ?? "");
   };
@@ -225,7 +228,7 @@ export function FilesManagerClient() {
       }
 
       const parentId = getParentdirectory_id(directories, activedirectory_id);
-      response.deletedIds.forEach((id) => removeDirectory(id));
+      response.deletedIds.forEach((id: string) => removeDirectory(id));
       setActivedirectory_id(parentId);
       setDirectoryLabel("");
       setStatus({ type: "success", message: "Klasör silindi." });
@@ -527,11 +530,11 @@ const deriveFileName = (url: string) => {
   }
 };
 
-const getDisplayName = (file: Files) =>
+const getDisplayName = (file: Selectable<Files>) =>
   file.tag?.trim() || deriveFileName(file.url);
 
 const getDirectoryLabel = (
-  directories: FileDirectories[],
+  directories: Selectable<FileDirectories>[],
   directory_id?: string | null,
 ) => {
   if (!directory_id) {
@@ -543,7 +546,7 @@ const getDirectoryLabel = (
 };
 
 const getParentdirectory_id = (
-  directories: FileDirectories[],
+  directories: Selectable<FileDirectories>[],
   directory_id: string,
 ) => {
   const found = directories.find((dir) => dir.id === directory_id);
@@ -551,10 +554,10 @@ const getParentdirectory_id = (
 };
 
 const getDescendantIds = (
-  directories: FileDirectories[],
+  directories: Selectable<FileDirectories>[],
   directory_id: string,
 ) => {
-  const byParent = new Map<string | null, FileDirectories[]>();
+  const byParent = new Map<string | null, Selectable<FileDirectories>[]>();
   directories.forEach((dir) => {
     const parentId = dir.parent_id ?? null;
     const list = byParent.get(parentId) ?? [];
@@ -580,8 +583,8 @@ const getDescendantIds = (
 };
 
 const countFilesInDirectory = (
-  files: Files[],
-  directories: FileDirectories[],
+  files: Selectable<Files>[],
+  directories: Selectable<FileDirectories>[],
   directory_id: string,
 ) => {
   const targetIds = getDescendantIds(directories, directory_id);

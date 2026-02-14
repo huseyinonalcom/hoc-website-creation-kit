@@ -7,6 +7,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { DragEvent, MouseEvent, useMemo, useRef, useState } from "react";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { Selectable } from "kysely";
 import Image from "next/image";
 
 import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
@@ -19,13 +20,13 @@ const inputClassName =
   "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm transition placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-indigo-400 dark:focus:ring-indigo-400";
 
 export type FilesBrowserClientProps = {
-  files: Files[];
-  directories: FileDirectories[];
-  onSelect?: (file: Files) => void;
+  files: Selectable<Files>[];
+  directories: Selectable<FileDirectories>[];
+  onSelect?: (file: Selectable<Files>) => void;
   onSelectionChange?: (ids: string[]) => void;
   onMoveFiles?: (directory_id: string | null, fileIds: string[]) => void;
-  onFileCreate?: (file: Files) => void;
-  onDirectoryCreate?: (directory: FileDirectories) => void;
+  onFileCreate?: (file: Selectable<Files>) => void;
+  onDirectoryCreate?: (directory: Selectable<FileDirectories>) => void;
   onDirectoryChange?: (directory_id: string | null) => void;
   className?: string;
   emptyStateMessage?: string;
@@ -105,7 +106,7 @@ export function FilesBrowserClient({
   }));
 
   const directoryMap = useMemo(() => {
-    const map = new Map<string, FileDirectories>();
+    const map = new Map<string, Selectable<FileDirectories>>();
     directories.forEach((dir) => map.set(dir.id, dir));
     return map;
   }, [directories]);
@@ -130,7 +131,11 @@ export function FilesBrowserClient({
       ? (directoryMap.get(activedirectory_id)!.parent_id ?? null)
       : null;
 
-  const handleSelect = (file: Files, index: number, event: MouseEvent) => {
+  const handleSelect = (
+    file: Selectable<Files>,
+    index: number,
+    event: MouseEvent,
+  ) => {
     if (!multiSelect) {
       updateSelectedIds([file.id]);
       setLastSelectedIndex(index);
@@ -559,13 +564,13 @@ const deriveFileName = (url: string) => {
   }
 };
 
-const getDisplayName = (file: Files) =>
+const getDisplayName = (file: Selectable<Files>) =>
   file.tag?.trim() || deriveFileName(file.url);
 
-function isHiddenFile(file: Files) {
+function isHiddenFile(file: Selectable<Files>) {
   return file.url?.includes("/users/");
 }
 
-function isVisibleFile(file: Files) {
+function isVisibleFile(file: Selectable<Files>) {
   return !file.is_deleted && !isHiddenFile(file);
 }

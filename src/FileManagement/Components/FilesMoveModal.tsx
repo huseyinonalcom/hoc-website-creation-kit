@@ -2,16 +2,16 @@
 
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { Selectable } from "kysely";
 import { useState } from "react";
 
-import type { FileDirectories } from "@/components/Files/types";
-
-import { FilesBrowserClient } from "@/components/Files/FilesBrowserClient";
-import { Button } from "@/components/Simple/Button";
+import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
+import { FileDirectories } from "../../server/types/dbtypes";
+import { FilesBrowserClient } from "./FilesBrowserClient";
 
 export type FilesMoveModalProps = {
   open: boolean;
-  directories: FileDirectories[];
+  directories: Selectable<FileDirectories>[];
   onClose: () => void;
   onConfirm: (directory_id: string | null) => void;
   initialdirectory_id?: string | null;
