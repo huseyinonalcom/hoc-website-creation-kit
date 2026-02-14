@@ -1,9 +1,10 @@
 import "server-only";
 import React from "react";
 
+import ServerFilesProvider from "./ServerFilesProvider";
+
 // ServerFilesProvider loads directories and files from the database
 // and provides them to the client `FilesDataProvider`.
-import ServerFilesProvider from "./ServerFilesProvider";
 
 export default async function AdminFilesProvider({
   children,

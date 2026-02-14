@@ -25,7 +25,7 @@ const mapDbDirToSerializable = (row) => ({
 
 export default async function ServerFilesProvider({
   children,
-}: {ƒ
+}: {
   children: React.ReactNode;
 }) {
   const filesRes = await getFiles({ includeDeleted: true });

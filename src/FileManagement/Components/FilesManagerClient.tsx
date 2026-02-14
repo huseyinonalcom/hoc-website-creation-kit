@@ -46,23 +46,19 @@ export type FilesManagerClientProps = {
   ) => Promise<DeleteDirectoryResponse>;
 };
 
-export function FilesManagerClient({
-  onUploadFile,
-  onCreateDirectory,
-  onUpdateFile,
-  onDeleteFile,
-  onUpdateDirectory,
-  onDeleteDirectory,
-}: FilesManagerClientProps) {
-  // Default handlers that call the package API so the manager works without props.
+export function FilesManagerClient() {
   const uploadFileDefault = async (input: UploadFileInput) => {
     try {
-      const data = await FMApi.uploadFile(input);
+      const actions = await import("../actions/fileActions");
+      const data = await actions.uploadFileAction(input.file as File, {
+        storageFolder: input.storageFolder ?? undefined,
+        directoryId: input.directoryId ?? undefined,
+      });
       if (data && data.result === "success" && data.file) {
         return {
           result: "success",
           error: "",
-          uploadedFile: FMApi.mapDbFileToSerializable(data.file),
+          uploadedFile: FMApi.mapDbFileToSerializable(data.result ?? data.file ?? data),
         } as UploadFileState;
       }
       return {
@@ -79,23 +75,32 @@ export function FilesManagerClient({
     }
   };
 
-  const resolvedOnUploadFile = onUploadFile ?? uploadFileDefault;
+  const resolvedOnUploadFile =  uploadFileDefault;
   const resolvedOnCreateDirectory =
-    onCreateDirectory ??
-    (async (input: CreateDirectoryInput) => await FMApi.createDirectory(input));
+    (async (input: CreateDirectoryInput) => {
+      const actions = await import("../actions/fileActions");
+      return actions.createDirectoryAction(input);
+    });
   const resolvedOnUpdateFile =
-    onUpdateFile ??
-    (async (input: UpdateFileInput) => await FMApi.updateFile(input));
+    (async (input: UpdateFileInput) => {
+      const actions = await import("../actions/fileActions");
+      return actions.updateFileAction(input as any);
+    });
   const resolvedOnDeleteFile =
-    onDeleteFile ??
-    (async (input: DeleteFileInput) => await FMApi.deleteFile(input.id));
+    (async (input: DeleteFileInput) => {
+      const actions = await import("../actions/fileActions");
+      return actions.deleteFileAction({ id: input.id });
+    });
   const resolvedOnUpdateDirectory =
-    onUpdateDirectory ??
-    (async (input: UpdateDirectoryInput) => await FMApi.updateDirectory(input));
+    (async (input: UpdateDirectoryInput) => {
+      const actions = await import("../actions/fileActions");
+      return actions.updateDirectoryAction(input as any);
+    });
   const resolvedOnDeleteDirectory =
-    onDeleteDirectory ??
-    (async (input: DeleteDirectoryInput) =>
-      await FMApi.deleteDirectory(input.id));
+    (async (input: DeleteDirectoryInput) => {
+      const actions = await import("../actions/fileActions");
+      return actions.deleteDirectoryAction({ id: input.id });
+    });
   const {
     files,
     directories,
@@ -170,14 +175,14 @@ export function FilesManagerClient({
       if (response.result === "error") {
         setStatus({
           type: "error",
-          message: response.error || "Dosya guncellenemedi.",
+          message: response.error || "Dosya güncellenemedi.",
         });
         return;
       }
 
       updateFile(response.file);
       handleSelectFile(response.file);
-      setStatus({ type: "success", message: "Dosya guncellendi." });
+      setStatus({ type: "success", message: "Dosya güncellendi." });
     });
   };
 
@@ -188,7 +193,7 @@ export function FilesManagerClient({
 
     setStatus(null);
 
-    if (!window.confirm("Bu dosyayi silmek istediginize emin misiniz?")) {
+    if (!window.confirm("Bu dosyayı silmek istediğinize emin misiniz?")) {
       return;
     }
 
@@ -284,7 +289,7 @@ export function FilesManagerClient({
 
     setStatus(null);
 
-    if (!window.confirm("Bu klasoru silmek istediginize emin misiniz?")) {
+    if (!window.confirm("Bu klasörü silmek istediğinize emin misiniz?")) {
       return;
     }
 
@@ -296,7 +301,7 @@ export function FilesManagerClient({
       if (response.result === "error") {
         setStatus({
           type: "error",
-          message: response.error || "Klasor silinemedi.",
+          message: response.error || "Klasör silinemedi.",
         });
         return;
       }
@@ -305,7 +310,7 @@ export function FilesManagerClient({
       response.deletedIds.forEach((id: string) => removeDirectory(id));
       setActiveDirectoryId(parentId);
       setDirectoryLabel("");
-      setStatus({ type: "success", message: "Klasor silindi." });
+      setStatus({ type: "success", message: "Klasör silindi." });
     });
   };
 
@@ -325,14 +330,14 @@ export function FilesManagerClient({
       if (response.result === "error") {
         setStatus({
           type: "error",
-          message: response.error || "Klasor guncellenemedi.",
+          message: response.error || "Klasör güncellenemedi.",
         });
         return;
       }
 
       updateDirectory(response.directory);
       setDirectoryLabel(response.directory.name);
-      setStatus({ type: "success", message: "Klasor guncellendi." });
+      setStatus({ type: "success", message: "Klasör güncellendi." });
     });
   };
 
@@ -352,7 +357,7 @@ export function FilesManagerClient({
       if (response.result === "error") {
         setStatus({
           type: "error",
-          message: response.error || "Klasor tasinamadi.",
+          message: response.error || "Klasör taşınamadı.",
         });
         return;
       }
@@ -361,7 +366,7 @@ export function FilesManagerClient({
       setActiveDirectoryId(response.directory.parentId ?? null);
       setDirectoryLabel("");
       setIsDirectoryMoveOpen(false);
-      setStatus({ type: "success", message: "Klasor tasindi." });
+      setStatus({ type: "success", message: "Klasör taşındı." });
     });
   };
 
@@ -392,14 +397,6 @@ export function FilesManagerClient({
         selectedFileIds={selectedFileIds}
         showDirectoryCreate={Boolean(resolvedOnCreateDirectory)}
         showUpload={Boolean(resolvedOnUploadFile)}
-        onCreateDirectory={resolvedOnCreateDirectory}
-        onDirectoryChange={handleDirectoryChange}
-        onDirectoryCreate={addDirectory}
-        onFileCreate={addFile}
-        onMoveFiles={handleMoveFiles}
-        onSelect={handleSelectFile}
-        onSelectionChange={handleSelectionChange}
-        onUploadFile={resolvedOnUploadFile}
       />
 
       <section className="space-y-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-gray-900">
@@ -407,7 +404,7 @@ export function FilesManagerClient({
           <div className="space-y-4 rounded-2xl border border-gray-200 bg-gray-50 p-4 dark:border-white/10 dark:bg-gray-800">
             <div>
               <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                Klasor Ayrintilari
+                Klasör Ayrıntıları
               </p>
               <p className="text-xs text-gray-500 dark:text-gray-400">
                 {activeDirectoryFileCount} dosya bulunuyor.
@@ -419,7 +416,7 @@ export function FilesManagerClient({
                 className="text-sm font-medium text-gray-700 dark:text-gray-200"
                 htmlFor="directory-label"
               >
-                Klasor Adi
+                Klasör Adı
               </label>
               <input
                 className={inputClassName}
@@ -444,7 +441,7 @@ export function FilesManagerClient({
                 variant="outline"
                 onClick={() => setIsDirectoryMoveOpen(true)}
               >
-                Tasi
+                Taşı
               </Button>
               <Button
                 disabled={isPending || !canDeleteDirectory}
@@ -452,24 +449,24 @@ export function FilesManagerClient({
                 variant="danger"
                 onClick={handleDeleteDirectory}
               >
-                Klasoru Sil
+                Klasörü Sil
               </Button>
             </div>
           </div>
         ) : null}
         <div>
           <p className="text-sm font-semibold text-gray-900 dark:text-white">
-            Dosya Ayrintilari
+            Dosya Ayrıntıları
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-400">
-            Dosya adi ve klasorunu guncelleyebilir veya dosyayi silebilirsiniz.
+            Dosya adı ve klasörünü güncelleyebilir veya dosyayı silebilirsiniz.
           </p>
         </div>
 
         {multiSelection ? (
           <div className="space-y-4">
             <p className="text-sm text-gray-700 dark:text-gray-200">
-              {selectedFileIds.length} dosya secildi.
+              {selectedFileIds.length} dosya seçildi.
             </p>
             <div className="flex flex-wrap items-center gap-3">
               <Button
@@ -478,7 +475,7 @@ export function FilesManagerClient({
                 variant="outline"
                 onClick={() => setIsMoveOpen(true)}
               >
-                Tasi
+                Taşı
               </Button>
             </div>
           </div>
@@ -499,7 +496,7 @@ export function FilesManagerClient({
                 className="text-sm font-medium text-gray-700 dark:text-gray-200"
                 htmlFor="file-label"
               >
-                Gorunen Ad
+                Görünen Ad
               </label>
               <input
                 className={inputClassName}
@@ -525,7 +522,7 @@ export function FilesManagerClient({
 
             <div className="space-y-2">
               <p className="text-sm font-medium text-gray-700 dark:text-gray-200">
-                Klasor
+                Klasör
               </p>
               <div className="rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-600 dark:border-white/10 dark:bg-gray-800 dark:text-gray-300">
                 {activeDirectoryLabel}
@@ -539,7 +536,7 @@ export function FilesManagerClient({
                 variant="primary"
                 onClick={handleSave}
               >
-                {isPending ? "Guncelleniyor..." : "Guncelle"}
+                {isPending ? "Güncelleniyor..." : "Güncelle"}
               </Button>
               <Button
                 disabled={isPending}
@@ -547,7 +544,7 @@ export function FilesManagerClient({
                 variant="outline"
                 onClick={() => setIsMoveOpen(true)}
               >
-                Tasi
+                Taşı
               </Button>
               <Button
                 disabled={isPending}
@@ -572,7 +569,7 @@ export function FilesManagerClient({
           </div>
         ) : (
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Islem yapmak icin bir dosya secin.
+            İşlem yapmak için bir dosya seçin.
           </p>
         )}
       </section>
@@ -581,7 +578,7 @@ export function FilesManagerClient({
         key={`move-${isMoveOpen ? "open" : "closed"}`}
         directories={directories}
         open={isMoveOpen}
-        title="Dosyalari Tasi"
+        title="Dosyaları Taşı"
         onClose={() => setIsMoveOpen(false)}
         onConfirm={handleMove}
       />
@@ -590,7 +587,7 @@ export function FilesManagerClient({
         key={`dir-move-${isDirectoryMoveOpen ? "open" : "closed"}`}
         directories={allowedMoveDirectories}
         open={isDirectoryMoveOpen}
-        title="Klasoru Tasi"
+        title="Klasörü Taşı"
         onClose={() => setIsDirectoryMoveOpen(false)}
         onConfirm={handleDirectoryMove}
       />
@@ -616,11 +613,11 @@ const getDirectoryLabel = (
   directoryId?: string | null,
 ) => {
   if (!directoryId) {
-    return "Kok";
+    return "Kök";
   }
 
   const found = directories.find((dir) => dir.id === directoryId);
-  return found?.name ?? "Kok";
+  return found?.name ?? "Kök";
 };
 
 const getParentDirectoryId = (

@@ -52,18 +52,8 @@ export type FilesBrowserClientProps = {
 };
 
 export function FilesBrowserClient({
-  files,
-  directories,
-  onSelect,
-  onSelectionChange,
-  onMoveFiles,
-  onFileCreate,
-  onDirectoryCreate,
-  onDirectoryChange,
-  onUploadFile,
-  onCreateDirectory,
   className,
-  emptyStateMessage = "Henuz yuklenmis dosya yok.",
+  emptyStateMessage = "Henüz yüklenmiş dosya yok.",
   initialDirectoryId = null,
   activeDirectoryId: controlledDirectoryId,
   showFiles = true,
@@ -78,20 +68,27 @@ export function FilesBrowserClient({
   // works out-of-the-box when props are not supplied.
   const uploadFileDefault = async (input: UploadFileInput) => {
     try {
-      const data = await FMApi.uploadFile(input);
+      const actions = await import("../actions/fileActions");
+      const data = await actions.uploadFileAction(input.file as File, {
+        storageFolder: input.storageFolder ?? undefined,
+        directoryId: input.directoryId ?? undefined,
+      });
+      // domain createFile returns an object with `result` being the inserted row
+      // or returns the DB row directly depending on implementation; normalize below
+      const maybeRow = data?.result ?? data?.file ?? data;
       if (data && data.result === "success" && data.file) {
         return {
           result: "success",
           error: "",
-          uploadedFile: FMApi.mapDbFileToSerializable(data.file),
+          uploadedFile: FMApi.mapDbFileToSerializable(maybeRow),
         } as UploadFileState;
       }
 
-      return {
-        result: "error",
-        error: data?.error || "Upload failed",
-        uploadedFile: null,
-      } as UploadFileState;
+      if (maybeRow && maybeRow.id) {
+        return { result: "success", error: "", uploadedFile: FMApi.mapDbFileToSerializable(maybeRow) } as UploadFileState;
+      }
+
+      return { result: "error", error: data?.error || "Upload failed", uploadedFile: null } as UploadFileState;
     } catch (err: any) {
       return {
         result: "error",
@@ -103,24 +100,15 @@ export function FilesBrowserClient({
 
   const createDirectoryDefault = async (input: CreateDirectoryInput) => {
     try {
-      const data = await FMApi.createDirectory(input);
+      const actions = await import("../actions/fileActions");
+      const data = await actions.createDirectoryAction(input);
       // API may wrap the result in different shapes; attempt to extract the directory row
-      const dirRow =
-        data?.directory ??
-        data?.result?.directory ??
-        data?.result?.result?.directory ??
-        null;
-      if (dirRow) {
-        return {
-          result: "success",
-          directory: FMApi.mapDbDirToSerializable(dirRow),
-        };
+      const dirRow = data?.result ?? data;
+      if (dirRow && dirRow.id) {
+        return { result: "success", directory: FMApi.mapDbDirToSerializable(dirRow) };
       }
 
-      return {
-        result: "error",
-        error: data?.error || "Could not create directory",
-      };
+      return { result: "error", error: data?.error || "Could not create directory" };
     } catch (err: any) {
       return { result: "error", error: err?.message || String(err) };
     }
