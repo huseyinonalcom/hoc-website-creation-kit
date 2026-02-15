@@ -31,6 +31,6 @@ export const accordionBlockConfig = {
             },
         },
     },
-    render: ({ sections, isEditing }) => (_jsx(Accordion, { sections: sections, isEditing: isEditing ?? false })),
+    render: ({ sections, isEditing }) => (_jsx(Accordion, { sections: sections ?? [], isEditing: isEditing ?? false })),
 };
 //# sourceMappingURL=config.js.map
