@@ -1,0 +1,1 @@
+{"version":3,"file":"create_page.d.ts","sourceRoot":"","sources":["../../../../src/server/domain/pages/create_page.ts"],"names":[],"mappings":"AAAA,OAAO,CAAC,MAAM,KAAK,CAAC;AACpB,OAAO,aAAa,CAAC;AAIrB,eAAO,MAAM,gBAAgB;;;;;;;iBAM3B,CAAC;AAEH,eAAO,MAAM,UAAU,GAAU,eAE9B;IACD,QAAQ,EAAE,CAAC,CAAC,KAAK,CAAC,OAAO,gBAAgB,CAAC,CAAC;CAC5C;;;;;;;;;;;;EAUA,CAAC"}

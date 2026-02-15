@@ -1,0 +1,1 @@
+{"version":3,"file":"updateDirectory.d.ts","sourceRoot":"","sources":["../../../../src/server/domain/directories/updateDirectory.ts"],"names":[],"mappings":"AAAA,OAAO,aAAa,CAAC;AAIrB,eAAO,MAAM,eAAe,GAAU,yBAInC;IACD,EAAE,EAAE,MAAM,CAAC;IACX,IAAI,CAAC,EAAE,MAAM,GAAG,IAAI,CAAC;IACrB,QAAQ,CAAC,EAAE,MAAM,GAAG,IAAI,CAAC;CAC1B;;;;;;;;EAoBA,CAAC;AAEF,eAAe,eAAe,CAAC"}
