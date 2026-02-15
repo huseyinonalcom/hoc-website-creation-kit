@@ -12,11 +12,11 @@ import type { RichTextBlockProps } from "../Components/Content/RichTextBlock/typ
 import type { HeadingBlockProps } from "../Components/Content/HeadingBlock/type";
 import type { ImageWithTextProps } from "../Components/Media/ImageWithText/type";
 import type { ImageWithSlotProps } from "../Components/Media/ImageWithSlot/type";
-import type { AccordionBlockData } from "../Components/Content/Accordion/type";
 import type { YoutubeEmbedProps } from "../Components/Embed/YoutubeEmbed/type";
 import type { SingleImageProps } from "../Components/Media/SingleImage/type";
 import type { SliderBlockProps } from "../Components/Media/SliderBlock/type";
 import type { ButtonLinkProps } from "../Components/Actions/ButtonLink/type";
+import type { AccordionProps } from "../Components/Content/Accordion/type";
 import type { LinkBarProps } from "../Components/Actions/LinkBar/type";
 import type { GalleryProps } from "../Components/Media/Gallery/type";
 export type { BaseComponentProps } from "../Components/type";
@@ -31,7 +31,7 @@ export type BaseEditorProps = {
     VerticalSpacer: VerticalSpacerProps;
     HeadingBlock: HeadingBlockProps;
     RichTextBlock: RichTextBlockProps;
-    AccordionBlock: AccordionBlockData;
+    AccordionBlock: AccordionProps;
     SingleAccordion: SingleAccordionProps;
     CombinationLock: CombinationLockProps;
     SingleImage: SingleImageProps;

@@ -194,12 +194,7 @@ export function Clipboard({ componentName }: ClipboardProps) {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <div>
-          <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">
-            {componentName}
-          </p>
-        </div>
+      <div className="flex flex-wrap items-center justify-end gap-2">
         <div className="flex gap-2">
           <Button
             disabled={!clipboardSupported || isBusy}

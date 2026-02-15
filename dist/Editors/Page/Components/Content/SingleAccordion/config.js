@@ -28,6 +28,6 @@ export const singleAccordionConfig = {
             ],
         },
     },
-    render: SingleAccordion,
+    render: ({ title, content, defaultOpen, isEditing }) => (_jsx(SingleAccordion, { title: title, content: content, defaultOpen: defaultOpen || (isEditing ?? false) })),
 };
 //# sourceMappingURL=config.js.map
