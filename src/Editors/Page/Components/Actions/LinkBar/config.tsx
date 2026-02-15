@@ -28,5 +28,5 @@ export const linkBarConfig: Config<BaseEditorProps>["components"]["LinkBar"] = {
       },
     },
   },
-  render: LinkBar,
+  render: ({ links }) => <LinkBar links={Array.isArray(links) ? links : []} />,
 };

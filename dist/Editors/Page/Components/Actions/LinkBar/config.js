@@ -23,6 +23,6 @@ export const linkBarConfig = {
             },
         },
     },
-    render: LinkBar,
+    render: ({ links }) => _jsx(LinkBar, { links: Array.isArray(links) ? links : [] }),
 };
 //# sourceMappingURL=config.js.map
