@@ -31,7 +31,7 @@ export const threeColumnLayoutConfig = {
             return _jsx(_Fragment, {});
         }
         const gapValue = typeof gap === "number" && gap >= 0 ? gap : 24;
-        return (_jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-3", style: { gap: `${gapValue}px` }, children: [_jsx("div", { children: First ? _jsx(First, {}) : null }), _jsx("div", { children: Second ? _jsx(Second, {}) : null }), _jsx("div", { children: Third ? _jsx(Third, {}) : null })] }));
+        return (_jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-3", style: { gap: `${gapValue}px` }, children: [_jsx("div", { children: First ? _jsx(First, {}) : _jsx(_Fragment, {}) }), _jsx("div", { children: Second ? _jsx(Second, {}) : _jsx(_Fragment, {}) }), _jsx("div", { children: Third ? _jsx(Third, {}) : _jsx(_Fragment, {}) })] }));
     },
 };
 //# sourceMappingURL=config.js.map

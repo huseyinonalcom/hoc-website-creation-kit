@@ -1,3 +1,3 @@
-import type { SingleAccordionBlockProps } from "./type";
-export default function SingleAccordion({ title, children, defaultOpen }: SingleAccordionBlockProps): import("react/jsx-runtime").JSX.Element;
+import type { SingleAccordionProps } from "./type";
+export default function SingleAccordion({ title, content: Content, defaultOpen, }: SingleAccordionProps): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=Component.d.ts.map

@@ -54,7 +54,7 @@ export const twoColumnLayoutConfig = {
                 return "lg:col-span-1";
             return "";
         })();
-        return (_jsxs("div", { className: containerClass, style: { gap: `${gapValue}px` }, children: [_jsx("div", { className: leftColClass, children: Left ? _jsx(Left, {}) : null }), _jsx("div", { className: rightColClass, children: Right ? _jsx(Right, {}) : null })] }));
+        return (_jsxs("div", { className: containerClass, style: { gap: `${gapValue}px` }, children: [_jsx("div", { className: leftColClass, children: Left ? _jsx(Left, {}) : _jsx(_Fragment, {}) }), _jsx("div", { className: rightColClass, children: Right ? _jsx(Right, {}) : _jsx(_Fragment, {}) })] }));
     },
 };
 //# sourceMappingURL=config.js.map

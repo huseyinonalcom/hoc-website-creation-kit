@@ -258,44 +258,44 @@ export declare const components: {
         metadata?: import("@puckeditor/core").ComponentMetadata;
     } & import("@puckeditor/core").ComponentConfigExtensions, "type">;
     AccordionBlock: Omit<{
-        render: import("@puckeditor/core").PuckComponent<import("./Content/Accordion/type").AccordionBlockData>;
+        render: import("@puckeditor/core").PuckComponent<import("./Content/Accordion/type").AccordionProps>;
         label?: string;
-        defaultProps?: import("./Content/Accordion/type").AccordionBlockData | undefined;
-        fields?: import("@puckeditor/core").Fields<import("./Content/Accordion/type").AccordionBlockData, {}> | undefined;
+        defaultProps?: import("./Content/Accordion/type").AccordionProps | undefined;
+        fields?: import("@puckeditor/core").Fields<import("./Content/Accordion/type").AccordionProps, {}> | undefined;
         permissions?: Partial<import("@puckeditor/core").Permissions>;
         inline?: boolean;
-        resolveFields?: ((data: Omit<import("@puckeditor/core").ComponentData<import("./Content/Accordion/type").AccordionBlockData, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, params: {
-            changed: Partial<Record<"sections" | "clipboard", boolean> & {
+        resolveFields?: ((data: Omit<import("@puckeditor/core").ComponentData<import("./Content/Accordion/type").AccordionProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, params: {
+            changed: Partial<Record<"sections" | "isEditing" | "clipboard", boolean> & {
                 id: string;
             }>;
-            fields: import("@puckeditor/core").Fields<import("./Content/Accordion/type").AccordionBlockData, {}>;
-            lastFields: import("@puckeditor/core").Fields<import("./Content/Accordion/type").AccordionBlockData, {}>;
-            lastData: Omit<import("@puckeditor/core").ComponentData<import("./Content/Accordion/type").AccordionBlockData, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type"> | null;
+            fields: import("@puckeditor/core").Fields<import("./Content/Accordion/type").AccordionProps, {}>;
+            lastFields: import("@puckeditor/core").Fields<import("./Content/Accordion/type").AccordionProps, {}>;
+            lastData: Omit<import("@puckeditor/core").ComponentData<import("./Content/Accordion/type").AccordionProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type"> | null;
             metadata: import("@puckeditor/core").ComponentMetadata;
             appState: import("@puckeditor/core").AppState;
             parent: import("@puckeditor/core").ComponentData | null;
-        }) => import("@puckeditor/core").Fields<import("./Content/Accordion/type").AccordionBlockData, {}> | Promise<import("@puckeditor/core").Fields<import("./Content/Accordion/type").AccordionBlockData, {}>>) | undefined;
-        resolveData?: ((data: Omit<import("@puckeditor/core").ComponentData<import("./Content/Accordion/type").AccordionBlockData, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, params: {
-            changed: Partial<Record<"sections" | "clipboard", boolean> & {
+        }) => import("@puckeditor/core").Fields<import("./Content/Accordion/type").AccordionProps, {}> | Promise<import("@puckeditor/core").Fields<import("./Content/Accordion/type").AccordionProps, {}>>) | undefined;
+        resolveData?: ((data: Omit<import("@puckeditor/core").ComponentData<import("./Content/Accordion/type").AccordionProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, params: {
+            changed: Partial<Record<"sections" | "isEditing" | "clipboard", boolean> & {
                 id: string;
             }>;
-            lastData: Omit<import("@puckeditor/core").ComponentData<import("./Content/Accordion/type").AccordionBlockData, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type"> | null;
+            lastData: Omit<import("@puckeditor/core").ComponentData<import("./Content/Accordion/type").AccordionProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type"> | null;
             metadata: import("@puckeditor/core").ComponentMetadata;
             trigger: import("@puckeditor/core").ResolveDataTrigger;
             parent: import("@puckeditor/core").ComponentData | null;
-        }) => (Omit<Omit<import("@puckeditor/core").ComponentData<import("./Content/Accordion/type").AccordionBlockData, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, "props"> & {
-            props?: Partial<import("./Content/Accordion/type").AccordionBlockData> | undefined;
-        }) | Promise<Omit<Omit<import("@puckeditor/core").ComponentData<import("./Content/Accordion/type").AccordionBlockData, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, "props"> & {
-            props?: Partial<import("./Content/Accordion/type").AccordionBlockData> | undefined;
+        }) => (Omit<Omit<import("@puckeditor/core").ComponentData<import("./Content/Accordion/type").AccordionProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, "props"> & {
+            props?: Partial<import("./Content/Accordion/type").AccordionProps> | undefined;
+        }) | Promise<Omit<Omit<import("@puckeditor/core").ComponentData<import("./Content/Accordion/type").AccordionProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, "props"> & {
+            props?: Partial<import("./Content/Accordion/type").AccordionProps> | undefined;
         }>) | undefined;
-        resolvePermissions?: ((data: Omit<import("@puckeditor/core").ComponentData<import("./Content/Accordion/type").AccordionBlockData, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, params: {
-            changed: Partial<Record<"sections" | "clipboard", boolean> & {
+        resolvePermissions?: ((data: Omit<import("@puckeditor/core").ComponentData<import("./Content/Accordion/type").AccordionProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, params: {
+            changed: Partial<Record<"sections" | "isEditing" | "clipboard", boolean> & {
                 id: string;
             }>;
             lastPermissions: Partial<import("@puckeditor/core").Permissions>;
             permissions: Partial<import("@puckeditor/core").Permissions>;
             appState: import("@puckeditor/core").AppState;
-            lastData: Omit<import("@puckeditor/core").ComponentData<import("./Content/Accordion/type").AccordionBlockData, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type"> | null;
+            lastData: Omit<import("@puckeditor/core").ComponentData<import("./Content/Accordion/type").AccordionProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type"> | null;
             parent: import("@puckeditor/core").ComponentData | null;
         }) => Promise<Partial<import("@puckeditor/core").Permissions>> | Partial<import("@puckeditor/core").Permissions>) | undefined;
         metadata?: import("@puckeditor/core").ComponentMetadata;
@@ -308,7 +308,7 @@ export declare const components: {
         permissions?: Partial<import("@puckeditor/core").Permissions>;
         inline?: boolean;
         resolveFields?: ((data: Omit<import("@puckeditor/core").ComponentData<import("./Content/SingleAccordion/type").SingleAccordionProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, params: {
-            changed: Partial<Record<"title" | "content" | "clipboard" | "defaultOpen", boolean> & {
+            changed: Partial<Record<"title" | "content" | "isEditing" | "clipboard" | "defaultOpen", boolean> & {
                 id: string;
             }>;
             fields: import("@puckeditor/core").Fields<import("./Content/SingleAccordion/type").SingleAccordionProps, {}>;
@@ -319,7 +319,7 @@ export declare const components: {
             parent: import("@puckeditor/core").ComponentData | null;
         }) => import("@puckeditor/core").Fields<import("./Content/SingleAccordion/type").SingleAccordionProps, {}> | Promise<import("@puckeditor/core").Fields<import("./Content/SingleAccordion/type").SingleAccordionProps, {}>>) | undefined;
         resolveData?: ((data: Omit<import("@puckeditor/core").ComponentData<import("./Content/SingleAccordion/type").SingleAccordionProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, params: {
-            changed: Partial<Record<"title" | "content" | "clipboard" | "defaultOpen", boolean> & {
+            changed: Partial<Record<"title" | "content" | "isEditing" | "clipboard" | "defaultOpen", boolean> & {
                 id: string;
             }>;
             lastData: Omit<import("@puckeditor/core").ComponentData<import("./Content/SingleAccordion/type").SingleAccordionProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type"> | null;
@@ -332,7 +332,7 @@ export declare const components: {
             props?: Partial<import("./Content/SingleAccordion/type").SingleAccordionProps> | undefined;
         }>) | undefined;
         resolvePermissions?: ((data: Omit<import("@puckeditor/core").ComponentData<import("./Content/SingleAccordion/type").SingleAccordionProps, string, Record<string, import("@puckeditor/core").DefaultComponentProps>>, "type">, params: {
-            changed: Partial<Record<"title" | "content" | "clipboard" | "defaultOpen", boolean> & {
+            changed: Partial<Record<"title" | "content" | "isEditing" | "clipboard" | "defaultOpen", boolean> & {
                 id: string;
             }>;
             lastPermissions: Partial<import("@puckeditor/core").Permissions>;

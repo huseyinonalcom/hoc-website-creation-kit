@@ -44,9 +44,9 @@ export const threeColumnLayoutConfig: Config<BaseEditorProps>["components"]["Thr
           className="grid grid-cols-1 lg:grid-cols-3"
           style={{ gap: `${gapValue}px` }}
         >
-          <div>{First ? <First /> : null}</div>
-          <div>{Second ? <Second /> : null}</div>
-          <div>{Third ? <Third /> : null}</div>
+          <div>{First ? <First /> : <></>}</div>
+          <div>{Second ? <Second /> : <></>}</div>
+          <div>{Third ? <Third /> : <></>}</div>
         </div>
       );
     },

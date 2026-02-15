@@ -63,8 +63,8 @@ export const twoColumnLayoutConfig: Config<BaseEditorProps>["components"]["TwoCo
 
       return (
         <div className={containerClass} style={{ gap: `${gapValue}px` }}>
-          <div className={leftColClass}>{Left ? <Left /> : null}</div>
-          <div className={rightColClass}>{Right ? <Right /> : null}</div>
+          <div className={leftColClass}>{Left ? <Left /> : <></>}</div>
+          <div className={rightColClass}>{Right ? <Right /> : <></>}</div>
         </div>
       );
     },

@@ -54,10 +54,10 @@ export const fourColumnLayoutConfig: Config<BaseEditorProps>["components"]["Four
           className="grid grid-cols-1 lg:grid-cols-4"
           style={{ gap: `${gapValue}px` }}
         >
-          <div>{First ? <First /> : null}</div>
-          <div>{Second ? <Second /> : null}</div>
-          <div>{Third ? <Third /> : null}</div>
-          <div>{Fourth ? <Fourth /> : null}</div>
+          <div>{First ? <First /> : <></>}</div>
+          <div>{Second ? <Second /> : <></>}</div>
+          <div>{Third ? <Third /> : <></>}</div>
+          <div>{Fourth ? <Fourth /> : <></>}</div>
         </div>
       );
     },
