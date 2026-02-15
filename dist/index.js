@@ -18,7 +18,7 @@ export { SingleImage } from "./Editors/Page/Components/Media/SingleImage/Compone
 export { default as Slider } from "./Editors/Page/Components/Media/SliderBlock/Component";
 export { default as SliderShowcase } from "./Editors/Page/Components/Media/SliderShowcaseBlock/Component";
 // Exports for File Management
-export { FilesDataProvider, useFilesData, FilesBrowserClient, FilesManagerClient, } from "./FileManagement";
+export { FilesDataProvider, useFilesData, FilesBrowserClient, FilesManagerClient, FilesPickerModal, } from "./FileManagement";
 // Rich Text Editor and Renderer
 export { RichTextEditor } from "./Editors/Text/Editor";
 export { RichTextRenderer } from "./Editors/Text/Renderer";

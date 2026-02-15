@@ -30,6 +30,7 @@ export {
   useFilesData,
   FilesBrowserClient,
   FilesManagerClient,
+  FilesPickerModal,
 } from "./FileManagement";
 export type {
   FilesBrowserClientProps,
@@ -45,6 +46,7 @@ export type {
   UpdateDirectoryResponse,
   DeleteFileInput,
   DeleteFileResponse,
+  FilesPickerModalProps,
 } from "./FileManagement";
 
 // Rich Text Editor and Renderer

@@ -1,11 +1,14 @@
 import "server-only";
 
 export {
-  type FilesBrowserClientProps,
   FilesBrowserClient,
+  type FilesBrowserClientProps,
 } from "./Components/FilesBrowserClient";
-
 export { FilesManagerClient } from "./Components/FilesManagerClient";
+export {
+  FilesPickerModal,
+  type FilesPickerModalProps,
+} from "./Components/FilesPickerModal";
 
 export { useFilesData, FilesDataProvider } from "./Providers/FilesDataProvider";
 

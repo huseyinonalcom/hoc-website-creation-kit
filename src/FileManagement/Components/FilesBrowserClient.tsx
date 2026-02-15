@@ -346,83 +346,85 @@ export function FilesBrowserClient({
             ) : null}
           </div>
         </header>
-        {visibleDirectories.length === 0 && visibleFiles.length === 0 ? (
-          <p className="rounded-md border border-dashed border-gray-300 p-6 text-center text-sm text-gray-500 dark:border-white/10 dark:text-gray-400">
-            {emptyStateMessage}
-          </p>
-        ) : (
-          <div className="grid gap-4 md:grid-cols-2">
-            {activedirectory_id ? (
-              <button
-                className={cn(
-                  "flex items-center gap-3 rounded-xl border border-dashed border-gray-300 px-4 py-3 text-left text-sm text-gray-600 transition hover:border-indigo-400 dark:border-white/10 dark:text-gray-300 dark:hover:border-indigo-400",
-                  dragOverTarget === "__up__"
-                    ? "border-indigo-500 bg-indigo-50 dark:border-indigo-400 dark:bg-indigo-500/10"
-                    : null,
-                )}
-                type="button"
-                onClick={() => handleEnterDirectory(parentdirectory_id)}
-                onDragOver={handleDragOverTarget("__up__")}
-                onDragLeave={handleDragLeaveTarget}
-                onDrop={handleDropTarget(parentdirectory_id)}
-              >
-                <ArrowUturnLeftIcon className="h-5 w-5" />
-                Üst Klasöre Çık
-              </button>
-            ) : null}
+        <div className="grid gap-4 md:grid-cols-2">
+          {activedirectory_id && (
+            <button
+              className={cn(
+                "flex items-center gap-3 rounded-xl border border-dashed border-gray-300 px-4 py-3 text-left text-sm text-gray-600 transition hover:border-indigo-400 dark:border-white/10 dark:text-gray-300 dark:hover:border-indigo-400",
+                dragOverTarget === "__up__"
+                  ? "border-indigo-500 bg-indigo-50 dark:border-indigo-400 dark:bg-indigo-500/10"
+                  : null,
+              )}
+              type="button"
+              onClick={() => handleEnterDirectory(parentdirectory_id)}
+              onDragOver={handleDragOverTarget("__up__")}
+              onDragLeave={handleDragLeaveTarget}
+              onDrop={handleDropTarget(parentdirectory_id)}
+            >
+              <ArrowUturnLeftIcon className="h-5 w-5" />
+              Üst Klasöre Çık
+            </button>
+          )}
 
-            {showDirectories
-              ? visibleDirectories.map((directory) => (
-                  <button
-                    key={directory.id}
-                    className={cn(
-                      "flex items-center gap-3 rounded-xl border border-gray-200 px-4 py-3 text-left text-sm text-gray-700 transition hover:border-indigo-400 dark:border-white/10 dark:text-gray-200 dark:hover:border-indigo-400",
-                      dragOverTarget === directory.id
-                        ? "border-indigo-500 bg-indigo-50 dark:border-indigo-400 dark:bg-indigo-500/10"
-                        : null,
-                    )}
-                    type="button"
-                    onClick={() => handleEnterDirectory(directory.id)}
-                    onDragOver={handleDragOverTarget(directory.id)}
-                    onDragLeave={handleDragLeaveTarget}
-                    onDrop={handleDropTarget(directory.id)}
-                  >
-                    <FolderIcon className="h-5 w-5 text-indigo-500" />
-                    {directory.name}
-                  </button>
-                ))
-              : null}
+          {visibleDirectories.length === 0 && visibleFiles.length === 0 ? (
+            <p className="rounded-md border border-dashed border-gray-300 p-6 text-center text-sm text-gray-500 md:col-span-2 dark:border-white/10 dark:text-gray-400">
+              {emptyStateMessage}
+            </p>
+          ) : (
+            <>
+              {showDirectories
+                ? visibleDirectories.map((directory) => (
+                    <button
+                      key={directory.id}
+                      className={cn(
+                        "flex items-center gap-3 rounded-xl border border-gray-200 px-4 py-3 text-left text-sm text-gray-700 transition hover:border-indigo-400 dark:border-white/10 dark:text-gray-200 dark:hover:border-indigo-400",
+                        dragOverTarget === directory.id
+                          ? "border-indigo-500 bg-indigo-50 dark:border-indigo-400 dark:bg-indigo-500/10"
+                          : null,
+                      )}
+                      type="button"
+                      onClick={() => handleEnterDirectory(directory.id)}
+                      onDragOver={handleDragOverTarget(directory.id)}
+                      onDragLeave={handleDragLeaveTarget}
+                      onDrop={handleDropTarget(directory.id)}
+                    >
+                      <FolderIcon className="h-5 w-5 text-indigo-500" />
+                      {directory.name}
+                    </button>
+                  ))
+                : null}
 
-            {showFiles
-              ? visibleFiles.map((file, i) => (
-                  <button
-                    key={file.id + "-filebrowser-thumb-" + i}
-                    className={cn(
-                      "flex flex-col overflow-hidden rounded-xl border text-left transition focus-visible:outline-2 focus-visible:outline-indigo-500",
-                      resolvedSelectedIds.includes(file.id)
-                        ? "border-indigo-600 ring-2 ring-indigo-600 dark:border-indigo-400 dark:ring-indigo-400"
-                        : "border-gray-200 hover:border-indigo-400 dark:border-white/10 dark:hover:border-indigo-400",
-                    )}
-                    type="button"
-                    draggable={enableDragDrop}
-                    onClick={(event) => handleSelect(file, i, event)}
-                    onDragStart={handleDragStart(file.id)}
-                  >
-                    <div className="relative h-40 w-full bg-gray-50 dark:bg-gray-800">
-                      <Image
-                        fill
-                        unoptimized
-                        alt={getDisplayName(file)}
-                        className="object-cover"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        src={file.url}
-                      />
-                    </div>
-                  </button>
-                ))
-              : null}
-          </div>
-        )}
+              {showFiles
+                ? visibleFiles.map((file, i) => (
+                    <button
+                      key={file.id + "-filebrowser-thumb-" + i}
+                      className={cn(
+                        "flex flex-col overflow-hidden rounded-xl border text-left transition focus-visible:outline-2 focus-visible:outline-indigo-500",
+                        resolvedSelectedIds.includes(file.id)
+                          ? "border-indigo-600 ring-2 ring-indigo-600 dark:border-indigo-400 dark:ring-indigo-400"
+                          : "border-gray-200 hover:border-indigo-400 dark:border-white/10 dark:hover:border-indigo-400",
+                      )}
+                      type="button"
+                      draggable={enableDragDrop}
+                      onClick={(event) => handleSelect(file, i, event)}
+                      onDragStart={handleDragStart(file.id)}
+                    >
+                      <div className="relative h-40 w-full bg-gray-50 dark:bg-gray-800">
+                        <Image
+                          fill
+                          unoptimized
+                          alt={getDisplayName(file)}
+                          className="object-cover"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          src={file.url}
+                        />
+                      </div>
+                    </button>
+                  ))
+                : null}
+            </>
+          )}
+        </div>
       </section>
 
       <Dialog

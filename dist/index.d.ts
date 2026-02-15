@@ -16,8 +16,8 @@ export { ImageWithText } from "./Editors/Page/Components/Media/ImageWithText/Com
 export { SingleImage } from "./Editors/Page/Components/Media/SingleImage/Component";
 export { default as Slider } from "./Editors/Page/Components/Media/SliderBlock/Component";
 export { default as SliderShowcase } from "./Editors/Page/Components/Media/SliderShowcaseBlock/Component";
-export { FilesDataProvider, useFilesData, FilesBrowserClient, FilesManagerClient, } from "./FileManagement";
-export type { FilesBrowserClientProps, UploadFileState, UploadFileInput, UpdateFileInput, UpdateFileResponse, CreateDirectoryInput, CreateDirectoryResponse, DeleteDirectoryInput, DeleteDirectoryResponse, UpdateDirectoryInput, UpdateDirectoryResponse, DeleteFileInput, DeleteFileResponse, } from "./FileManagement";
+export { FilesDataProvider, useFilesData, FilesBrowserClient, FilesManagerClient, FilesPickerModal, } from "./FileManagement";
+export type { FilesBrowserClientProps, UploadFileState, UploadFileInput, UpdateFileInput, UpdateFileResponse, CreateDirectoryInput, CreateDirectoryResponse, DeleteDirectoryInput, DeleteDirectoryResponse, UpdateDirectoryInput, UpdateDirectoryResponse, DeleteFileInput, DeleteFileResponse, FilesPickerModalProps, } from "./FileManagement";
 export { RichTextEditor } from "./Editors/Text/Editor";
 export { RichTextRenderer } from "./Editors/Text/Renderer";
 export { PageEditor } from "./Editors/Page/PageEditor";
