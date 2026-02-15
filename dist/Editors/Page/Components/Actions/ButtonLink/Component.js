@@ -22,7 +22,7 @@ export const ButtonLink = ({ text, url, icon, openInNewTab, color, borderRadius,
     if (!hasText && !resolvedHref) {
         return _jsx(_Fragment, {});
     }
-    return (_jsxs(Link, { className: "inline-flex items-center gap-3 rounded-full px-6 py-3 text-sm font-semibold text-white", href: resolvedHref, rel: rel, style: {
+    return (_jsxs(Link, { className: "inline-flex items-center gap-3 rounded-full px-6 py-3 text-sm font-semibold text-white", href: resolvedHref ?? "#", rel: rel, style: {
             backgroundColor,
             borderRadius: `${radiusValue}px`,
         }, target: target, children: [IconComponent ? _jsx(IconComponent, { className: "h-5 w-5" }) : null, hasText ? _jsx(RichTextRenderer, { content: normalizedHtml }) : "Buton"] }));

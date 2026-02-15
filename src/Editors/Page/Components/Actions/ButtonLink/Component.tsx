@@ -46,7 +46,7 @@ export const ButtonLink = ({
   return (
     <Link
       className="inline-flex items-center gap-3 rounded-full px-6 py-3 text-sm font-semibold text-white"
-      href={resolvedHref!}
+      href={resolvedHref ?? "#"}
       rel={rel}
       style={{
         backgroundColor,
