@@ -13,6 +13,6 @@ type SlidesFieldProps = {
     ImageField: ComponentType<SlideImageFieldProps>;
     componentName: string;
 };
-export declare function SlidesField({ value, onChange, ImageField, componentName, }: SlidesFieldProps): import("react/jsx-runtime").JSX.Element;
+export declare function SlidesField({ value, onChange, ImageField }: SlidesFieldProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=SlidesField.d.ts.map

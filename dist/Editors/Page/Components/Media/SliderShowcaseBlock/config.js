@@ -44,6 +44,6 @@ export const sliderShowcaseBlockConfig = {
             defaultValue: 45,
         }),
     },
-    render: SliderShowcase,
+    render: ({ autoPlay, autoPlayInterval, desktopHeight, mobileHeight, imageMode, slides, }) => (_jsx(SliderShowcase, { autoPlay: autoPlay, autoPlayInterval: autoPlayInterval, desktopHeight: desktopHeight, mobileHeight: mobileHeight, imageMode: imageMode, slides: slides })),
 };
 //# sourceMappingURL=config.js.map

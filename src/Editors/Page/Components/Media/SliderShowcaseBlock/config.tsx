@@ -57,5 +57,21 @@ export const sliderShowcaseBlockConfig: Config<BaseEditorProps>["components"]["S
         defaultValue: 45,
       }),
     },
-    render: SliderShowcase,
+    render: ({
+      autoPlay,
+      autoPlayInterval,
+      desktopHeight,
+      mobileHeight,
+      imageMode,
+      slides,
+    }) => (
+      <SliderShowcase
+        autoPlay={autoPlay}
+        autoPlayInterval={autoPlayInterval}
+        desktopHeight={desktopHeight}
+        mobileHeight={mobileHeight}
+        imageMode={imageMode}
+        slides={slides}
+      />
+    ),
   };
