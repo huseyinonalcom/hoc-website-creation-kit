@@ -11,12 +11,19 @@ export type ButtonLinkProps = BaseComponentProps & {
   borderRadius?: number;
 };
 
-export type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "danger" | "subtle";
+export type ButtonVariant =
+  | "primary"
+  | "secondary"
+  | "outline"
+  | "ghost"
+  | "danger"
+  | "subtle";
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
 };
 
-export type ButtonLinkComponentProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
-  variant?: ButtonVariant;
-};
+export type ButtonLinkComponentProps =
+  AnchorHTMLAttributes<HTMLAnchorElement> & {
+    variant?: ButtonVariant;
+  };

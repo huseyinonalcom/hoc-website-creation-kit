@@ -9,11 +9,11 @@ import type { CombinationLockProps } from "../Components/Content/CombinationLock
 import type { TwoColumnLayoutProps } from "../Components/Layout/TwoColumnLayout/type";
 import type { GoogleMapsEmbedProps } from "../Components/Embed/GoogleMapsEmbed/type";
 import type { VerticalSpacerProps } from "../Components/Layout/VerticalSpacer/type";
-import type { AccordionBlockData } from "../Components/Content/AccordionBlock/type";
 import type { RichTextBlockProps } from "../Components/Content/RichTextBlock/type";
 import type { HeadingBlockProps } from "../Components/Content/HeadingBlock/type";
 import type { ImageWithTextProps } from "../Components/Media/ImageWithText/type";
 import type { ImageWithSlotProps } from "../Components/Media/ImageWithSlot/type";
+import type { AccordionBlockData } from "../Components/Content/Accordion/type";
 import type { YoutubeEmbedProps } from "../Components/Embed/YoutubeEmbed/type";
 import type { SingleImageProps } from "../Components/Media/SingleImage/type";
 import type { SliderBlockProps } from "../Components/Media/SliderBlock/type";

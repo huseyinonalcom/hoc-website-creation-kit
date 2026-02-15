@@ -4,7 +4,7 @@ import type { BaseEditorProps } from "../../../config/types";
 
 import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
 import { defaultFieldHelpers } from "../../../fields/fieldHelpers";
-import CombinationLock from "./Component";
+import { CombinationLock } from "./Component";
 
 const { numberInput } = defaultFieldHelpers;
 

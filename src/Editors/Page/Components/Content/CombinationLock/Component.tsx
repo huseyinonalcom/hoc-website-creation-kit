@@ -15,7 +15,7 @@ const DEFAULT_CHARSET =
   " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 const BASE_HEIGHT = 28;
 
-export default function CombinationLock({
+export function CombinationLock({
   sequences = ["Code", "Lock", "Sync"],
   interval = 3000,
   spinDuration = 1500,

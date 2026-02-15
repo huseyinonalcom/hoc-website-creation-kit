@@ -1,1 +1,0 @@
-{"version":3,"file":"tsFileMigrationProvider.d.ts","sourceRoot":"","sources":["../../../../src/server/db/utils/tsFileMigrationProvider.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,SAAS,EAAE,iBAAiB,EAAE,MAAM,QAAQ,CAAC;AAQ3D,qBAAa,uBAAwB,YAAW,iBAAiB;IACnD,OAAO,CAAC,QAAQ,CAAC,UAAU;gBAAV,UAAU,EAAE,MAAM;IAEzC,aAAa,IAAI,OAAO,CAAC,MAAM,CAAC,MAAM,EAAE,SAAS,CAAC,CAAC;CAsB1D"}

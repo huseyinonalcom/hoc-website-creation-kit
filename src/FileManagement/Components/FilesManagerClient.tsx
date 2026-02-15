@@ -10,10 +10,11 @@ import {
   updateDirectoryAction,
   updateFileAction,
 } from "../actions";
-import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
 import { FileDirectories, Files } from "../../server/types/dbtypes";
 import { useFilesData } from "../Providers/FilesDataProvider";
 import { FilesBrowserClient } from "./FilesBrowserClient";
+import { Button } from "../../Components/Simple/Button";
+import { getDisplayName } from "../utils/fileUtils";
 import { FilesMoveModal } from "./FilesMoveModal";
 import cn from "../../utils/classnames";
 
@@ -21,6 +22,66 @@ const inputClassName =
   "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm transition placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-indigo-400 dark:focus:ring-indigo-400";
 
 type StatusState = { type: "success" | "error"; message: string } | null;
+
+const getDirectoryLabel = (
+  directories: Selectable<FileDirectories>[],
+  directory_id?: string | null,
+) => {
+  if (!directory_id) {
+    return "Kök";
+  }
+
+  const found = directories.find((dir) => dir.id === directory_id);
+  return found?.name ?? "Kök";
+};
+
+const getParentdirectory_id = (
+  directories: Selectable<FileDirectories>[],
+  directory_id: string,
+) => {
+  const found = directories.find((dir) => dir.id === directory_id);
+  return found?.parent_id ?? null;
+};
+
+const getDescendantIds = (
+  directories: Selectable<FileDirectories>[],
+  directory_id: string,
+) => {
+  const byParent = new Map<string | null, Selectable<FileDirectories>[]>();
+  directories.forEach((dir) => {
+    const parentId = dir.parent_id ?? null;
+    const list = byParent.get(parentId) ?? [];
+    list.push(dir);
+    byParent.set(parentId, list);
+  });
+
+  const result: string[] = [];
+  const stack = [directory_id];
+
+  while (stack.length > 0) {
+    const current = stack.pop();
+    if (!current || result.includes(current)) {
+      continue;
+    }
+
+    result.push(current);
+    const children = byParent.get(current) ?? [];
+    children.forEach((child) => stack.push(child.id));
+  }
+
+  return result;
+};
+
+const countFilesInDirectory = (
+  files: Selectable<Files>[],
+  directories: Selectable<FileDirectories>[],
+  directory_id: string,
+) => {
+  const targetIds = getDescendantIds(directories, directory_id);
+  return files.filter(
+    (file) => !file.is_deleted && targetIds.includes(file.directory_id ?? ""),
+  ).length;
+};
 
 export function FilesManagerClient() {
   const {
@@ -522,76 +583,3 @@ export function FilesManagerClient() {
     </div>
   );
 }
-
-const deriveFileName = (url: string) => {
-  try {
-    const decoded = decodeURIComponent(url);
-    const parts = decoded.split("/");
-    return parts[parts.length - 1] || decoded;
-  } catch {
-    return url;
-  }
-};
-
-const getDisplayName = (file: Selectable<Files>) =>
-  file.tag?.trim() || deriveFileName(file.url);
-
-const getDirectoryLabel = (
-  directories: Selectable<FileDirectories>[],
-  directory_id?: string | null,
-) => {
-  if (!directory_id) {
-    return "Kök";
-  }
-
-  const found = directories.find((dir) => dir.id === directory_id);
-  return found?.name ?? "Kök";
-};
-
-const getParentdirectory_id = (
-  directories: Selectable<FileDirectories>[],
-  directory_id: string,
-) => {
-  const found = directories.find((dir) => dir.id === directory_id);
-  return found?.parent_id ?? null;
-};
-
-const getDescendantIds = (
-  directories: Selectable<FileDirectories>[],
-  directory_id: string,
-) => {
-  const byParent = new Map<string | null, Selectable<FileDirectories>[]>();
-  directories.forEach((dir) => {
-    const parentId = dir.parent_id ?? null;
-    const list = byParent.get(parentId) ?? [];
-    list.push(dir);
-    byParent.set(parentId, list);
-  });
-
-  const result: string[] = [];
-  const stack = [directory_id];
-
-  while (stack.length > 0) {
-    const current = stack.pop();
-    if (!current || result.includes(current)) {
-      continue;
-    }
-
-    result.push(current);
-    const children = byParent.get(current) ?? [];
-    children.forEach((child) => stack.push(child.id));
-  }
-
-  return result;
-};
-
-const countFilesInDirectory = (
-  files: Selectable<Files>[],
-  directories: Selectable<FileDirectories>[],
-  directory_id: string,
-) => {
-  const targetIds = getDescendantIds(directories, directory_id);
-  return files.filter(
-    (file) => !file.is_deleted && targetIds.includes(file.directory_id ?? ""),
-  ).length;
-};

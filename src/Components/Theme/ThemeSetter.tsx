@@ -14,6 +14,6 @@ const themeScript = `
   })();
 `;
 
-export default function ThemeSetter() {
+export function ThemeSetter() {
   return <script dangerouslySetInnerHTML={{ __html: themeScript }}></script>;
 }

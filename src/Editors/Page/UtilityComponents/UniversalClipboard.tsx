@@ -11,7 +11,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { createUsePuck } from "@puckeditor/core";
 
-import { Button } from "../Components/Actions/ButtonLink/Button";
+import { Button } from "../../../Components/Simple/Button";
 
 type ClipboardStatus = "idle" | "success" | "error";
 

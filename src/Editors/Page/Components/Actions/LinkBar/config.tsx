@@ -4,7 +4,7 @@ import type { BaseEditorProps } from "../../../config/types";
 
 import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
 import { LinkListField } from "./LinkListField";
-import { LinkBarBlock } from "./Component";
+import { LinkBar } from "./Component";
 
 export const linkBarConfig: Config<BaseEditorProps>["components"]["LinkBar"] = {
   label: "Bağlantı Listesi",
@@ -28,5 +28,5 @@ export const linkBarConfig: Config<BaseEditorProps>["components"]["LinkBar"] = {
       },
     },
   },
-  render: LinkBarBlock,
+  render: LinkBar,
 };

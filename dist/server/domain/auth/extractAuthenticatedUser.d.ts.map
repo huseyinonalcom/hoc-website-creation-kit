@@ -1,1 +1,0 @@
-{"version":3,"file":"extractAuthenticatedUser.d.ts","sourceRoot":"","sources":["../../../../src/server/domain/auth/extractAuthenticatedUser.ts"],"names":[],"mappings":"AAAA,OAAO,aAAa,CAAC;AAErB,OAAO,EAAE,oBAAoB,EAAE,MAAM,sBAAsB,CAAC;AAG5D,wBAAsB,wBAAwB,CAC5C,KAAK,EAAE,MAAM,GAAG,SAAS,GACxB,OAAO,CAAC,oBAAoB,CAAC,CAW/B"}

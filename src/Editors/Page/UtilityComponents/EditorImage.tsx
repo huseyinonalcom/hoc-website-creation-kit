@@ -6,7 +6,7 @@ import Image from "next/image";
 
 import { FilesPickerModal } from "../../../FileManagement/Components/FilesPickerModal";
 import { useFilesData } from "../../../FileManagement/Providers/FilesDataProvider";
-import { Button } from "../Components/Actions/ButtonLink/Button";
+import { Button } from "../../../Components/Simple/Button";
 import { Files } from "../../../server/types/dbtypes";
 
 export type EditorImageProps = {

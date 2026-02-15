@@ -10,14 +10,23 @@ import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { Selectable } from "kysely";
 import Image from "next/image";
 
-import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
 import { createDirectoryAction, uploadFileAction } from "../actions";
 import { FileDirectories, Files } from "../../server/types/dbtypes";
+import { Button } from "../../Components/Simple/Button";
+import { getDisplayName } from "../utils/fileUtils";
 import { uploadFileInitialState } from "../state";
 import cn from "../../utils/classnames";
 
 const inputClassName =
   "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm transition placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-indigo-400 dark:focus:ring-indigo-400";
+
+function isHiddenFile(file: Selectable<Files>) {
+  return file.url?.includes("/users/");
+}
+
+function isVisibleFile(file: Selectable<Files>) {
+  return !file.is_deleted && !isHiddenFile(file);
+}
 
 export type FilesBrowserClientProps = {
   files: Selectable<Files>[];
@@ -554,25 +563,4 @@ export function FilesBrowserClient({
       </Dialog>
     </div>
   );
-}
-
-const deriveFileName = (url: string) => {
-  try {
-    const decoded = decodeURIComponent(url);
-    const parts = decoded.split("/");
-    return parts[parts.length - 1] || decoded;
-  } catch {
-    return url;
-  }
-};
-
-const getDisplayName = (file: Selectable<Files>) =>
-  file.tag?.trim() || deriveFileName(file.url);
-
-function isHiddenFile(file: Selectable<Files>) {
-  return file.url?.includes("/users/");
-}
-
-function isVisibleFile(file: Selectable<Files>) {
-  return !file.is_deleted && !isHiddenFile(file);
 }

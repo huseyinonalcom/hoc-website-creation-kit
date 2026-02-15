@@ -29,11 +29,7 @@ export function useFilesData() {
   return ctx;
 }
 
-export default function FilesDataProvider({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export function FilesDataProvider({ children }: { children: ReactNode }) {
   const [files, setFiles] = useState<Selectable<Files>[]>([]);
   const [directories, setDirectories] = useState<Selectable<FileDirectories>[]>(
     [],

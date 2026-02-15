@@ -1,1 +1,0 @@
-{"version":3,"file":"create_first_user.d.ts","sourceRoot":"","sources":["../../../../../src/server/domain/users/private/create_first_user.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,UAAU,EAAE,MAAM,QAAQ,CAAC;AACpC,OAAO,aAAa,CAAC;AAIrB,OAAO,EAAE,KAAK,EAAE,MAAM,wBAAwB,CAAC;AAiB/C,eAAO,MAAM,oBAAoB,GAC/B,MAAM,UAAU,CAAC,KAAK,CAAC,GAAG;IAAE,QAAQ,EAAE,MAAM,CAAA;CAAE,qBA6B/C,CAAC"}

@@ -4,7 +4,7 @@ import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Selectable } from "kysely";
 
-import { Button } from "../../Editors/Page/Components/Actions/ButtonLink/Button";
+import { Button } from "../../Components/Simple/Button";
 import { FileDirectories, Files } from "../../server/types/dbtypes";
 import { FilesBrowserClient } from "./FilesBrowserClient";
 

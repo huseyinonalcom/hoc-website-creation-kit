@@ -17,7 +17,7 @@ const normalizePath = (path: string) => {
   }
 };
 
-export function LinkBarBlock({ links = [] }: LinkBarProps) {
+export function LinkBar({ links = [] }: LinkBarProps) {
   const pathname = normalizePath(usePathname() ?? "/");
 
   if (!links.length) {
@@ -36,7 +36,9 @@ export function LinkBarBlock({ links = [] }: LinkBarProps) {
               key={`${link.path}-${idx}`}
               className={cn(
                 "border-b-3 pb-4 text-lg font-semibold transition-colors",
-                isActive ? "border-blue-600 text-blue-600" : "border-transparent hover:border-blue-600 hover:text-blue-600",
+                isActive
+                  ? "border-blue-600 text-blue-600"
+                  : "border-transparent hover:border-blue-600 hover:text-blue-600",
               )}
               href={link.path!}
             >

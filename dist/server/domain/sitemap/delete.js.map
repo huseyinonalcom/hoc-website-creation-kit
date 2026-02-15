@@ -1,1 +1,0 @@
-{"version":3,"file":"delete.js","sourceRoot":"","sources":["../../../../src/server/domain/sitemap/delete.ts"],"names":[],"mappings":"AAAA,OAAO,aAAa,CAAC;AAErB,OAAO,EAAE,GAAG,EAAE,MAAM,gBAAgB,CAAC;AAErC,MAAM,CAAC,MAAM,WAAW,GAAG,KAAK,EAAE,EAAE,EAAE,EAAkB,EAAE,EAAE;IAC1D,OAAO;QACL,MAAM,EAAE,MAAM,GAAG,CAAC,UAAU,EAAE,EAAE,EAAE,EAAE,CAAC,CAAC,OAAO,EAAE;KAChD,CAAC;AACJ,CAAC,CAAC"}

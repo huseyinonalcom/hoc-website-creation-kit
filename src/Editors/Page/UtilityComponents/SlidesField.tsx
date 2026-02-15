@@ -9,7 +9,7 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/outline";
 
-import { Button } from "../Components/Actions/ButtonLink/Button";
+import { Button } from "../../../Components/Simple/Button";
 import { RichTextEditor } from "../../Text/Editor";
 import { Clipboard } from "./UniversalClipboard";
 
