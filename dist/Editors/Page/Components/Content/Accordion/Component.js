@@ -15,10 +15,10 @@ export function Accordion({ sections, isEditing, }) {
     if (!sanitizedSections.length) {
         return _jsx(_Fragment, {});
     }
-    return (_jsxs("div", { className: "w-full overflow-hidden", children: [isEditing && (_jsx("div", { className: "mb-4 text-sm text-gray-500", children: "D\u00FCzenleme Modu" })), sanitizedSections.map((section, index) => {
-                const isOpen = openIndex === index || isEditing;
-                const title = section.title?.trim() || `Bölüm ${index + 1}`;
-                return (_jsx(AccordionSection, { title: title, content: section.content, isOpen: isOpen || isEditing, handleToggle: () => handleToggle(index) }, `accordion-section-${index}-${title}`));
-            })] }));
+    return (_jsx("div", { className: "w-full overflow-hidden", children: sanitizedSections.map((section, index) => {
+            const isOpen = openIndex === index || isEditing;
+            const title = section.title?.trim() || `Bölüm ${index + 1}`;
+            return (_jsx(AccordionSection, { title: title, content: section.content, isOpen: isOpen || isEditing, handleToggle: () => handleToggle(index) }, `accordion-section-${index}-${title}`));
+        }) }));
 }
 //# sourceMappingURL=Component.js.map

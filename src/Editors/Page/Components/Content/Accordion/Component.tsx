@@ -66,9 +66,6 @@ export function Accordion({
 
   return (
     <div className="w-full overflow-hidden">
-      {isEditing && (
-        <div className="mb-4 text-sm text-gray-500">Düzenleme Modu</div>
-      )}
       {sanitizedSections.map(
         (section: AccordionSectionProps, index: number) => {
           const isOpen = openIndex === index || isEditing;
