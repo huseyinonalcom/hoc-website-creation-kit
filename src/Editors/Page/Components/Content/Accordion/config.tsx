@@ -37,7 +37,7 @@ export const accordionBlockConfig: Config<BaseEditorProps>["components"]["Accord
         },
       },
     },
-    render: ({ sections, isEditing }) => (
+    render: ({ sections, puck: { isEditing } }) => (
       <Accordion sections={sections ?? []} isEditing={isEditing ?? false} />
     ),
   };
