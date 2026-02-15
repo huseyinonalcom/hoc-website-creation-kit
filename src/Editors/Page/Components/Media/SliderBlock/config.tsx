@@ -45,5 +45,12 @@ export const sliderBlockConfig: Config<BaseEditorProps>["components"]["SliderBlo
       }),
       imageMode: imageModeToggleField,
     },
-    render: Slider,
+    render: ({ autoPlay, autoPlayInterval, slides, imageMode }) => (
+      <Slider
+        autoPlay={autoPlay}
+        autoPlayInterval={autoPlayInterval}
+        slides={slides}
+        imageMode={imageMode}
+      />
+    ),
   };

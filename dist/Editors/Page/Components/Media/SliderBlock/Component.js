@@ -3,7 +3,7 @@ import { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from "react/jsx-run
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { RichTextRenderer } from "../../../../Text/Renderer";
-export default function Slider({ slides = [], autoPlay = false, autoPlayInterval = 6000, imageMode = "cover" }) {
+export default function Slider({ slides = [], autoPlay = false, autoPlayInterval = 6000, imageMode = "cover", }) {
     const normalizedSlides = slides
         .map((slide) => ({
         imageUrl: slide.imageUrl?.trim() ?? "",

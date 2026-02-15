@@ -32,6 +32,6 @@ export const sliderBlockConfig = {
         }),
         imageMode: imageModeToggleField,
     },
-    render: Slider,
+    render: ({ autoPlay, autoPlayInterval, slides, imageMode }) => (_jsx(Slider, { autoPlay: autoPlay, autoPlayInterval: autoPlayInterval, slides: slides, imageMode: imageMode })),
 };
 //# sourceMappingURL=config.js.map
