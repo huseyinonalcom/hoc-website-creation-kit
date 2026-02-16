@@ -1,22 +1,18 @@
 "use client";
 
 import { ChevronUpIcon } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
-
-import type { SingleAccordionProps } from "./type";
+import { useState } from "react";
 
 import cn from "../../../../../utils/classnames";
+import { SingleAccordionProps } from "./type";
 
 export default function SingleAccordion({
   title,
-  content: Content,
+  children,
   defaultOpen = false,
 }: SingleAccordionProps) {
   const [isOpen, setIsOpen] = useState(Boolean(defaultOpen));
 
-  useEffect(() => {
-    setIsOpen(Boolean(defaultOpen));
-  }, [defaultOpen]);
   const resolvedTitle = title?.trim() || "Bölüm";
 
   return (
@@ -44,7 +40,7 @@ export default function SingleAccordion({
             isOpen ? "grid-rows-[1fr] pb-5" : "grid-rows-[0fr]",
           )}
         >
-          <div className="min-h-0">{Content ? <Content /> : <p></p>}</div>
+          <div className="min-h-0">{children ? <>{children}</> : <p></p>}</div>
         </div>
       </div>
     </div>

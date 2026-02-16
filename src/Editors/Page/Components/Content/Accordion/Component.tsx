@@ -3,12 +3,12 @@
 import { ChevronUpIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
+import { AccordionProps, AccordionSectionProps } from "./type";
 import cn from "../../../../../utils/classnames";
-import { AccordionSectionProps } from "./type";
 
 const AccordionSection = ({
   title,
-  content: Content,
+  content,
   isOpen,
   handleToggle,
 }: AccordionSectionProps) => {
@@ -35,20 +35,14 @@ const AccordionSection = ({
         )}
       >
         <div className="min-h-0">
-          {Content ? <Content /> : <p className="text-sm"></p>}
+          {content ? <>{content}</> : <p className="text-sm"></p>}
         </div>
       </div>
     </div>
   );
 };
 
-export function Accordion({
-  sections,
-  isEditing,
-}: {
-  sections: AccordionSectionProps[];
-  isEditing: boolean;
-}) {
+export function Accordion({ sections, isEditing }: AccordionProps) {
   const sanitizedSections = sections.filter(
     (section: AccordionSectionProps): section is AccordionSectionProps =>
       Boolean(section),

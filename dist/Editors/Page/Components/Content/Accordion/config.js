@@ -1,4 +1,4 @@
-import { jsx as _jsx } from "react/jsx-runtime";
+import { jsx as _jsx, Fragment as _Fragment } from "react/jsx-runtime";
 import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
 import { Accordion } from "./Component";
 export const accordionBlockConfig = {
@@ -12,13 +12,8 @@ export const accordionBlockConfig = {
             label: "Bölümler",
             type: "array",
             min: 1,
-            // @ts-expect-error We can't set default values for anything other than title
-            defaultItemProps: {
-                title: "Yeni Bölüm",
-            },
             getItemSummary: (item, index) => item?.title?.trim() ||
                 `Bölüm ${typeof index === "number" ? index + 1 : 1}`,
-            // @ts-expect-error The omitted properties are handled internally in the Accordion component, so we don't need to worry about them here
             arrayFields: {
                 title: {
                     label: "Başlık",
@@ -31,6 +26,18 @@ export const accordionBlockConfig = {
             },
         },
     },
-    render: ({ sections, puck: { isEditing } }) => (_jsx(Accordion, { sections: sections ?? [], isEditing: isEditing ?? false })),
+    render: ({ sections, puck: { isEditing } }) => {
+        const normalizedSections = (sections ?? []).map((section) => {
+            const Content = section?.content;
+            return {
+                title: section?.title,
+                content: Content ? _jsx(Content, {}) : _jsx(_Fragment, {}),
+            };
+        });
+        if (normalizedSections.length < 1) {
+            return _jsx(_Fragment, {});
+        }
+        return _jsx(Accordion, { isEditing: isEditing, sections: normalizedSections });
+    },
 };
 //# sourceMappingURL=config.js.map

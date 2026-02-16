@@ -33,11 +33,12 @@ export const singleAccordionConfig: Config<BaseEditorProps>["components"]["Singl
         ],
       },
     },
-    render: ({ title, content, defaultOpen, puck: { isEditing } }) => (
+    render: ({ title, content: Content, defaultOpen, puck: { isEditing } }) => (
       <SingleAccordion
         title={title}
-        content={content}
         defaultOpen={defaultOpen || (isEditing ?? false)}
-      />
+      >
+        {Content ? <Content /> : <></>}
+      </SingleAccordion>
     ),
   };

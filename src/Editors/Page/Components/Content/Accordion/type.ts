@@ -1,15 +1,25 @@
-import { ComponentType } from "react";
+import { Slot } from "@puckeditor/core";
+import { ReactNode } from "react";
 
 import type { BaseComponentProps } from "../../type";
 
-export type AccordionSectionProps = {
+export type AccordionSectionPropsPuck = {
   title?: string;
-  isOpen: boolean;
-  content: ComponentType;
-  handleToggle: () => void;
+  content: Slot;
 };
 
-export type AccordionProps = BaseComponentProps & {
+export type AccordionPropsPuck = BaseComponentProps & {
+  sections: AccordionSectionPropsPuck[];
+};
+
+export type AccordionSectionProps = {
+  title?: string;
+  content: ReactNode;
+  isOpen?: boolean;
+  handleToggle?: () => void;
+};
+
+export type AccordionProps = {
   sections: AccordionSectionProps[];
   isEditing: boolean;
 };

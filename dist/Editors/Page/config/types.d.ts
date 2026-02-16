@@ -1,8 +1,8 @@
 import type { ChangeEvent, ComponentType } from "react";
 import type { SliderShowcaseBlockProps } from "../Components/Media/SliderShowcaseBlock/type";
+import type { SingleAccordionPropsPuck } from "../Components/Content/SingleAccordion/type";
 import type { ThreeColumnLayoutProps } from "../Components/Layout/ThreeColumnLayout/type";
 import type { FourColumnLayoutProps } from "../Components/Layout/FourColumnLayout/type";
-import type { SingleAccordionProps } from "../Components/Content/SingleAccordion/type";
 import type { ImageOverlayTextProps } from "../Components/Media/ImageOverlayText/type";
 import type { CombinationLockProps } from "../Components/Content/CombinationLock/type";
 import type { TwoColumnLayoutProps } from "../Components/Layout/TwoColumnLayout/type";
@@ -13,10 +13,10 @@ import type { HeadingBlockProps } from "../Components/Content/HeadingBlock/type"
 import type { ImageWithTextProps } from "../Components/Media/ImageWithText/type";
 import type { ImageWithSlotProps } from "../Components/Media/ImageWithSlot/type";
 import type { YoutubeEmbedProps } from "../Components/Embed/YoutubeEmbed/type";
+import type { AccordionPropsPuck } from "../Components/Content/Accordion/type";
 import type { SingleImageProps } from "../Components/Media/SingleImage/type";
 import type { SliderBlockProps } from "../Components/Media/SliderBlock/type";
 import type { ButtonLinkProps } from "../Components/Actions/ButtonLink/type";
-import type { AccordionProps } from "../Components/Content/Accordion/type";
 import type { LinkBarProps } from "../Components/Actions/LinkBar/type";
 import type { GalleryProps } from "../Components/Media/Gallery/type";
 export type { BaseComponentProps } from "../Components/type";
@@ -31,8 +31,8 @@ export type BaseEditorProps = {
     VerticalSpacer: VerticalSpacerProps;
     HeadingBlock: HeadingBlockProps;
     RichTextBlock: RichTextBlockProps;
-    AccordionBlock: AccordionProps;
-    SingleAccordion: SingleAccordionProps;
+    AccordionBlock: AccordionPropsPuck;
+    SingleAccordion: SingleAccordionPropsPuck;
     CombinationLock: CombinationLockProps;
     SingleImage: SingleImageProps;
     ImageWithText: ImageWithTextProps;

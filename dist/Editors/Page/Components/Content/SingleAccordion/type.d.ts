@@ -1,8 +1,14 @@
-import type { ComponentType } from "react";
-import type { BaseComponentProps } from "../../type";
-export type SingleAccordionProps = BaseComponentProps & {
+import { Slot } from "@puckeditor/core";
+import { ReactNode } from "react";
+import { BaseComponentProps } from "../../type";
+export type SingleAccordionPropsPuck = BaseComponentProps & {
     title?: string;
-    content?: ComponentType;
+    content?: Slot;
+    defaultOpen?: boolean;
+};
+export type SingleAccordionProps = {
+    title?: string;
+    children?: ReactNode;
     defaultOpen?: boolean;
 };
 //# sourceMappingURL=type.d.ts.map

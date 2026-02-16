@@ -17,14 +17,10 @@ export const accordionBlockConfig: Config<BaseEditorProps>["components"]["Accord
         label: "Bölümler",
         type: "array",
         min: 1,
-        // @ts-expect-error We can't set default values for anything other than title
-        defaultItemProps: {
-          title: "Yeni Bölüm",
-        },
+
         getItemSummary: (item, index) =>
           item?.title?.trim() ||
           `Bölüm ${typeof index === "number" ? index + 1 : 1}`,
-        // @ts-expect-error The omitted properties are handled internally in the Accordion component, so we don't need to worry about them here
         arrayFields: {
           title: {
             label: "Başlık",
@@ -37,7 +33,20 @@ export const accordionBlockConfig: Config<BaseEditorProps>["components"]["Accord
         },
       },
     },
-    render: ({ sections, puck: { isEditing } }) => (
-      <Accordion sections={sections ?? []} isEditing={isEditing ?? false} />
-    ),
+    render: ({ sections, puck: { isEditing } }) => {
+      const normalizedSections = (sections ?? []).map((section) => {
+        const Content = section?.content;
+
+        return {
+          title: section?.title,
+          content: Content ? <Content /> : <></>,
+        };
+      });
+
+      if (normalizedSections.length < 1) {
+        return <></>;
+      }
+
+      return <Accordion isEditing={isEditing} sections={normalizedSections} />;
+    },
   };

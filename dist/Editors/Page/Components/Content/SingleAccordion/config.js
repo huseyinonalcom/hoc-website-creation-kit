@@ -1,4 +1,4 @@
-import { jsx as _jsx } from "react/jsx-runtime";
+import { jsx as _jsx, Fragment as _Fragment } from "react/jsx-runtime";
 import { Clipboard } from "../../../UtilityComponents/UniversalClipboard";
 import SingleAccordion from "./Component";
 export const singleAccordionConfig = {
@@ -28,6 +28,6 @@ export const singleAccordionConfig = {
             ],
         },
     },
-    render: ({ title, content, defaultOpen, puck: { isEditing } }) => (_jsx(SingleAccordion, { title: title, content: content, defaultOpen: defaultOpen || (isEditing ?? false) })),
+    render: ({ title, content: Content, defaultOpen, puck: { isEditing } }) => (_jsx(SingleAccordion, { title: title, defaultOpen: defaultOpen || (isEditing ?? false), children: Content ? _jsx(Content, {}) : _jsx(_Fragment, {}) })),
 };
 //# sourceMappingURL=config.js.map
