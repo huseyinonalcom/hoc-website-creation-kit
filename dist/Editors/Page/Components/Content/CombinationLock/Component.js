@@ -3,7 +3,7 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useCallback, useEffect, useMemo, useState } from "react";
 const DEFAULT_CHARSET = " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 const BASE_HEIGHT = 28;
-export function CombinationLock({ sequences = ["Code", "Lock", "Sync"], interval = 3000, spinDuration = 1500, cycles = 1, scale = 1, activeSequence, className, }) {
+export function CombinationLock({ sequences = ["Code", "Lock"], interval = 3000, spinDuration = 1500, cycles = 1, scale = 1, activeSequence, className, }) {
     const charset = useMemo(() => {
         const base = DEFAULT_CHARSET.split("");
         const uniqueFromSeqs = Array.from(new Set(sequences.join("").split("")));

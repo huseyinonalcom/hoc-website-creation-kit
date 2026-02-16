@@ -38,11 +38,11 @@ export const combinationLockConfig: Config<BaseEditorProps>["components"]["Combi
         },
       },
       interval: numberInput("Gösterim Süresi (ms)", {
-        min: 0,
+        min: 1000,
         defaultValue: 2000,
       }),
       spinDuration: numberInput("Dönme Süresi (ms)", {
-        min: 0,
+        min: 100,
         defaultValue: 700,
       }),
       cycles: numberInput("Turlar", { min: 1, defaultValue: 1 }),
@@ -53,9 +53,12 @@ export const combinationLockConfig: Config<BaseEditorProps>["components"]["Combi
     },
     render: (props) => {
       const { sequences, interval, spinDuration, cycles, scale } = props;
-      const mappedSequences = Array.isArray(sequences)
-        ? sequences.map((item) => item?.value ?? "")
-        : [];
+      let mappedSequences: string[] = [];
+      if (!sequences || sequences.length < 2) {
+        mappedSequences = ["Code", "Lock"];
+      } else {
+        mappedSequences = sequences.map((item) => item?.value ?? "");
+      }
       return (
         <CombinationLock
           interval={interval}

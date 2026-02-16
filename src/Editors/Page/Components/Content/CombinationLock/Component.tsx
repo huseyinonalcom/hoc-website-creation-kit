@@ -16,7 +16,7 @@ const DEFAULT_CHARSET =
 const BASE_HEIGHT = 28;
 
 export function CombinationLock({
-  sequences = ["Code", "Lock", "Sync"],
+  sequences = ["Code", "Lock"],
   interval = 3000,
   spinDuration = 1500,
   cycles = 1,
