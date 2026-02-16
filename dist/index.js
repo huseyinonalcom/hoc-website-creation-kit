@@ -4,10 +4,8 @@ export { Button } from "./Components/Simple/Button";
 // Components also used in Page Editor
 export { ButtonLink } from "./Editors/Page/Components/Actions/ButtonLink/Component";
 export { LinkBar } from "./Editors/Page/Components/Actions/LinkBar/Component";
-export { Accordion } from "./Editors/Page/Components/Content/Accordion/Component";
 export { CombinationLock } from "./Editors/Page/Components/Content/CombinationLock/Component";
 export { default as HeadingBlock } from "./Editors/Page/Components/Content/HeadingBlock/Component";
-export { default as SingleAccordionBlock } from "./Editors/Page/Components/Content/SingleAccordion/Component";
 export { GoogleMapsEmbed } from "./Editors/Page/Components/Embed/GoogleMapsEmbed/Component";
 export { YoutubeEmbed } from "./Editors/Page/Components/Embed/YoutubeEmbed/Component";
 export { VerticalSpacer } from "./Editors/Page/Components/Layout/VerticalSpacer/Component";
