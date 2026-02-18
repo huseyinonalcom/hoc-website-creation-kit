@@ -1,1 +1,1 @@
-{"version":3,"file":"Component.d.ts","sourceRoot":"","sources":["../../../../../../src/Editors/Page/Components/Embed/YoutubeEmbed/Component.tsx"],"names":[],"mappings":"AAAA,OAAO,EAAE,iBAAiB,EAAE,MAAM,QAAQ,CAAC;AAmE3C,eAAO,MAAM,YAAY,GAAI,wDAO1B,iBAAiB,4CAiCnB,CAAC;AAEF,eAAe,YAAY,CAAC"}
+{"version":3,"file":"Component.d.ts","sourceRoot":"","sources":["../../../../../../src/Editors/Page/Components/Embed/YoutubeEmbed/Component.tsx"],"names":[],"mappings":"AAAA,OAAO,EAAE,iBAAiB,EAAE,MAAM,QAAQ,CAAC;AAmE3C,eAAO,MAAM,YAAY,GAAI,wDAO1B,iBAAiB,4CAyCnB,CAAC;AAEF,eAAe,YAAY,CAAC"}
