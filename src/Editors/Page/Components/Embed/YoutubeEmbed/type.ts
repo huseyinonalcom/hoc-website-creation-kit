@@ -6,4 +6,5 @@ export type YoutubeEmbedProps = BaseComponentProps & {
   startSeconds?: number;
   autoPlay?: boolean;
   muted?: boolean;
+  height?: string;
 };

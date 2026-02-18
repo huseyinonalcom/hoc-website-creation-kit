@@ -30,6 +30,11 @@ export const youtubeEmbedConfig: Config<BaseEditorProps>["components"]["YoutubeE
         label: "Başlık",
         type: "text",
       },
+      height: {
+        label: "Yükseklik (px veya %)",
+        type: "text",
+        placeholder: "Örn: 360px veya 50%",
+      },
       startSeconds: numberInput("Başlangıç Zamanı (sn)", {
         min: 0,
         placeholder: "Örn: 30",
