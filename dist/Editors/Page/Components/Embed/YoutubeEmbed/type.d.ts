@@ -5,6 +5,6 @@ export type YoutubeEmbedProps = BaseComponentProps & {
     startSeconds?: number;
     autoPlay?: boolean;
     muted?: boolean;
-    height?: string;
+    height?: number;
 };
 //# sourceMappingURL=type.d.ts.map

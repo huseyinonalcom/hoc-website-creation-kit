@@ -57,10 +57,18 @@ export const YoutubeEmbed = ({ url, title, startSeconds, autoPlay, muted, height
         autoPlay,
         muted,
     });
-    if (height && !height.endsWith("px") && !height.endsWith("%")) {
-        height = `${height}px`;
+    try {
+        if (typeof height === "string") {
+            height = parseInt(height, 10);
+        }
     }
-    return (_jsx("div", { className: "relative w-full overflow-hidden rounded-2xl", style: { height: height || "360px" }, children: _jsx("iframe", { allowFullScreen: true, allow: "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share", className: "absolute inset-0 h-full w-full", loading: autoPlay ? undefined : "lazy", referrerPolicy: "strict-origin-when-cross-origin", src: embedUrl, title: title?.trim() || "YouTube video player" }) }));
+    catch {
+        height = 16;
+    }
+    if (!height) {
+        height = 16;
+    }
+    return (_jsx("div", { className: "relative w-full overflow-hidden rounded-2xl", style: { aspectRatio: `${height} / 9` }, children: _jsx("iframe", { allowFullScreen: true, allow: "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share", className: "absolute inset-0 h-full w-full", loading: autoPlay ? undefined : "lazy", referrerPolicy: "strict-origin-when-cross-origin", src: embedUrl, title: title?.trim() || "YouTube video player" }) }));
 };
 export default YoutubeEmbed;
 //# sourceMappingURL=Component.js.map

@@ -85,14 +85,22 @@ export const YoutubeEmbed = ({
     muted,
   });
 
-  if (height && !height.endsWith("px") && !height.endsWith("%")) {
-    height = `${height}px`;
+  try {
+    if (typeof height === "string") {
+      height = parseInt(height, 10);
+    }
+  } catch {
+    height = 16;
+  }
+
+  if (!height) {
+    height = 16;
   }
 
   return (
     <div
       className="relative w-full overflow-hidden rounded-2xl"
-      style={{ height: height || "360px" }}
+      style={{ aspectRatio: `${height} / 9` }}
     >
       <iframe
         allowFullScreen
