@@ -54,10 +54,15 @@ const buildEmbedUrl = (
 
   if (autoPlay) {
     params.set("autoplay", "1");
-    params.set("mute", muted ? "1" : "0");
   }
 
-  return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
+  if (muted || autoPlay) {
+    params.set("mute", "1");
+  } else {
+    params.set("mute", "0");
+  }
+
+  return `https://www.youtube.com/embed/${videoId}?controls=0&disablekb=1&loop=1&${params.toString()}`;
 };
 
 export const YoutubeEmbed = ({
@@ -93,7 +98,7 @@ export const YoutubeEmbed = ({
         allowFullScreen
         allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
         className="absolute inset-0 h-full w-full"
-        loading="lazy"
+        loading={autoPlay ? undefined : "lazy"}
         referrerPolicy="strict-origin-when-cross-origin"
         src={embedUrl}
         title={title?.trim() || "YouTube video player"}

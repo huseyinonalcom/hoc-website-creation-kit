@@ -27,7 +27,7 @@ const extractVideoId = (rawValue) => {
     const idPattern = /^[a-zA-Z0-9_-]{11}$/;
     return idPattern.test(value) ? value : undefined;
 };
-const buildEmbedUrl = (videoId, { startSeconds, autoPlay, muted }) => {
+const buildEmbedUrl = (videoId, { startSeconds, autoPlay, muted, }) => {
     const params = new URLSearchParams({
         rel: "0",
         modestbranding: "1",
@@ -38,11 +38,16 @@ const buildEmbedUrl = (videoId, { startSeconds, autoPlay, muted }) => {
     }
     if (autoPlay) {
         params.set("autoplay", "1");
-        params.set("mute", muted ? "1" : "0");
     }
-    return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
+    if (muted || autoPlay) {
+        params.set("mute", "1");
+    }
+    else {
+        params.set("mute", "0");
+    }
+    return `https://www.youtube.com/embed/${videoId}?controls=0&disablekb=1&loop=1&${params.toString()}`;
 };
-export const YoutubeEmbed = ({ url, title, startSeconds, autoPlay, muted }) => {
+export const YoutubeEmbed = ({ url, title, startSeconds, autoPlay, muted, height, }) => {
     const videoId = extractVideoId(url);
     if (!videoId) {
         return _jsx(_Fragment, {});
@@ -52,7 +57,10 @@ export const YoutubeEmbed = ({ url, title, startSeconds, autoPlay, muted }) => {
         autoPlay,
         muted,
     });
-    return (_jsx("div", { className: "relative w-full overflow-hidden rounded-2xl", style: { paddingBottom: "56.25%" }, children: _jsx("iframe", { allowFullScreen: true, allow: "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share", className: "absolute inset-0 h-full w-full", loading: "lazy", referrerPolicy: "strict-origin-when-cross-origin", src: embedUrl, title: title?.trim() || "YouTube video player" }) }));
+    if (height && !height.endsWith("px") && !height.endsWith("%")) {
+        height = `${height}px`;
+    }
+    return (_jsx("div", { className: "relative w-full overflow-hidden rounded-2xl", style: { height: height || "360px" }, children: _jsx("iframe", { allowFullScreen: true, allow: "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share", className: "absolute inset-0 h-full w-full", loading: autoPlay ? undefined : "lazy", referrerPolicy: "strict-origin-when-cross-origin", src: embedUrl, title: title?.trim() || "YouTube video player" }) }));
 };
 export default YoutubeEmbed;
 //# sourceMappingURL=Component.js.map
