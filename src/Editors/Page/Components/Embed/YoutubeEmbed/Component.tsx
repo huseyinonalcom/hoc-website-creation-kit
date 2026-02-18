@@ -34,7 +34,14 @@ const extractVideoId = (rawValue?: string): string | undefined => {
   return idPattern.test(value) ? value : undefined;
 };
 
-const buildEmbedUrl = (videoId: string, { startSeconds, autoPlay, muted }: { startSeconds?: number; autoPlay?: boolean; muted?: boolean }): string => {
+const buildEmbedUrl = (
+  videoId: string,
+  {
+    startSeconds,
+    autoPlay,
+    muted,
+  }: { startSeconds?: number; autoPlay?: boolean; muted?: boolean },
+): string => {
   const params = new URLSearchParams({
     rel: "0",
     modestbranding: "1",
@@ -53,7 +60,14 @@ const buildEmbedUrl = (videoId: string, { startSeconds, autoPlay, muted }: { sta
   return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
 };
 
-export const YoutubeEmbed = ({ url, title, startSeconds, autoPlay, muted }: YoutubeEmbedProps) => {
+export const YoutubeEmbed = ({
+  url,
+  title,
+  startSeconds,
+  autoPlay,
+  muted,
+  height,
+}: YoutubeEmbedProps) => {
   const videoId = extractVideoId(url);
 
   if (!videoId) {
@@ -66,8 +80,15 @@ export const YoutubeEmbed = ({ url, title, startSeconds, autoPlay, muted }: Yout
     muted,
   });
 
+  if (height && !height.endsWith("px") && !height.endsWith("%")) {
+    height = `${height}px`;
+  }
+
   return (
-    <div className="relative w-full overflow-hidden rounded-2xl" style={{ paddingBottom: "56.25%" }}>
+    <div
+      className="relative w-full overflow-hidden rounded-2xl"
+      style={{ height: height || "360px" }}
+    >
       <iframe
         allowFullScreen
         allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
