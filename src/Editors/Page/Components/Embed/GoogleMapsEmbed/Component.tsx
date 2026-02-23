@@ -1,6 +1,6 @@
 import type { GoogleMapsEmbedFrameProps } from "./type";
 
-const DEFAULT_HEIGHT = 450;
+const DEFAULT_HEIGHT = 16;
 const GOOGLE_HOST_REGEX = /(^|\.)google\.[a-z.]+$/i;
 
 const buildEmbedSrc = (rawValue?: string): string | undefined => {
@@ -14,7 +14,9 @@ const buildEmbedSrc = (rawValue?: string): string | undefined => {
   }
 
   const ensureUrl = (input: string) =>
-    input.startsWith("http://") || input.startsWith("https://") ? input : `https://www.google.com/maps?q=${encodeURIComponent(input)}&output=embed`;
+    input.startsWith("http://") || input.startsWith("https://")
+      ? input
+      : `https://www.google.com/maps?q=${encodeURIComponent(input)}&output=embed`;
 
   try {
     const parsedUrl = new URL(ensureUrl(value));
@@ -23,7 +25,11 @@ const buildEmbedSrc = (rawValue?: string): string | undefined => {
       return undefined;
     }
 
-    if (!parsedUrl.pathname.startsWith("/maps/embed") && !parsedUrl.pathname.startsWith("/maps/d/embed") && parsedUrl.searchParams.get("output") !== "embed") {
+    if (
+      !parsedUrl.pathname.startsWith("/maps/embed") &&
+      !parsedUrl.pathname.startsWith("/maps/d/embed") &&
+      parsedUrl.searchParams.get("output") !== "embed"
+    ) {
       parsedUrl.searchParams.set("output", "embed");
     }
 
@@ -35,19 +41,25 @@ const buildEmbedSrc = (rawValue?: string): string | undefined => {
   }
 };
 
-export const GoogleMapsEmbed = ({ url, title, height, allowFullScreen }: GoogleMapsEmbedFrameProps) => {
+export const GoogleMapsEmbed = ({
+  url,
+  title,
+  height,
+  allowFullScreen,
+}: GoogleMapsEmbedFrameProps) => {
   const embedSrc = buildEmbedSrc(url);
 
   if (!embedSrc) {
     return <></>;
   }
 
-  const resolvedHeight = typeof height === "number" && height > 0 ? height : DEFAULT_HEIGHT;
+  const resolvedHeight =
+    typeof height === "number" && height > 0 ? height : DEFAULT_HEIGHT;
 
   return (
     <div
       className="relative w-full overflow-hidden rounded-2xl border border-gray-200 bg-gray-100 dark:border-white/10 dark:bg-gray-800/40"
-      style={{ minHeight: `${resolvedHeight}px` }}
+      style={{ aspectRatio: `${resolvedHeight} / 10` }}
     >
       <iframe
         allowFullScreen={allowFullScreen}

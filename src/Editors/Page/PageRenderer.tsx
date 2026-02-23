@@ -10,6 +10,10 @@ export type PageRendererProps = {
   pagePathSegments: string[];
 };
 
-export function PageRenderer({ config = baseRendererConfig, data, pagePathSegments }: PageRendererProps) {
+export function PageRenderer({
+  config = baseRendererConfig,
+  data,
+  pagePathSegments,
+}: PageRendererProps) {
   return <Render config={config} data={data} metadata={{ pagePathSegments }} />;
 }

@@ -22,9 +22,9 @@ export const googleMapsEmbedConfig = {
             label: "Başlık",
             type: "text",
         },
-        height: numberInput("Harita Yüksekliği (px)", {
-            min: 200,
-            placeholder: "Örn: 450",
+        height: numberInput("Harita Yüksekliği", {
+            min: 1,
+            placeholder: "Örn: 10",
         }),
         allowFullScreen: {
             label: "Tam ekran izni",

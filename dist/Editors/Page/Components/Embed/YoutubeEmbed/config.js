@@ -25,9 +25,9 @@ export const youtubeEmbedConfig = {
             type: "text",
         },
         height: {
-            label: "Yükseklik (px veya %)",
+            label: "Yükseklik",
             type: "text",
-            placeholder: "Örn: 360px veya 50%",
+            placeholder: "50",
         },
         startSeconds: numberInput("Başlangıç Zamanı (sn)", {
             min: 0,
