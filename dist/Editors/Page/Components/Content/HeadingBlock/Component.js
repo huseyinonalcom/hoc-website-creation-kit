@@ -35,6 +35,9 @@ const resolveColor = (value, fallback) => {
 export function HeadingBlock({ text, level = headingDefaultValues.level, textAlign = headingDefaultValues.textAlign, fontSize = DEFAULT_FONT_SIZE, fontWeight = DEFAULT_FONT_WEIGHT, italic = headingDefaultValues.italic, textColor, textColorLight = headingDefaultValues.textColorLight, textColorDark = headingDefaultValues.textColorDark, decorationEnabled = headingDefaultValues.decorationEnabled, decorationWidth = DEFAULT_DECORATION_WIDTH, decorationThickness = DEFAULT_DECORATION_THICKNESS, decorationSpacing = DEFAULT_DECORATION_SPACING, decorationColor, decorationColorLight = headingDefaultValues.decorationColorLight, decorationColorDark = headingDefaultValues.decorationColorDark, underlineMode = headingDefaultValues.underlineMode, marginTop = headingDefaultValues.marginTop, marginRight = headingDefaultValues.marginRight, marginBottom = headingDefaultValues.marginBottom, marginLeft = headingDefaultValues.marginLeft, }) {
     const rawText = typeof text === "string" ? text : "";
     const hasText = rawText.trim().length > 0;
+    if (!hasText) {
+        return _jsx(_Fragment, {});
+    }
     const resolvedLevel = headingLevels.includes(level) ? level : "h2";
     const HeadingTag = resolvedLevel;
     const resolvedFontSize = normalizeNumber(fontSize, DEFAULT_FONT_SIZE, MIN_FONT_SIZE);
@@ -50,11 +53,10 @@ export function HeadingBlock({ text, level = headingDefaultValues.level, textAli
     const resolvedDecorationSpacing = normalizeNumber(decorationSpacing, DEFAULT_DECORATION_SPACING, 0);
     const containerAlign = headingAlignmentMap[textAlign] ?? "flex-start";
     const containerStyle = {
+        display: "flex",
+        flexDirection: "column",
         alignItems: containerAlign,
     };
-    if (!hasText && !decorationEnabled) {
-        return _jsx(_Fragment, {});
-    }
     const resolvedMargins = {
         marginTop: normalizeNumber(marginTop, headingDefaultValues.marginTop, 0),
         marginRight: normalizeNumber(marginRight, headingDefaultValues.marginRight, 0),
@@ -64,29 +66,26 @@ export function HeadingBlock({ text, level = headingDefaultValues.level, textAli
     const headingStyles = {
         fontSize: `${resolvedFontSize}px`,
         fontStyle: italic ? "italic" : "normal",
+        color: `light-dark(${resolvedTextColorLight}, ${resolvedTextColorDark})`,
         fontWeight: resolvedFontWeight,
         marginTop: `${resolvedMargins.marginTop}px`,
         marginRight: `${resolvedMargins.marginRight}px`,
         marginBottom: `${resolvedMargins.marginBottom}px`,
         marginLeft: `${resolvedMargins.marginLeft}px`,
         textAlign,
-        borderImageSlice: decorationEnabled && underlineMode === "inline" ? 1 : undefined,
+        borderBottom: decorationEnabled && underlineMode === "inline"
+            ? `${resolvedDecorationThickness}px solid light-dark(${resolvedDecorationColorLight}, ${resolvedDecorationColorDark})`
+            : undefined,
     };
-    const headingDarkBorderClass = decorationEnabled && underlineMode === "inline"
-        ? `border-[${resolvedDecorationColorLight}] dark:border-[${resolvedDecorationColorDark}] border-solid border-b-[${resolvedDecorationThickness}px]`
-        : undefined;
     const decorationStyles = {
         alignSelf: containerAlign,
         borderRadius: `0px`,
         height: `${resolvedDecorationThickness}px`,
         marginTop: `${resolvedDecorationSpacing}px`,
         width: `${underlineMode === "inline" ? "100%" : `${resolvedDecorationWidth}px`}`,
+        backgroundColor: `light-dark(${resolvedDecorationColorLight}, ${resolvedDecorationColorDark})`,
     };
-    const headingColorClass = `text-[${resolvedTextColorLight}] dark:text-[${resolvedTextColorDark}]`;
-    const decorationColorClass = `bg-[${resolvedDecorationColorLight}] dark:bg-[${resolvedDecorationColorDark}]`;
-    return (_jsxs("div", { className: "flex flex-col", style: containerStyle, children: [hasText ? (_jsx(HeadingTag, { className: [headingColorClass, headingDarkBorderClass]
-                    .filter(Boolean)
-                    .join(" "), style: headingStyles, children: rawText })) : null, decorationEnabled && underlineMode === "separate" ? (_jsx("span", { "aria-hidden": "true", className: decorationColorClass, style: decorationStyles })) : null] }));
+    return (_jsxs("div", { style: containerStyle, children: [hasText ? (_jsx(HeadingTag, { style: headingStyles, children: rawText })) : null, decorationEnabled && underlineMode === "separate" ? (_jsx("span", { "aria-hidden": "true", style: decorationStyles })) : null] }));
 }
 export default HeadingBlock;
 //# sourceMappingURL=Component.js.map
