@@ -24,11 +24,10 @@ export const youtubeEmbedConfig = {
             label: "Başlık",
             type: "text",
         },
-        height: {
-            label: "Yükseklik",
-            type: "text",
-            placeholder: "50",
-        },
+        height: numberInput("Video Yükseklik Oranı", {
+            min: 16,
+            placeholder: "Örn: 16",
+        }),
         startSeconds: numberInput("Başlangıç Zamanı (sn)", {
             min: 0,
             placeholder: "Örn: 30",

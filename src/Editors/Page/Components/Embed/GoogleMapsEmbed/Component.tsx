@@ -1,6 +1,5 @@
 import type { GoogleMapsEmbedFrameProps } from "./type";
 
-const DEFAULT_HEIGHT = 16;
 const GOOGLE_HOST_REGEX = /(^|\.)google\.[a-z.]+$/i;
 
 const buildEmbedSrc = (rawValue?: string): string | undefined => {
@@ -53,13 +52,22 @@ export const GoogleMapsEmbed = ({
     return <></>;
   }
 
-  const resolvedHeight =
-    typeof height === "number" && height > 0 ? height : DEFAULT_HEIGHT;
+  try {
+    if (typeof height === "string") {
+      height = parseInt(height, 10);
+    }
+  } catch {
+    height = 9;
+  }
+
+  if (!height) {
+    height = 9;
+  }
 
   return (
     <div
       className="relative w-full overflow-hidden rounded-2xl border border-gray-200 bg-gray-100 dark:border-white/10 dark:bg-gray-800/40"
-      style={{ aspectRatio: `${resolvedHeight} / 10` }}
+      style={{ aspectRatio: `16 / ${height}` }}
     >
       <iframe
         allowFullScreen={allowFullScreen}

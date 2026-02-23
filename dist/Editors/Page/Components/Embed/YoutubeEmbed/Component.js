@@ -63,12 +63,12 @@ export const YoutubeEmbed = ({ url, title, startSeconds, autoPlay, muted, height
         }
     }
     catch {
-        height = 16;
+        height = 9;
     }
     if (!height) {
-        height = 16;
+        height = 9;
     }
-    return (_jsx("div", { className: "relative w-full overflow-hidden rounded-2xl", style: { aspectRatio: `${height} / 9` }, children: _jsx("iframe", { allowFullScreen: true, allow: "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share", className: "absolute inset-0 h-full w-full", loading: autoPlay ? undefined : "lazy", referrerPolicy: "strict-origin-when-cross-origin", src: embedUrl, title: title?.trim() || "YouTube video player" }) }));
+    return (_jsx("div", { className: "relative w-full overflow-hidden rounded-2xl", style: { aspectRatio: `16 / ${height}` }, children: _jsx("iframe", { allowFullScreen: true, allow: "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share", className: "absolute inset-0 h-full w-full", loading: autoPlay ? undefined : "lazy", referrerPolicy: "strict-origin-when-cross-origin", src: embedUrl, title: title?.trim() || "YouTube video player" }) }));
 };
 export default YoutubeEmbed;
 //# sourceMappingURL=Component.js.map

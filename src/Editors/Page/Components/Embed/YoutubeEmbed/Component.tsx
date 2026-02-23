@@ -90,17 +90,17 @@ export const YoutubeEmbed = ({
       height = parseInt(height, 10);
     }
   } catch {
-    height = 16;
+    height = 9;
   }
 
   if (!height) {
-    height = 16;
+    height = 9;
   }
 
   return (
     <div
       className="relative w-full overflow-hidden rounded-2xl"
-      style={{ aspectRatio: `${height} / 9` }}
+      style={{ aspectRatio: `16 / ${height}` }}
     >
       <iframe
         allowFullScreen

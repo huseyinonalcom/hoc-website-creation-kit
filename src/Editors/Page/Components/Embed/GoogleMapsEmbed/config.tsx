@@ -28,9 +28,9 @@ export const googleMapsEmbedConfig: Config<BaseEditorProps>["components"]["Googl
         label: "Başlık",
         type: "text",
       },
-      height: numberInput("Harita Yüksekliği", {
-        min: 1,
-        placeholder: "Örn: 10",
+      height: numberInput("Harita Yükseklik Oranı", {
+        min: 16,
+        placeholder: "Örn: 16",
       }),
       allowFullScreen: {
         label: "Tam ekran izni",
