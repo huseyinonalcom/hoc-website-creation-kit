@@ -70,13 +70,10 @@ export function HeadingBlock({ text, level = headingDefaultValues.level, textAli
         marginBottom: `${resolvedMargins.marginBottom}px`,
         marginLeft: `${resolvedMargins.marginLeft}px`,
         textAlign,
-        borderBottom: decorationEnabled && underlineMode === "inline"
-            ? `${resolvedDecorationThickness}px solid ${resolvedDecorationColorLight}`
-            : undefined,
         borderImageSlice: decorationEnabled && underlineMode === "inline" ? 1 : undefined,
     };
     const headingDarkBorderClass = decorationEnabled && underlineMode === "inline"
-        ? `dark:border-[${resolvedDecorationColorDark}]`
+        ? `border-[${resolvedDecorationColorLight}] dark:border-[${resolvedDecorationColorDark}] border-solid border-b-[${resolvedDecorationThickness}px]`
         : undefined;
     const decorationStyles = {
         alignSelf: containerAlign,
